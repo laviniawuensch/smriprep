@@ -1,0 +1,14 @@
+strict digraph  {
+"inputnode (utility)";
+"fs_datasource (io)";
+"lta (nitransforms)";
+"resample (freesurfer)";
+"outputnode (utility)";
+"inputnode (utility)" -> "fs_datasource (io)";
+"inputnode (utility)" -> "lta (nitransforms)";
+"inputnode (utility)" -> "resample (freesurfer)";
+"fs_datasource (io)" -> "lta (nitransforms)";
+"fs_datasource (io)" -> "resample (freesurfer)";
+"lta (nitransforms)" -> "resample (freesurfer)";
+"resample (freesurfer)" -> "outputnode (utility)";
+}

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>smriprep.interfaces.msm &mdash; smriprep 0.12.3.dev220 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/banner.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=1413ff29"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=d9a209d6"></script>
+        <script src="../../../_static/doctools.js?v=6afcdcd2"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            smriprep
+          </a>
+              <div class="version">
+                0.12.3.dev220
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">Library API (application program interface)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">What’s new?</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">smriprep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../interfaces.html">smriprep.interfaces</a></li>
+      <li class="breadcrumb-item active">smriprep.interfaces.msm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+
+
+    
+    
+
+
+
+    <p class="scv-banner scv-sphinx_rtd_theme"><b>Warning:</b> This document is for the development version of smriprep.</p>
+<h1>Source code for smriprep.interfaces.msm</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CommandLine</span><span class="p">,</span>
+    <span class="n">CommandLineInputSpec</span><span class="p">,</span>
+    <span class="n">File</span><span class="p">,</span>
+    <span class="n">TraitedSpec</span><span class="p">,</span>
+    <span class="n">traits</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MSMInputSpec</span><span class="p">(</span><span class="n">CommandLineInputSpec</span><span class="p">):</span>
+    <span class="n">in_mesh</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--inmesh=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;input mesh (available formats: VTK, ASCII, GIFTI). Needs to be a sphere&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">out_base</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;in_mesh&quot;</span><span class="p">],</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_msm&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--out=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;output basename&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">reference_mesh</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--refmesh=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;reference mesh (available formats: VTK, ASCII, GIFTI). Needs to be a sphere.&quot;</span>
+        <span class="s2">&quot;If not included algorithm assumes reference mesh is equivalent input&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">in_data</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--indata=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;scalar or multivariate data for input - can be ASCII (.asc,.dpv,.txt) &quot;</span>
+        <span class="s2">&quot;or GIFTI (.func.gii or .shape.gii)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">reference_data</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--refdata=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;scalar or multivariate data for reference - can be ASCII (.asc,.dpv,.txt) &quot;</span>
+        <span class="s2">&quot;or GIFTI (.func.gii or .shape.gii)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">transformed_mesh</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--trans=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Transformed source mesh (output of a previous registration). &quot;</span>
+        <span class="s2">&quot;Use this to initialise the current registration.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">in_register</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--in_register=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Input mesh at data resolution. Used to resample data onto input mesh if data &quot;</span>
+        <span class="s2">&quot;is supplied at a different resolution. Note this mesh HAS to be in alignment with &quot;</span>
+        <span class="s2">&quot;either the input_mesh of (if supplied) the transformed source mesh. &quot;</span>
+        <span class="s2">&quot;Use with supreme caution.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">in_weight</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--inweight=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;cost function weighting for input - weights data in these vertices when calculating &quot;</span>
+        <span class="s2">&quot;similarity (ASCII or GIFTI). Can be multivariate provided dimension equals that of data&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">reference_weight</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--refweight=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;cost function weighting for reference - weights data in these vertices when &quot;</span>
+        <span class="s2">&quot;calculating similarity (ASCII or GIFTI). Can be multivariate provided dimension &quot;</span>
+        <span class="s2">&quot;equals that of data&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">output_format</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
+        <span class="s2">&quot;GIFTI&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;VTK&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ASCII&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ASCII_MAT&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--format=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;format of output files&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--conf=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;configuration file&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--levels=</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;number of resolution levels (default = number of resolution levels specified &quot;</span>
+        <span class="s2">&quot;by --opt in config file)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">smooth_output_sigma</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--smoothout=</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;smooth transformed output with this sigma (default=0)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Bool</span><span class="p">(</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;--verbose&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;switch on diagnostic messages&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MSMOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
+    <span class="n">warped_mesh</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the warped input mesh (i.e., new vertex locations - this capture the warp field, &quot;</span>
+        <span class="s2">&quot;much like a _warp.nii.gz file would for volumetric warps created by FNIRT).&quot;</span>
+    <span class="p">)</span>
+    <span class="n">downsampled_warped_mesh</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a downsampled version of the warped_mesh where the resolution of this mesh will &quot;</span>
+        <span class="s2">&quot;be equivalent to the resolution of the final datamesh&quot;</span>
+    <span class="p">)</span>
+    <span class="n">warped_data</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the input data passed through the MSM warp and projected onto the target surface&quot;</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="MSM">
+<a class="viewcode-back" href="../../../api/smriprep.interfaces.msm.html#smriprep.interfaces.msm.MSM">[docs]</a>
+<span class="k">class</span> <span class="nc">MSM</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MSM (Multimodal Surface Matching) is a tool for registering cortical surfaces.</span>
+<span class="sd">    The tool has been developed and tested using FreeSurfer extracted surfaces.</span>
+<span class="sd">    However, in principle the tool with work with any cortical surface extraction method provided</span>
+<span class="sd">    the surfaces can be mapped to the sphere.</span>
+<span class="sd">    The key advantage of the method is that alignment may be driven using a wide variety of</span>
+<span class="sd">    univariate (sulcal depth, curvature, myelin), multivariate (Task fMRI, or Resting State</span>
+<span class="sd">    Networks) or multimodal (combinations of folding, myelin and fMRI) feature sets.</span>
+
+<span class="sd">    The main MSM tool is currently run from the command line using the program ``msm``.</span>
+<span class="sd">    This enables fast alignment of spherical cortical surfaces by utilising a fast discrete</span>
+<span class="sd">    optimisation framework (FastPD Komodakis 2007), which significantly reduces the search</span>
+<span class="sd">    space of possible deformations for each vertex, and allows flexibility with regards to the</span>
+<span class="sd">    choice of similarity metric used to match the images.</span>
+
+<span class="sd">    &gt;&gt;&gt; msm = MSM(</span>
+<span class="sd">    ...   config_file=load(&#39;msm/MSMSulcStrainFinalconf&#39;),</span>
+<span class="sd">    ...   in_mesh=&#39;sub-01_hemi-L_sphere.surf.gii&#39;,</span>
+<span class="sd">    ...   reference_mesh=&#39;tpl-fsaverage_hemi-L_den-164k_desc-std_sphere.surf.gii&#39;,</span>
+<span class="sd">    ...   in_data=&#39;sub-01_hemi-L_sulc.shape.gii&#39;,</span>
+<span class="sd">    ...   reference_data=&#39;tpl-fsaverage_hemi-L_den-164k_sulc.shape.gii&#39;,</span>
+<span class="sd">    ...   out_base=&#39;L.&#39;,</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; msm.cmdline  # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE</span>
+<span class="sd">    &#39;msm --conf=.../MSMSulcStrainFinalconf \</span>
+<span class="sd">    --indata=sub-01_hemi-L_sulc.shape.gii \</span>
+<span class="sd">    --inmesh=sub-01_hemi-L_sphere.surf.gii \</span>
+<span class="sd">    --out=L. \</span>
+<span class="sd">    --refdata=tpl-fsaverage_hemi-L_den-164k_sulc.shape.gii \</span>
+<span class="sd">    --refmesh=tpl-fsaverage_hemi-L_den-164k_desc-std_sphere.surf.gii&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">input_spec</span> <span class="o">=</span> <span class="n">MSMInputSpec</span>
+    <span class="n">output_spec</span> <span class="o">=</span> <span class="n">MSMOutputSpec</span>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;msm&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_list_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">nipype.utils.filemanip</span> <span class="kn">import</span> <span class="n">split_filename</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">out_base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_base</span> <span class="ow">or</span> <span class="n">split_filename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_mesh</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">cwd</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;warped_mesh&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cwd</span> <span class="o">/</span> <span class="p">(</span><span class="n">out_base</span> <span class="o">+</span> <span class="s1">&#39;sphere.reg.surf.gii&#39;</span><span class="p">))</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;downsampled_warped_mesh&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cwd</span> <span class="o">/</span> <span class="p">(</span><span class="n">out_base</span> <span class="o">+</span> <span class="s1">&#39;sphere.LR.reg.surf.gii&#39;</span><span class="p">))</span>
+        <span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;warped_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cwd</span> <span class="o">/</span> <span class="p">(</span><span class="n">out_base</span> <span class="o">+</span> <span class="s1">&#39;transformed_and_reprojected.func.gii&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">outputs</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2019, Center for Reproducible Neuroscience, Stanford University.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        <span class="fa fa-book"> Other Versions</span>
+        v: rel/0.13.0
+        <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+        <dl>
+            <dt>Tags</dt>
+            <dd><a href="../../../../0.10.0/index.html">0.10.0</a></dd>
+            <dd><a href="../../../../0.11.0/index.html">0.11.0</a></dd>
+            <dd><a href="../../../../0.11.0rc0/index.html">0.11.0rc0</a></dd>
+            <dd><a href="../../../../0.11.0rc1/index.html">0.11.0rc1</a></dd>
+            <dd><a href="../../../../0.11.1/index.html">0.11.1</a></dd>
+            <dd><a href="../../../../0.12.0/index.html">0.12.0</a></dd>
+            <dd><a href="../../../../0.12.1/index.html">0.12.1</a></dd>
+            <dd><a href="../../../../0.12.2/index.html">0.12.2</a></dd>
+            <dd><a href="../../../../0.8.0/index.html">0.8.0</a></dd>
+            <dd><a href="../../../../0.8.0rc1/index.html">0.8.0rc1</a></dd>
+            <dd><a href="../../../../0.8.0rc2/index.html">0.8.0rc2</a></dd>
+            <dd><a href="../../../../0.8.0rc3/index.html">0.8.0rc3</a></dd>
+            <dd><a href="../../../../0.8.1/index.html">0.8.1</a></dd>
+            <dd><a href="../../../../0.8.2/index.html">0.8.2</a></dd>
+            <dd><a href="../../../../0.8.3/index.html">0.8.3</a></dd>
+            <dd><a href="../../../../0.9.0/index.html">0.9.0</a></dd>
+            <dd><a href="../../../../0.9.1/index.html">0.9.1</a></dd>
+            <dd><a href="../../../../0.9.2/index.html">0.9.2</a></dd>
+        </dl>
+        <dl>
+            <dt>Branches</dt>
+            <dd><a href="../../../../dependabot_pip_pillow-10.0.1/index.html">dependabot/pip/pillow-10.0.1</a></dd>
+            <dd><a href="../../../../dependabot_pip_urllib3-2.0.7/index.html">dependabot/pip/urllib3-2.0.7</a></dd>
+            <dd><a href="../../../../enh_calabel/index.html">enh/calabel</a></dd>
+            <dd><a href="../../../../enh_split-surfaces/index.html">enh/split-surfaces</a></dd>
+            <dd><a href="../../../../fix_parcstats/index.html">fix/parcstats</a></dd>
+            <dd><a href="../../../../fix_recon-report/index.html">fix/recon-report</a></dd>
+            <dd><a href="../../../../fix_tfselect-resless/index.html">fix/tfselect-resless</a></dd>
+            <dd><a href="../../../../maint_0.12.x/index.html">maint/0.12.x</a></dd>
+            <dd><a href="../../../../maint_0.8.x/index.html">maint/0.8.x</a></dd>
+            <dd><a href="../../../../maint_0.9.x/index.html">maint/0.9.x</a></dd>
+            <dd><a href="../../../../master/index.html">master</a></dd>
+            <dd><a href="msm.html">rel/0.13.0</a></dd>
+            <dd><a href="../../../../rel_0.8.0rc1/index.html">rel/0.8.0rc1</a></dd>
+        </dl>
+    </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
