@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.anatomical &mdash; smriprep 0.13.1 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/banner.css" type="text/css" />
+  <title>smriprep.workflows.anatomical &mdash; smriprep 0.13.2.dev4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -33,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.1
+                0.13.2.dev4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -886,7 +888,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">have_mask</span><span class="p">:</span>
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ANAT Stage 2: Preparing brain extraction workflow&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">skull_strip_mode</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
-            <span class="n">run_skull_strip</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">_is_skull_stripped</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">t1w</span><span class="p">)</span>
+            <span class="n">run_skull_strip</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">_is_skull_stripped</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">t1w</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">run_skull_strip</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}[</span><span class="n">skull_strip_mode</span><span class="p">]</span>
 
