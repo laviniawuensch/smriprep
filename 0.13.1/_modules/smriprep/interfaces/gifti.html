@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.interfaces.gifti &mdash; smriprep 0.13.2.dev19 documentation</title>
+  <title>smriprep.interfaces.gifti &mdash; smriprep 0.13.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2.dev19
+                0.13.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -97,17 +97,17 @@
 <span class="k">class</span> <span class="nc">MetricMathInputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
     <span class="n">subject_id</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;subject ID&#39;</span><span class="p">)</span>
     <span class="n">hemisphere</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
-        <span class="s1">&#39;L&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;R&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;L&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;R&quot;</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;hemisphere&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">metric</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;name of metric to invert&#39;</span><span class="p">)</span>
     <span class="n">metric_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;input GIFTI file&#39;</span><span class="p">)</span>
     <span class="n">operation</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
-        <span class="s1">&#39;invert&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;abs&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bin&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;invert&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abs&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bin&quot;</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;operation to perform&#39;</span><span class="p">,</span>
     <span class="p">)</span>
@@ -144,20 +144,20 @@
 
         <span class="n">img</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">GiftiImage</span><span class="o">.</span><span class="n">from_filename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">metric_file</span><span class="p">)</span>
         <span class="c1"># wb_command -set-structure</span>
-        <span class="n">img</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;AnatomicalStructurePrimary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="s1">&#39;CortexLeft&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span> <span class="s1">&#39;CortexRight&#39;</span><span class="p">}[</span><span class="n">hemi</span><span class="p">]</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;AnatomicalStructurePrimary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="s1">&#39;CortexLeft&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span> <span class="s1">&#39;CortexRight&#39;</span><span class="p">}[</span><span class="n">hemi</span><span class="p">]</span>
         <span class="n">darray</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">darrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># wb_command -set-map-names</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="n">darray</span><span class="o">.</span><span class="n">meta</span>
-        <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">hemi</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">hemi</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">datatype</span> <span class="o">=</span> <span class="n">darray</span><span class="o">.</span><span class="n">datatype</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">operation</span> <span class="o">==</span> <span class="s1">&#39;abs&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">operation</span> <span class="o">==</span> <span class="s2">&quot;abs&quot;</span><span class="p">:</span>
             <span class="c1"># wb_command -metric-math &quot;abs(var)&quot;</span>
             <span class="n">data</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">darray</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">operation</span> <span class="o">==</span> <span class="s1">&#39;invert&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">operation</span> <span class="o">==</span> <span class="s2">&quot;invert&quot;</span><span class="p">:</span>
             <span class="c1"># wb_command -metric-math &quot;var * -1&quot;</span>
             <span class="n">data</span> <span class="o">=</span> <span class="o">-</span><span class="n">darray</span><span class="o">.</span><span class="n">data</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">operation</span> <span class="o">==</span> <span class="s1">&#39;bin&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">operation</span> <span class="o">==</span> <span class="s2">&quot;bin&quot;</span><span class="p">:</span>
             <span class="c1"># wb_command -metric-math &quot;var &gt; 0&quot;</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">darray</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mi">0</span>
             <span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;uint8&#39;</span>
@@ -174,9 +174,9 @@
         <span class="p">)</span>
         <span class="n">img</span><span class="o">.</span><span class="n">darrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">darray</span>
 
-        <span class="n">out_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">runtime</span><span class="o">.</span><span class="n">cwd</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">hemi</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">.native.shape.gii&#39;</span><span class="p">)</span>
+        <span class="n">out_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">runtime</span><span class="o">.</span><span class="n">cwd</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">hemi</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">.native.shape.gii&quot;</span><span class="p">)</span>
         <span class="n">img</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">out_filename</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="s1">&#39;metric_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="s2">&quot;metric_file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_filename</span>
         <span class="k">return</span> <span class="n">runtime</span></div>
 
 </pre></div>
@@ -221,6 +221,7 @@
             <dd><a href="../../../../0.12.2/index.html">0.12.2</a></dd>
             <dd><a href="../../../../0.13.0/index.html">0.13.0</a></dd>
             <dd><a href="gifti.html">0.13.1</a></dd>
+            <dd><a href="../../../../0.13.2/index.html">0.13.2</a></dd>
             <dd><a href="../../../../0.8.0/index.html">0.8.0</a></dd>
             <dd><a href="../../../../0.8.0rc1/index.html">0.8.0rc1</a></dd>
             <dd><a href="../../../../0.8.0rc2/index.html">0.8.0rc2</a></dd>

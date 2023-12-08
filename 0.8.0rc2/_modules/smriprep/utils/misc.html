@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.utils.misc &mdash; smriprep 0.13.2.dev19 documentation</title>
+  <title>smriprep.utils.misc &mdash; smriprep 0.13.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5dd5ad26" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2.dev19
+                0.13.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -115,8 +115,8 @@
 <a class="viewcode-back" href="../../../api/smriprep.utils.misc.html#smriprep.utils.misc.apply_lut">[docs]</a>
 <span class="k">def</span> <span class="nf">apply_lut</span><span class="p">(</span><span class="n">in_dseg</span><span class="p">,</span> <span class="n">lut</span><span class="p">,</span> <span class="n">newpath</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Map the input discrete segmentation to a new label set (lookup table, LUT).&quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
     <span class="kn">from</span> <span class="nn">nipype.utils.filemanip</span> <span class="kn">import</span> <span class="n">fname_presuffix</span>
 
     <span class="k">if</span> <span class="n">newpath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -124,14 +124,14 @@
 
         <span class="n">newpath</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">()</span>
 
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">fname_presuffix</span><span class="p">(</span><span class="n">in_dseg</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;_dseg&#39;</span><span class="p">,</span> <span class="n">newpath</span><span class="o">=</span><span class="n">newpath</span><span class="p">)</span>
-    <span class="n">lut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lut</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">fname_presuffix</span><span class="p">(</span><span class="n">in_dseg</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;_dseg&quot;</span><span class="p">,</span> <span class="n">newpath</span><span class="o">=</span><span class="n">newpath</span><span class="p">)</span>
+    <span class="n">lut</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lut</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int16&quot;</span><span class="p">)</span>
 
     <span class="n">segm</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">in_dseg</span><span class="p">)</span>
     <span class="n">hdr</span> <span class="o">=</span> <span class="n">segm</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">hdr</span><span class="o">.</span><span class="n">set_data_dtype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+    <span class="n">hdr</span><span class="o">.</span><span class="n">set_data_dtype</span><span class="p">(</span><span class="s2">&quot;int16&quot;</span><span class="p">)</span>
     <span class="n">segm</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
-        <span class="n">lut</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">segm</span><span class="o">.</span><span class="n">dataobj</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">),</span> <span class="n">segm</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">hdr</span>
+        <span class="n">lut</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">segm</span><span class="o">.</span><span class="n">dataobj</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int16&quot;</span><span class="p">),</span> <span class="n">segm</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">hdr</span>
     <span class="p">)</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">out_file</span></div>
@@ -159,8 +159,8 @@
 <span class="sd">    subjects_dir : os.PathLike or None</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">time</span>
     <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+    <span class="kn">import</span> <span class="nn">time</span>
 
     <span class="k">if</span> <span class="n">subjects_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">subjects_dir</span>
@@ -168,10 +168,10 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">subj_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">subjects_dir</span>
 
-    <span class="n">isrunning</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">subj_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;scripts/IsRunning*&#39;</span><span class="p">))</span>
+    <span class="n">isrunning</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">subj_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;scripts/IsRunning*&quot;</span><span class="p">))</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">isrunning</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">subjects_dir</span>
-    <span class="n">reconlog</span> <span class="o">=</span> <span class="n">subj_dir</span> <span class="o">/</span> <span class="s1">&#39;scripts&#39;</span> <span class="o">/</span> <span class="s1">&#39;recon-all.log&#39;</span>
+    <span class="n">reconlog</span> <span class="o">=</span> <span class="n">subj_dir</span> <span class="o">/</span> <span class="s2">&quot;scripts&quot;</span> <span class="o">/</span> <span class="s2">&quot;recon-all.log&quot;</span>
     <span class="c1"># if recon log doesn&#39;t exist, just clear IsRunning</span>
     <span class="n">mtime</span> <span class="o">=</span> <span class="n">reconlog</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mtime</span> <span class="k">if</span> <span class="n">reconlog</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">mtime</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">mtime_tol</span><span class="p">:</span>
@@ -231,6 +231,7 @@
             <dd><a href="../../../../0.12.2/index.html">0.12.2</a></dd>
             <dd><a href="../../../../0.13.0/index.html">0.13.0</a></dd>
             <dd><a href="../../../../0.13.1/index.html">0.13.1</a></dd>
+            <dd><a href="../../../../0.13.2/index.html">0.13.2</a></dd>
             <dd><a href="../../../../0.8.0/index.html">0.8.0</a></dd>
             <dd><a href="../../../../0.8.0rc1/index.html">0.8.0rc1</a></dd>
             <dd><a href="misc.html">0.8.0rc2</a></dd>

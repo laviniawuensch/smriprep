@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.outputs &mdash; smriprep 0.13.2.dev19 documentation</title>
+  <title>smriprep.workflows.outputs &mdash; smriprep 0.13.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2.dev19
+                0.13.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -111,23 +111,23 @@
 <span class="sd">&quot;&quot;&quot;Writing outputs.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">ty</span>
 
-<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">utility</span> <span class="k">as</span> <span class="n">niu</span>
 <span class="kn">from</span> <span class="nn">nipype.pipeline</span> <span class="kn">import</span> <span class="n">engine</span> <span class="k">as</span> <span class="n">pe</span>
-<span class="kn">from</span> <span class="nn">niworkflows.engine.workflows</span> <span class="kn">import</span> <span class="n">LiterateWorkflow</span> <span class="k">as</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">utility</span> <span class="k">as</span> <span class="n">niu</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.fixes</span> <span class="kn">import</span> <span class="n">FixHeaderApplyTransforms</span> <span class="k">as</span> <span class="n">ApplyTransforms</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.nibabel</span> <span class="kn">import</span> <span class="n">ApplyMask</span><span class="p">,</span> <span class="n">GenerateSamplingReference</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.space</span> <span class="kn">import</span> <span class="n">SpaceDataSource</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.utility</span> <span class="kn">import</span> <span class="n">KeySelect</span>
+<span class="kn">from</span> <span class="nn">niworkflows.engine.workflows</span> <span class="kn">import</span> <span class="n">LiterateWorkflow</span> <span class="k">as</span> <span class="n">Workflow</span>
 
 <span class="kn">from</span> <span class="nn">..interfaces</span> <span class="kn">import</span> <span class="n">DerivativesDataSink</span>
 <span class="kn">from</span> <span class="nn">..interfaces.templateflow</span> <span class="kn">import</span> <span class="n">TemplateFlowSelect</span>
 
-<span class="n">BIDS_TISSUE_ORDER</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;GM&#39;</span><span class="p">,</span> <span class="s1">&#39;WM&#39;</span><span class="p">,</span> <span class="s1">&#39;CSF&#39;</span><span class="p">)</span>
+<span class="n">BIDS_TISSUE_ORDER</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;GM&quot;</span><span class="p">,</span> <span class="s2">&quot;WM&quot;</span><span class="p">,</span> <span class="s2">&quot;CSF&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="init_anat_reports_wf">
 <a class="viewcode-back" href="../../../api/smriprep.workflows.outputs.html#smriprep.workflows.outputs.init_anat_reports_wf">[docs]</a>
-<span class="k">def</span> <span class="nf">init_anat_reports_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">spaces</span><span class="p">,</span> <span class="n">freesurfer</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat_reports_wf&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">init_anat_reports_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">spaces</span><span class="p">,</span> <span class="n">freesurfer</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;anat_reports_wf&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set up a battery of datasinks to store reports in the right location.</span>
 
@@ -165,44 +165,44 @@
 <span class="sd">        Template space and specifications</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">niworkflows.interfaces.reportlets.masks</span> <span class="kn">import</span> <span class="n">ROIsPlot</span>
     <span class="kn">from</span> <span class="nn">niworkflows.interfaces.reportlets.registration</span> <span class="kn">import</span> <span class="p">(</span>
         <span class="n">SimpleBeforeAfterRPT</span> <span class="k">as</span> <span class="n">SimpleBeforeAfter</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">niworkflows.interfaces.reportlets.masks</span> <span class="kn">import</span> <span class="n">ROIsPlot</span>
 
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputfields</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;source_file&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;t1w_mask&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;t1w_dseg&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;template&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;source_file&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t1w_preproc&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t1w_mask&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t1w_dseg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;template&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">,</span>
         <span class="c1"># May be missing</span>
-        <span class="s1">&#39;t1w_conform_report&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;t1w_conform_report&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subject_id&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subjects_dir&quot;</span><span class="p">,</span>
     <span class="p">]</span>
-    <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">inputfields</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">)</span>
+    <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">inputfields</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">)</span>
 
-    <span class="n">seg_rpt</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ROIsPlot</span><span class="p">(</span><span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">],</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;seg_rpt&#39;</span><span class="p">)</span>
+    <span class="n">seg_rpt</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ROIsPlot</span><span class="p">(</span><span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;magenta&quot;</span><span class="p">],</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;seg_rpt&quot;</span><span class="p">)</span>
 
     <span class="n">t1w_conform_check</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_empty_report</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1w_conform_check&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;t1w_conform_check&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">ds_t1w_conform_report</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;conform&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;figures&#39;</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_conform_report&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;conform&quot;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;figures&quot;</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_conform_report&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">ds_t1w_dseg_mask_report</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;dseg&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;figures&#39;</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_dseg_mask_report&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dseg&quot;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;figures&quot;</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_dseg_mask_report&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -219,60 +219,60 @@
     <span class="p">])</span>
     <span class="c1"># fmt:on</span>
 
-    <span class="k">if</span> <span class="n">spaces</span><span class="o">.</span><span class="n">_cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">spaces</span><span class="o">.</span><span class="n">cached</span><span class="o">.</span><span class="n">references</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">spaces</span><span class="p">,</span> <span class="s2">&quot;_cached&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">spaces</span><span class="o">.</span><span class="n">cached</span><span class="o">.</span><span class="n">references</span><span class="p">:</span>
         <span class="n">template_iterator_wf</span> <span class="o">=</span> <span class="n">init_template_iterator_wf</span><span class="p">(</span><span class="n">spaces</span><span class="o">=</span><span class="n">spaces</span><span class="p">)</span>
         <span class="n">t1w_std</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
             <span class="n">ApplyTransforms</span><span class="p">(</span>
                 <span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                 <span class="n">default_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                 <span class="nb">float</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;LanczosWindowedSinc&#39;</span><span class="p">,</span>
+                <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;LanczosWindowedSinc&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t1w_std&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;t1w_std&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">mask_std</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
             <span class="n">ApplyTransforms</span><span class="p">(</span>
                 <span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                 <span class="n">default_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                 <span class="nb">float</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;MultiLabel&#39;</span><span class="p">,</span>
+                <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;MultiLabel&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mask_std&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mask_std&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Generate reportlets showing spatial normalization</span>
         <span class="n">norm_msk</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
             <span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span>
                 <span class="n">function</span><span class="o">=</span><span class="n">_rpt_masks</span><span class="p">,</span>
-                <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;before&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">],</span>
-                <span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mask_file&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">,</span> <span class="s1">&#39;after_mask&#39;</span><span class="p">],</span>
+                <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;before&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">],</span>
+                <span class="n">input_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mask_file&quot;</span><span class="p">,</span> <span class="s2">&quot;before&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">,</span> <span class="s2">&quot;after_mask&quot;</span><span class="p">],</span>
             <span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;norm_msk&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;norm_msk&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">norm_rpt</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">SimpleBeforeAfter</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;norm_rpt&#39;</span><span class="p">,</span> <span class="n">mem_gb</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-        <span class="n">norm_rpt</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">after_label</span> <span class="o">=</span> <span class="s1">&#39;Participant&#39;</span>  <span class="c1"># after</span>
+        <span class="n">norm_rpt</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">SimpleBeforeAfter</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;norm_rpt&quot;</span><span class="p">,</span> <span class="n">mem_gb</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">norm_rpt</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">after_label</span> <span class="o">=</span> <span class="s2">&quot;Participant&quot;</span>  <span class="c1"># after</span>
 
         <span class="n">ds_std_t1w_report</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-            <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;figures&#39;</span><span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std_t1w_report&#39;</span><span class="p">,</span>
+            <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;T1w&quot;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;figures&quot;</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_std_t1w_report&quot;</span><span class="p">,</span>
             <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
             <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">template_iterator_wf</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.template&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat2std_xfm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;template&quot;</span><span class="p">,</span> <span class="s2">&quot;inputnode.template&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;inputnode.anat2std_xfm&quot;</span><span class="p">),</span>
             <span class="p">]),</span>
-            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">t1w_std</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;input_image&#39;</span><span class="p">)]),</span>
-            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">mask_std</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;input_image&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">t1w_std</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;t1w_preproc&quot;</span><span class="p">,</span> <span class="s2">&quot;input_image&quot;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">mask_std</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;t1w_mask&quot;</span><span class="p">,</span> <span class="s2">&quot;input_image&quot;</span><span class="p">)]),</span>
             <span class="p">(</span><span class="n">template_iterator_wf</span><span class="p">,</span> <span class="n">t1w_std</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.anat2std_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;transforms&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.std_t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;reference_image&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;outputnode.anat2std_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;transforms&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;outputnode.std_t1w&quot;</span><span class="p">,</span> <span class="s2">&quot;reference_image&quot;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">template_iterator_wf</span><span class="p">,</span> <span class="n">mask_std</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.anat2std_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;transforms&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.std_t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;reference_image&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;outputnode.anat2std_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;transforms&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;outputnode.std_t1w&quot;</span><span class="p">,</span> <span class="s2">&quot;reference_image&quot;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">template_iterator_wf</span><span class="p">,</span> <span class="n">norm_rpt</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.space&#39;</span><span class="p">,</span> <span class="s1">&#39;before_label&#39;</span><span class="p">)]),</span>
             <span class="p">(</span><span class="n">t1w_std</span><span class="p">,</span> <span class="n">norm_msk</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_image&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">)]),</span>
@@ -294,12 +294,12 @@
     <span class="k">if</span> <span class="n">freesurfer</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">..interfaces.reports</span> <span class="kn">import</span> <span class="n">FSSurfaceReport</span>
 
-        <span class="n">recon_report</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">FSSurfaceReport</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;recon_report&#39;</span><span class="p">)</span>
+        <span class="n">recon_report</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">FSSurfaceReport</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;recon_report&quot;</span><span class="p">)</span>
         <span class="n">recon_report</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">_always_run</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">ds_recon_report</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-            <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;reconall&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;figures&#39;</span><span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_recon_report&#39;</span><span class="p">,</span>
+            <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;reconall&quot;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;figures&quot;</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_recon_report&quot;</span><span class="p">,</span>
             <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># fmt:off</span>
@@ -321,7 +321,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">num_t1w</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_template_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_template_wf&quot;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save the subject-specific template</span>
@@ -356,18 +356,18 @@
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span>
             <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
-                <span class="s1">&#39;source_files&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;t1w_ref_xfms&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;source_files&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;t1w_ref_xfms&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;t1w_preproc&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;t1w_preproc&quot;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
     <span class="n">ds_t1w_preproc</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_preproc&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;preproc&quot;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_preproc&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ds_t1w_preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">SkullStripped</span> <span class="o">=</span> <span class="kc">False</span>
@@ -376,7 +376,7 @@
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">ds_t1w_preproc</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">),</span>
                                      <span class="p">(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">ds_t1w_preproc</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_preproc&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">ds_t1w_preproc</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="s2">&quot;t1w_preproc&quot;</span><span class="p">)]),</span>
     <span class="p">])</span>
     <span class="c1"># fmt:on</span>
 
@@ -386,14 +386,14 @@
         <span class="n">ds_t1w_ref_xfms</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
             <span class="n">DerivativesDataSink</span><span class="p">(</span>
                 <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-                <span class="n">to</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
-                <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-                <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;xfm&#39;</span><span class="p">,</span>
-                <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>
-                <span class="o">**</span><span class="p">{</span><span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;orig&#39;</span><span class="p">},</span>
+                <span class="n">to</span><span class="o">=</span><span class="s2">&quot;T1w&quot;</span><span class="p">,</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span>
+                <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;xfm&quot;</span><span class="p">,</span>
+                <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;txt&quot;</span><span class="p">,</span>
+                <span class="o">**</span><span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="s2">&quot;orig&quot;</span><span class="p">},</span>
             <span class="p">),</span>
-            <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">],</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_ref_xfms&#39;</span><span class="p">,</span>
+            <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_file&quot;</span><span class="p">,</span> <span class="s2">&quot;in_file&quot;</span><span class="p">],</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_ref_xfms&quot;</span><span class="p">,</span>
             <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># fmt:off</span>
@@ -414,7 +414,7 @@
     <span class="n">bids_root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">mask_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_mask_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_mask_wf&quot;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save the subject brain mask</span>
@@ -444,28 +444,28 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;mask_file&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">,</span> <span class="s2">&quot;mask_file&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mask_file&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mask_file&quot;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
-    <span class="n">raw_sources</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_bids_relative</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;raw_sources&#39;</span><span class="p">)</span>
+    <span class="n">raw_sources</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_bids_relative</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;raw_sources&quot;</span><span class="p">)</span>
     <span class="n">raw_sources</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bids_root</span> <span class="o">=</span> <span class="n">bids_root</span>
 
     <span class="n">ds_mask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
             <span class="n">desc</span><span class="o">=</span><span class="n">mask_type</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;mask&quot;</span><span class="p">,</span>
             <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_mask&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_mask&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">mask_type</span> <span class="o">==</span> <span class="s1">&#39;brain&#39;</span><span class="p">:</span>
-        <span class="n">ds_mask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="s1">&#39;Brain&#39;</span>
+    <span class="k">if</span> <span class="n">mask_type</span> <span class="o">==</span> <span class="s2">&quot;brain&quot;</span><span class="p">:</span>
+        <span class="n">ds_mask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="s2">&quot;Brain&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">ds_mask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="s1">&#39;ROI&#39;</span>
+        <span class="n">ds_mask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="s2">&quot;ROI&quot;</span>
 
     <span class="c1"># fmt:off</span>
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -483,7 +483,7 @@
 
 <div class="viewcode-block" id="init_ds_dseg_wf">
 <a class="viewcode-back" href="../../../api/smriprep.workflows.outputs.html#smriprep.workflows.outputs.init_ds_dseg_wf">[docs]</a>
-<span class="k">def</span> <span class="nf">init_ds_dseg_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_dseg_wf&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">init_ds_dseg_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_dseg_wf&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save discrete segmentations</span>
 
@@ -510,19 +510,19 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_dseg&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">,</span> <span class="s2">&quot;t1w_dseg&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t1w_dseg&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;t1w_dseg&quot;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
     <span class="n">ds_t1w_dseg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;dseg&#39;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dseg&quot;</span><span class="p">,</span>
             <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">],</span>
+            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;desc&quot;</span><span class="p">],</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_dseg&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_dseg&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -540,7 +540,7 @@
 
 <div class="viewcode-block" id="init_ds_tpms_wf">
 <a class="viewcode-back" href="../../../api/smriprep.workflows.outputs.html#smriprep.workflows.outputs.init_ds_tpms_wf">[docs]</a>
-<span class="k">def</span> <span class="nf">init_ds_tpms_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_tpms_wf&#39;</span><span class="p">,</span> <span class="n">tpm_labels</span><span class="o">=</span><span class="n">BIDS_TISSUE_ORDER</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">init_ds_tpms_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_tpms_wf&quot;</span><span class="p">,</span> <span class="n">tpm_labels</span><span class="o">=</span><span class="n">BIDS_TISSUE_ORDER</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save tissue probability maps</span>
 
@@ -569,19 +569,19 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_tpms&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">,</span> <span class="s2">&quot;t1w_tpms&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t1w_tpms&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;t1w_tpms&quot;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
     <span class="n">ds_t1w_tpms</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;probseg&#39;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;probseg&quot;</span><span class="p">,</span>
             <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">],</span>
+            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;desc&quot;</span><span class="p">],</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_tpms&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_tpms&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ds_t1w_tpms</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">tpm_labels</span>
@@ -590,7 +590,7 @@
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">ds_t1w_tpms</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_tpms&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">),</span>
                                   <span class="p">(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">ds_t1w_tpms</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_tpms&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">ds_t1w_tpms</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="s2">&quot;t1w_tpms&quot;</span><span class="p">)]),</span>
     <span class="p">])</span>
     <span class="c1"># fmt:on</span>
 
@@ -603,7 +603,7 @@
 <span class="k">def</span> <span class="nf">init_ds_template_registration_wf</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_template_registration_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_template_registration_wf&quot;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save template registration transforms</span>
@@ -631,37 +631,37 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;std2anat_xfm&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;template&quot;</span><span class="p">,</span> <span class="s2">&quot;source_files&quot;</span><span class="p">,</span> <span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;std2anat_xfm&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;std2anat_xfm&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;std2anat_xfm&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">ds_std2t1w_xfm</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">to</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;xfm&#39;</span><span class="p">,</span>
-            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">],</span>
+            <span class="n">to</span><span class="o">=</span><span class="s2">&quot;T1w&quot;</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;xfm&quot;</span><span class="p">,</span>
+            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;desc&quot;</span><span class="p">],</span>
         <span class="p">),</span>
-        <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;from&#39;</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std2t1w_xfm&#39;</span><span class="p">,</span>
+        <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;in_file&quot;</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_std2t1w_xfm&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">ds_t1w2std_xfm</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;xfm&#39;</span><span class="p">,</span>
-            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">],</span>
-            <span class="o">**</span><span class="p">{</span><span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;T1w&#39;</span><span class="p">},</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;xfm&quot;</span><span class="p">,</span>
+            <span class="n">dismiss_entities</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;desc&quot;</span><span class="p">],</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="s2">&quot;T1w&quot;</span><span class="p">},</span>
         <span class="p">),</span>
-        <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w2std_xfm&#39;</span><span class="p">,</span>
+        <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;in_file&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w2std_xfm&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -675,8 +675,8 @@
             <span class="p">(</span><span class="s1">&#39;std2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">),</span>
             <span class="p">((</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="n">_combine_cohort</span><span class="p">),</span> <span class="s1">&#39;from&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">ds_t1w2std_xfm</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">ds_std2t1w_xfm</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;std2anat_xfm&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">ds_t1w2std_xfm</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">ds_std2t1w_xfm</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="s2">&quot;std2anat_xfm&quot;</span><span class="p">)]),</span>
     <span class="p">])</span>
     <span class="c1"># fmt:on</span>
 
@@ -689,7 +689,7 @@
 <span class="k">def</span> <span class="nf">init_ds_fs_registration_wf</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_fs_registration_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_fs_registration_wf&quot;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save rigid registration between subject anatomical template and FreeSurfer T1.mgz</span>
@@ -722,40 +722,40 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">,</span> <span class="s2">&quot;fsnative2t1w_xfm&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w2fsnative_xfm&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;fsnative2t1w_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;t1w2fsnative_xfm&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="kn">from</span> <span class="nn">niworkflows.interfaces.nitransforms</span> <span class="kn">import</span> <span class="n">ConcatenateXFMs</span>
 
     <span class="c1"># FS native space transforms</span>
-    <span class="n">lta2itk</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ConcatenateXFMs</span><span class="p">(</span><span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;lta2itk&#39;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">lta2itk</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ConcatenateXFMs</span><span class="p">(</span><span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lta2itk&quot;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ds_t1w_fsnative</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-            <span class="n">to</span><span class="o">=</span><span class="s1">&#39;fsnative&#39;</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;xfm&#39;</span><span class="p">,</span>
-            <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>
-            <span class="o">**</span><span class="p">{</span><span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;T1w&#39;</span><span class="p">},</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span>
+            <span class="n">to</span><span class="o">=</span><span class="s2">&quot;fsnative&quot;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;xfm&quot;</span><span class="p">,</span>
+            <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;txt&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="s2">&quot;T1w&quot;</span><span class="p">},</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_fsnative&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_fsnative&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ds_fsnative_t1w</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span>
-            <span class="n">to</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
-            <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;xfm&#39;</span><span class="p">,</span>
-            <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">,</span>
-            <span class="o">**</span><span class="p">{</span><span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;fsnative&#39;</span><span class="p">},</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span>
+            <span class="n">to</span><span class="o">=</span><span class="s2">&quot;T1w&quot;</span><span class="p">,</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;xfm&quot;</span><span class="p">,</span>
+            <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;txt&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="s2">&quot;fsnative&quot;</span><span class="p">},</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_fsnative_t1w&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_fsnative_t1w&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -781,7 +781,7 @@
     <span class="n">bids_root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">surfaces</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_surfaces_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_surfaces_wf&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save GIFTI surfaces</span>
@@ -813,31 +813,31 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">surfaces</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">surfaces</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">surfaces</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">surfaces</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">surf</span> <span class="ow">in</span> <span class="n">surfaces</span><span class="p">:</span>
         <span class="n">ds_surf</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
             <span class="n">DerivativesDataSink</span><span class="p">(</span>
                 <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-                <span class="n">hemi</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">],</span>
-                <span class="n">suffix</span><span class="o">=</span><span class="n">surf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># Split for sphere_reg and sphere_reg_fsLR</span>
-                <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.surf.gii&#39;</span><span class="p">,</span>
+                <span class="n">hemi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">],</span>
+                <span class="n">suffix</span><span class="o">=</span><span class="n">surf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># Split for sphere_reg and sphere_reg_fsLR</span>
+                <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;.surf.gii&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;hemi&#39;</span><span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ds_</span><span class="si">{</span><span class="n">surf</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;in_file&quot;</span><span class="p">,</span> <span class="s2">&quot;hemi&quot;</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ds_</span><span class="si">{</span><span class="n">surf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">surf</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;sphere_reg&#39;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">surf</span> <span class="o">==</span> <span class="s1">&#39;sphere_reg_msm&#39;</span><span class="p">:</span>
-                <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39;msmsulc&#39;</span>
-                <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="s1">&#39;fsLR&#39;</span>
+        <span class="k">if</span> <span class="n">surf</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;sphere_reg&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">surf</span> <span class="o">==</span> <span class="s2">&quot;sphere_reg_msm&quot;</span><span class="p">:</span>
+                <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;msmsulc&quot;</span>
+                <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="s2">&quot;fsLR&quot;</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39;reg&#39;</span>
-                <span class="k">if</span> <span class="n">surf</span> <span class="o">==</span> <span class="s1">&#39;sphere_reg_fsLR&#39;</span><span class="p">:</span>
-                    <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="s1">&#39;fsLR&#39;</span>
+                <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;reg&quot;</span>
+                <span class="k">if</span> <span class="n">surf</span> <span class="o">==</span> <span class="s2">&quot;sphere_reg_fsLR&quot;</span><span class="p">:</span>
+                    <span class="n">ds_surf</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="s2">&quot;fsLR&quot;</span>
 
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -857,7 +857,7 @@
     <span class="n">bids_root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_surface_metrics_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_surface_metrics_wf&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save GIFTI surface metrics</span>
@@ -889,21 +889,21 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">metrics</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">metrics</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">metrics</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">metrics</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
         <span class="n">ds_surf</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
             <span class="n">DerivativesDataSink</span><span class="p">(</span>
                 <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-                <span class="n">hemi</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">],</span>
+                <span class="n">hemi</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">],</span>
                 <span class="n">suffix</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
-                <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.shape.gii&#39;</span><span class="p">,</span>
+                <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;.shape.gii&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;hemi&#39;</span><span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ds_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">iterfield</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;in_file&quot;</span><span class="p">,</span> <span class="s2">&quot;hemi&quot;</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ds_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -925,8 +925,8 @@
     <span class="n">bids_root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="n">cifti_output</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;91k&#39;</span><span class="p">,</span> <span class="s1">&#39;170k&#39;</span><span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_grayord_metrics_wf&#39;</span><span class="p">,</span>
+    <span class="n">cifti_output</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;91k&quot;</span><span class="p">,</span> <span class="s2">&quot;170k&quot;</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_grayord_metrics_wf&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Save CIFTI-2 surface metrics</span>
@@ -963,11 +963,11 @@
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span>
-            <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source_files&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">metrics</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">_metadata&#39;</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
+            <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_files&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">metrics</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">_metadata&quot;</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">metrics</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+    <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">metrics</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
         <span class="n">ds_metric</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
@@ -977,9 +977,9 @@
                 <span class="n">density</span><span class="o">=</span><span class="n">cifti_output</span><span class="p">,</span>
                 <span class="n">suffix</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
                 <span class="n">compress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.dscalar.nii&#39;</span><span class="p">,</span>
+                <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;.dscalar.nii&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;ds_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ds_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -1002,9 +1002,10 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">bids_root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_anat_volumes_wf&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_anat_volumes_wf&quot;</span><span class="p">,</span>
     <span class="n">tpm_labels</span><span class="o">=</span><span class="n">BIDS_TISSUE_ORDER</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">:</span>
+
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span>
@@ -1031,7 +1032,7 @@
     <span class="n">raw_sources</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_bids_relative</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;raw_sources&#39;</span><span class="p">)</span>
     <span class="n">raw_sources</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bids_root</span> <span class="o">=</span> <span class="n">bids_root</span>
 
-    <span class="n">gen_ref</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">GenerateSamplingReference</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;gen_ref&#39;</span><span class="p">,</span> <span class="n">mem_gb</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">gen_ref</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">GenerateSamplingReference</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gen_ref&quot;</span><span class="p">,</span> <span class="n">mem_gb</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 
     <span class="c1"># Mask T1w preproc images</span>
     <span class="n">mask_t1w</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ApplyMask</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mask_t1w&#39;</span><span class="p">)</span>
@@ -1042,46 +1043,48 @@
             <span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
             <span class="n">default_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
             <span class="nb">float</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;LanczosWindowedSinc&#39;</span><span class="p">,</span>
+            <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;LanczosWindowedSinc&quot;</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat2std_t1w&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;anat2std_t1w&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">anat2std_mask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;MultiLabel&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat2std_mask&#39;</span><span class="p">)</span>
-    <span class="n">anat2std_dseg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;MultiLabel&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat2std_dseg&#39;</span><span class="p">)</span>
+    <span class="n">anat2std_mask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;MultiLabel&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;anat2std_mask&quot;</span><span class="p">)</span>
+    <span class="n">anat2std_dseg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;MultiLabel&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;anat2std_dseg&quot;</span><span class="p">)</span>
     <span class="n">anat2std_tpms</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
-        <span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">),</span>
-        <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;input_image&#39;</span><span class="p">],</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat2std_tpms&#39;</span><span class="p">,</span>
+        <span class="n">ApplyTransforms</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;Gaussian&quot;</span><span class="p">),</span>
+        <span class="n">iterfield</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;input_image&quot;</span><span class="p">],</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;anat2std_tpms&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">ds_std_t1w</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
             <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;preproc&#39;</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;preproc&quot;</span><span class="p">,</span>
             <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std_t1w&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_std_t1w&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ds_std_t1w</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">SkullStripped</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">ds_std_mask</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;brain&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std_mask&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span>
+            <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;brain&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;mask&quot;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_std_mask&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">ds_std_mask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="s1">&#39;Brain&#39;</span>
+    <span class="n">ds_std_mask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">Type</span> <span class="o">=</span> <span class="s2">&quot;Brain&quot;</span>
 
     <span class="n">ds_std_dseg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;dseg&#39;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std_dseg&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dseg&quot;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_std_dseg&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">ds_std_tpms</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;probseg&#39;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std_tpms&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;probseg&quot;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_std_tpms&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1092,22 +1095,22 @@
 
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">gen_ref</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;ref_file&#39;</span><span class="p">,</span> <span class="s1">&#39;fixed_image&#39;</span><span class="p">),</span>
-            <span class="p">((</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="n">_is_native</span><span class="p">),</span> <span class="s1">&#39;keep_native&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;ref_file&quot;</span><span class="p">,</span> <span class="s2">&quot;fixed_image&quot;</span><span class="p">),</span>
+            <span class="p">((</span><span class="s2">&quot;resolution&quot;</span><span class="p">,</span> <span class="n">_is_native</span><span class="p">),</span> <span class="s2">&quot;keep_native&quot;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">mask_t1w</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;t1w_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;in_mask&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;t1w_preproc&quot;</span><span class="p">,</span> <span class="s2">&quot;in_file&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;t1w_mask&quot;</span><span class="p">,</span> <span class="s2">&quot;in_mask&quot;</span><span class="p">),</span>
         <span class="p">]),</span>
-        <span class="p">(</span><span class="n">mask_t1w</span><span class="p">,</span> <span class="n">anat2std_t1w</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;input_image&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">anat2std_mask</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;input_image&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">anat2std_dseg</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_dseg&#39;</span><span class="p">,</span> <span class="s1">&#39;input_image&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">anat2std_tpms</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_tpms&#39;</span><span class="p">,</span> <span class="s1">&#39;input_image&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">gen_ref</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;moving_image&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">anat2std_t1w</span><span class="p">,</span> <span class="n">ds_std_t1w</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_image&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">anat2std_mask</span><span class="p">,</span> <span class="n">ds_std_mask</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_image&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">anat2std_dseg</span><span class="p">,</span> <span class="n">ds_std_dseg</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_image&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">anat2std_tpms</span><span class="p">,</span> <span class="n">ds_std_tpms</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;output_image&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">mask_t1w</span><span class="p">,</span> <span class="n">anat2std_t1w</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;out_file&quot;</span><span class="p">,</span> <span class="s2">&quot;input_image&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">anat2std_mask</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;t1w_mask&quot;</span><span class="p">,</span> <span class="s2">&quot;input_image&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">anat2std_dseg</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;t1w_dseg&quot;</span><span class="p">,</span> <span class="s2">&quot;input_image&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">anat2std_tpms</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;t1w_tpms&quot;</span><span class="p">,</span> <span class="s2">&quot;input_image&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">gen_ref</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;t1w_preproc&quot;</span><span class="p">,</span> <span class="s2">&quot;moving_image&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">anat2std_t1w</span><span class="p">,</span> <span class="n">ds_std_t1w</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;output_image&quot;</span><span class="p">,</span> <span class="s2">&quot;in_file&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">anat2std_mask</span><span class="p">,</span> <span class="n">ds_std_mask</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;output_image&quot;</span><span class="p">,</span> <span class="s2">&quot;in_file&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">anat2std_dseg</span><span class="p">,</span> <span class="n">ds_std_dseg</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;output_image&quot;</span><span class="p">,</span> <span class="s2">&quot;in_file&quot;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">anat2std_tpms</span><span class="p">,</span> <span class="n">ds_std_tpms</span><span class="p">,</span> <span class="p">[(</span><span class="s2">&quot;output_image&quot;</span><span class="p">,</span> <span class="s2">&quot;in_file&quot;</span><span class="p">)]),</span>
     <span class="p">])</span>  <span class="c1"># fmt:skip</span>
 
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
@@ -1141,8 +1144,8 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">bids_root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">cifti_output</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;91k&#39;</span><span class="p">,</span> <span class="s1">&#39;170k&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat_second_derivatives_wf&#39;</span><span class="p">,</span>
+    <span class="n">cifti_output</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;91k&quot;</span><span class="p">,</span> <span class="s2">&quot;170k&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;anat_second_derivatives_wf&quot;</span><span class="p">,</span>
     <span class="n">tpm_labels</span><span class="o">=</span><span class="n">BIDS_TISSUE_ORDER</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1196,29 +1199,29 @@
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span>
             <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
-                <span class="s1">&#39;template&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;source_files&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;t1w_fs_aseg&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;t1w_fs_aparc&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;template&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;source_files&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;t1w_fs_aseg&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;t1w_fs_aparc&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">raw_sources</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_bids_relative</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;raw_sources&#39;</span><span class="p">)</span>
+    <span class="n">raw_sources</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_bids_relative</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;raw_sources&quot;</span><span class="p">)</span>
     <span class="n">raw_sources</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">bids_root</span> <span class="o">=</span> <span class="n">bids_root</span>
 
     <span class="c1"># Parcellations</span>
     <span class="n">ds_t1w_fsaseg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;aseg&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;dseg&#39;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_fsaseg&#39;</span><span class="p">,</span>
+        <span class="n">DerivativesDataSink</span><span class="p">(</span><span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;aseg&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dseg&quot;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_fsaseg&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ds_t1w_fsparc</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">DerivativesDataSink</span><span class="p">(</span>
-            <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;aparcaseg&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;dseg&#39;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span>
+            <span class="n">base_directory</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;aparcaseg&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dseg&quot;</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_t1w_fsparc&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ds_t1w_fsparc&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -1237,7 +1240,7 @@
 
 <div class="viewcode-block" id="init_template_iterator_wf">
 <a class="viewcode-back" href="../../../api/smriprep.workflows.outputs.html#smriprep.workflows.outputs.init_template_iterator_wf">[docs]</a>
-<span class="k">def</span> <span class="nf">init_template_iterator_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">spaces</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;template_iterator_wf&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">init_template_iterator_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">spaces</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;template_iterator_wf&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare the necessary components to resample an image to a template space</span>
 
 <span class="sd">    This produces a workflow with an unjoined iterable named &quot;spacesource&quot;.</span>
@@ -1250,42 +1253,42 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;template&quot;</span><span class="p">,</span> <span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;inputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span>
             <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
-                <span class="s1">&#39;space&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;resolution&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;cohort&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;std_t1w&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;std_mask&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;space&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;resolution&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cohort&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;std_t1w&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;std_mask&quot;</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;outputnode&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">spacesource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">SpaceDataSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;spacesource&#39;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">spacesource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">SpaceDataSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;spacesource&quot;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">spacesource</span><span class="o">.</span><span class="n">iterables</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s1">&#39;in_tuple&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;in_tuple&quot;</span><span class="p">,</span>
         <span class="p">[(</span><span class="n">s</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">spec</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">spaces</span><span class="o">.</span><span class="n">cached</span><span class="o">.</span><span class="n">get_standard</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))],</span>
     <span class="p">)</span>
 
     <span class="n">gen_tplid</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_fmt_cohort</span><span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;gen_tplid&#39;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gen_tplid&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">select_xfm</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">KeySelect</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">]),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;select_xfm&#39;</span><span class="p">,</span>
+        <span class="n">KeySelect</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;select_xfm&quot;</span><span class="p">,</span>
         <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">select_tpl</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">TemplateFlowSelect</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;select_tpl&#39;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">TemplateFlowSelect</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;select_tpl&quot;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="c1"># fmt:off</span>
@@ -1305,16 +1308,16 @@
             <span class="p">((</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="n">_no_native</span><span class="p">),</span> <span class="s1">&#39;resolution&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">spacesource</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;space&#39;</span><span class="p">,</span> <span class="s1">&#39;space&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;resolution&#39;</span><span class="p">,</span> <span class="s1">&#39;resolution&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;cohort&#39;</span><span class="p">,</span> <span class="s1">&#39;cohort&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;space&quot;</span><span class="p">,</span> <span class="s2">&quot;space&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;resolution&quot;</span><span class="p">,</span> <span class="s2">&quot;resolution&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;cohort&quot;</span><span class="p">,</span> <span class="s2">&quot;cohort&quot;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">select_xfm</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;anat2std_xfm&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">,</span> <span class="s2">&quot;anat2std_xfm&quot;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">select_tpl</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;t1w_file&#39;</span><span class="p">,</span> <span class="s1">&#39;std_t1w&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;brain_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;std_mask&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;t1w_file&quot;</span><span class="p">,</span> <span class="s2">&quot;std_t1w&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;brain_mask&quot;</span><span class="p">,</span> <span class="s2">&quot;std_mask&quot;</span><span class="p">),</span>
         <span class="p">]),</span>
     <span class="p">])</span>
     <span class="c1"># fmt:on</span>
@@ -1326,7 +1329,7 @@
 <span class="k">def</span> <span class="nf">_bids_relative</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">bids_root</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="n">in_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">in_files</span><span class="p">]</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">:</span>
@@ -1339,49 +1342,47 @@
 
 <span class="k">def</span> <span class="nf">_rpt_masks</span><span class="p">(</span><span class="n">mask_file</span><span class="p">,</span> <span class="n">before</span><span class="p">,</span> <span class="n">after</span><span class="p">,</span> <span class="n">after_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">abspath</span>
-
     <span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
 
     <span class="n">msk</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">mask_file</span><span class="p">)</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">bnii</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">before</span><span class="p">)</span>
-    <span class="n">nb</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">bnii</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">*</span> <span class="n">msk</span><span class="p">,</span> <span class="n">bnii</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">bnii</span><span class="o">.</span><span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="s1">&#39;before.nii.gz&#39;</span><span class="p">)</span>
+    <span class="n">nb</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">bnii</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">*</span> <span class="n">msk</span><span class="p">,</span> <span class="n">bnii</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">bnii</span><span class="o">.</span><span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="s2">&quot;before.nii.gz&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">after_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">msk</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">after_mask</span><span class="p">)</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
     <span class="n">anii</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">after</span><span class="p">)</span>
-    <span class="n">nb</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">anii</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">*</span> <span class="n">msk</span><span class="p">,</span> <span class="n">anii</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">anii</span><span class="o">.</span><span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="s1">&#39;after.nii.gz&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;before.nii.gz&#39;</span><span class="p">),</span> <span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;after.nii.gz&#39;</span><span class="p">)</span>
+    <span class="n">nb</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">anii</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">*</span> <span class="n">msk</span><span class="p">,</span> <span class="n">anii</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">anii</span><span class="o">.</span><span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="s2">&quot;after.nii.gz&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;before.nii.gz&quot;</span><span class="p">),</span> <span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;after.nii.gz&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_drop_cohort</span><span class="p">(</span><span class="n">in_template</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_template</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">_drop_cohort</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_pick_cohort</span><span class="p">(</span><span class="n">in_template</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_template</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;cohort-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;cohort-&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">Undefined</span>
 
             <span class="k">return</span> <span class="n">Undefined</span>
-        <span class="k">return</span> <span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;cohort-&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;cohort-&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">_pick_cohort</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_fmt</span><span class="p">(</span><span class="n">in_template</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">in_template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">in_template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_empty_report</span><span class="p">(</span><span class="n">in_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
     <span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">isdefined</span>
 
     <span class="k">if</span> <span class="n">in_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">isdefined</span><span class="p">(</span><span class="n">in_file</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">in_file</span>
 
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;tmp-report.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tmp-report.html&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
     <span class="n">out_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;\</span>
 <span class="sd">                &lt;h4 class=&quot;elem-title&quot;&gt;A previously computed T1w template was provided.&lt;/h4&gt;</span>
@@ -1391,19 +1392,18 @@
 
 
 <span class="k">def</span> <span class="nf">_is_native</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;native&#39;</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;native&quot;</span>
 
 
 <span class="k">def</span> <span class="nf">_no_native</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
 
 
 <span class="k">def</span> <span class="nf">_drop_path</span><span class="p">(</span><span class="n">in_path</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
     <span class="kn">from</span> <span class="nn">templateflow.conf</span> <span class="kn">import</span> <span class="n">TF_HOME</span>
 
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">in_path</span><span class="p">)</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">TF_HOME</span><span class="p">))</span>
@@ -1413,14 +1413,14 @@
     <span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">isdefined</span>
 
     <span class="k">if</span> <span class="n">cohort</span> <span class="ow">and</span> <span class="n">isdefined</span><span class="p">(</span><span class="n">cohort</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">template</span><span class="si">}</span><span class="s1">:cohort-</span><span class="si">{</span><span class="n">cohort</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template</span><span class="si">}</span><span class="s2">:cohort-</span><span class="si">{</span><span class="n">cohort</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">return</span> <span class="n">template</span>
 
 
 <span class="k">def</span> <span class="nf">_combine_cohort</span><span class="p">(</span><span class="n">in_template</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_template</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">template</span> <span class="o">=</span> <span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s1">&#39;cohort-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;cohort-&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">template</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">in_template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;cohort-&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">_combine_cohort</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">in_template</span><span class="p">]</span>
@@ -1473,6 +1473,7 @@
             <dd><a href="../../../../0.12.2/index.html">0.12.2</a></dd>
             <dd><a href="outputs.html">0.13.0</a></dd>
             <dd><a href="../../../../0.13.1/index.html">0.13.1</a></dd>
+            <dd><a href="../../../../0.13.2/index.html">0.13.2</a></dd>
             <dd><a href="../../../../0.8.0/index.html">0.8.0</a></dd>
             <dd><a href="../../../../0.8.0rc1/index.html">0.8.0rc1</a></dd>
             <dd><a href="../../../../0.8.0rc2/index.html">0.8.0rc2</a></dd>

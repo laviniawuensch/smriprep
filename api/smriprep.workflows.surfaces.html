@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.surfaces module &mdash; smriprep 0.13.2.dev19 documentation</title>
+  <title>smriprep.workflows.surfaces module &mdash; smriprep 0.13.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/banner.css" />
@@ -38,7 +38,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2.dev19
+                0.13.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -100,9 +100,12 @@
   
 
 
+    
+    
 
 
 
+    <p class="scv-banner scv-sphinx_rtd_theme"><a href="../master/api/smriprep.workflows.surfaces.html"><b>Warning:</b> This document is for an old version of smriprep. The main version is master.</a></p>
 <section id="module-smriprep.workflows.surfaces">
 <span id="smriprep-workflows-surfaces-module"></span><h1>smriprep.workflows.surfaces module<a class="headerlink" href="#module-smriprep.workflows.surfaces" title="Link to this heading"></a></h1>
 <p>Surface preprocessing workflows.</p>
@@ -198,7 +201,7 @@ race conditions, as it is a volumetric operation.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.surfaces.init_gifti_morphometrics_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_gifti_morphometrics_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">morphometrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('thickness',</span> <span class="pre">'curv',</span> <span class="pre">'sulc')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gifti_morphometrics_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_gifti_morphometrics_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_gifti_morphometrics_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_gifti_morphometrics_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">morphometrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['thickness',</span> <span class="pre">'curv',</span> <span class="pre">'sulc']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gifti_morphometrics_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_gifti_morphometrics_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_gifti_morphometrics_wf" title="Link to this definition"></a></dt>
 <dd><p>Prepare GIFTI shape files from morphometrics found in a FreeSurfer subjects
 directory.</p>
 <p>The default morphometrics are <code class="docutils literal notranslate"><span class="pre">lh/rh.thickness</span></code>, <code class="docutils literal notranslate"><span class="pre">lh/rh.curv</span></code>, and
@@ -229,7 +232,7 @@ directory.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.surfaces.init_gifti_surfaces_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_gifti_surfaces_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surfaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('pial',</span> <span class="pre">'midthickness',</span> <span class="pre">'inflated',</span> <span class="pre">'white')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_scanner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gifti_surface_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_gifti_surfaces_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_gifti_surfaces_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_gifti_surfaces_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surfaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['pial',</span> <span class="pre">'midthickness',</span> <span class="pre">'inflated',</span> <span class="pre">'white']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_scanner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gifti_surface_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_gifti_surfaces_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_gifti_surfaces_wf" title="Link to this definition"></a></dt>
 <dd><p>Prepare GIFTI surfaces from a FreeSurfer subjects directory.</p>
 <p>The default surfaces are <code class="docutils literal notranslate"><span class="pre">lh/rh.pial</span></code>, <code class="docutils literal notranslate"><span class="pre">lh/rh.midthickness</span></code>,
 <code class="docutils literal notranslate"><span class="pre">lh/rh.inflated</span></code>, and <code class="docutils literal notranslate"><span class="pre">lh/rh.white</span></code>.</p>
@@ -606,7 +609,7 @@ to have a certain margin.</p>
 <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
         <span class="fa fa-book"> Other Versions</span>
-        v: master
+        v: 0.13.2
         <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -622,6 +625,7 @@ to have a certain margin.</p>
             <dd><a href="../0.12.2/api/smriprep.workflows.surfaces.html">0.12.2</a></dd>
             <dd><a href="../0.13.0/api/smriprep.workflows.surfaces.html">0.13.0</a></dd>
             <dd><a href="../0.13.1/api/smriprep.workflows.surfaces.html">0.13.1</a></dd>
+            <dd><a href="../0.13.2/api/smriprep.workflows.surfaces.html">0.13.2</a></dd>
             <dd><a href="../0.8.0/api/smriprep.workflows.surfaces.html">0.8.0</a></dd>
             <dd><a href="../0.8.0rc1/api/smriprep.workflows.surfaces.html">0.8.0rc1</a></dd>
             <dd><a href="../0.8.0rc2/api/smriprep.workflows.surfaces.html">0.8.0rc2</a></dd>

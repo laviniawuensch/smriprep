@@ -1,0 +1,18 @@
+strict digraph  {
+"poutputnode (utility)";
+"outputnode (utility)";
+"inputnode (utility)";
+"split_desc (templateflow)";
+"trunc_mov (ants)";
+"registration (norm)";
+"tf_select (templateflow)";
+"poutputnode (utility)" -> "outputnode (utility)";
+"inputnode (utility)" -> "split_desc (templateflow)";
+"inputnode (utility)" -> "trunc_mov (ants)";
+"inputnode (utility)" -> "registration (norm)";
+"split_desc (templateflow)" -> "tf_select (templateflow)";
+"split_desc (templateflow)" -> "registration (norm)";
+"split_desc (templateflow)" -> "poutputnode (utility)";
+"trunc_mov (ants)" -> "registration (norm)";
+"registration (norm)" -> "poutputnode (utility)";
+}
