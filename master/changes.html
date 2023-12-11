@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What’s new? &mdash; smriprep 0.13.2 documentation</title>
+  <title>What’s new? &mdash; smriprep 0.13.3.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/banner.css" />
@@ -37,7 +37,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2
+                0.13.3.dev26
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Library API (application program interface)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What’s new?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#december-08-2023">0.13.2 (December 08, 2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#november-21-2023">0.13.1 (November 21, 2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#november-20-2023">0.13.0 (November 20, 2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#august-16-2023">0.12.2 (August 16, 2023)</a></li>
@@ -136,6 +137,20 @@
 
 <section id="what-s-new">
 <h1>What’s new?<a class="headerlink" href="#what-s-new" title="Link to this heading"></a></h1>
+<section id="december-08-2023">
+<h2>0.13.2 (December 08, 2023)<a class="headerlink" href="#december-08-2023" title="Link to this heading"></a></h2>
+<p>Bug fix release in the 0.13.x series.</p>
+<p>This release fixes a check for skull-stripping in auto mode, and adds
+missing fsLR atlases to the Python package resources.
+The Docker image has also been updated to ensure FreeSurfer can be run
+from the sMRIPrep container.</p>
+<p>With thanks to Patrick Sadil for reports and fixes.</p>
+<ul class="simple">
+<li><p>ENH: Add 59k atlases (#405)</p></li>
+<li><p>FIX: Repair FreeSurfer dependency in Dockerfile (tcsh) (#404)</p></li>
+<li><p>FIX: Invert result of skull-strip check in auto mode (#402)</p></li>
+</ul>
+</section>
 <section id="november-21-2023">
 <h2>0.13.1 (November 21, 2023)<a class="headerlink" href="#november-21-2023" title="Link to this heading"></a></h2>
 <p>Bug fix release in the 0.13.x series.</p>

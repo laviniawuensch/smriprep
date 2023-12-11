@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.interfaces.workbench &mdash; smriprep 0.13.2 documentation</title>
+  <title>smriprep.interfaces.workbench &mdash; smriprep 0.13.3.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2
+                0.13.3.dev26
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -92,70 +92,70 @@
     <span class="n">surf_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Input surface GIFTI file (.surf.gii)&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Input surface GIFTI file (.surf.gii)&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ref_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;NIfTI volume in the desired output space (dims, spacing, origin)&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;NIfTI volume in the desired output space (dims, spacing, origin)&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">out_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;surf_file&quot;</span><span class="p">],</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_distvol.nii.gz&quot;</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;surf_file&#39;</span><span class="p">],</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_distvol.nii.gz&#39;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Name of output volume containing signed distances&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Name of output volume containing signed distances&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">out_mask</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;surf_file&quot;</span><span class="p">],</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_distmask.nii.gz&quot;</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-roi-out </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Name of file to store a mask where the ``out_file`` has a computed value&quot;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;surf_file&#39;</span><span class="p">],</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_distmask.nii.gz&#39;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-roi-out </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Name of file to store a mask where the ``out_file`` has a computed value&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">fill_value</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span>
         <span class="mf">0.0</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-fill-value </span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-fill-value </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;value to put in all voxels that don&#39;t get assigned a distance&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">exact_limit</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span>
         <span class="mf">5.0</span><span class="p">,</span>
         <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-exact-limit </span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;distance for exact output in mm&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-exact-limit </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;distance for exact output in mm&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">approx_limit</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span>
         <span class="mf">20.0</span><span class="p">,</span>
         <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-approx-limit </span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;distance for approximate output in mm&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-approx-limit </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;distance for approximate output in mm&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">approx_neighborhood</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
         <span class="mi">2</span><span class="p">,</span>
         <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-approx-neighborhood </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;size of neighborhood cube measured from center to face in voxels, default 2 = 5x5x5&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-approx-neighborhood </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;size of neighborhood cube measured from center to face in voxels, default 2 = 5x5x5&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">winding_method</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
-        <span class="s2">&quot;EVEN_ODD&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;NEGATIVE&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;NONZERO&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;NORMALS&quot;</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-winding </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;EVEN_ODD&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NEGATIVE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NONZERO&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NORMALS&#39;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-winding </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;winding method for point inside surface test&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;winding method for point inside surface test&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">CreateSignedDistanceVolumeOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Name of output volume containing signed distances&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Name of output volume containing signed distances&#39;</span><span class="p">)</span>
     <span class="n">out_mask</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Name of file to store a mask where the ``out_file`` has a computed value&quot;</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Name of file to store a mask where the ``out_file`` has a computed value&#39;</span>
     <span class="p">)</span>
 
 
@@ -229,7 +229,7 @@
 
     <span class="n">input_spec</span> <span class="o">=</span> <span class="n">CreateSignedDistanceVolumeInputSpec</span>
     <span class="n">output_spec</span> <span class="o">=</span> <span class="n">CreateSignedDistanceVolumeOutputSpec</span>
-    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;wb_command -create-signed-distance-volume&quot;</span></div>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s1">&#39;wb_command -create-signed-distance-volume&#39;</span></div>
 
 
 
@@ -237,28 +237,28 @@
     <span class="n">in_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Surface to warp&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Surface to warp&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">target_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Surface to match the coordinates of&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Surface to match the coordinates of&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">out_affine</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_xfm&quot;</span><span class="p">,</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;in_surface&quot;</span><span class="p">],</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_xfm&#39;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_surface&#39;</span><span class="p">],</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output affine file&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output affine file&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SurfaceAffineRegressionOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">out_affine</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;The output affine file&quot;</span><span class="p">)</span>
+    <span class="n">out_affine</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;The output affine file&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SurfaceAffineRegression">
@@ -286,9 +286,10 @@
 <span class="sd">    tpl-fsaverage_hemi-L_den-164k_sulc.shape.gii \</span>
 <span class="sd">    sub-01_hemi-L_sulc.shape_xfm&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">input_spec</span> <span class="o">=</span> <span class="n">SurfaceAffineRegressionInputSpec</span>
     <span class="n">output_spec</span> <span class="o">=</span> <span class="n">SurfaceAffineRegressionOutputSpec</span>
-    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;wb_command -surface-affine-regression&quot;</span></div>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s1">&#39;wb_command -surface-affine-regression&#39;</span></div>
 
 
 
@@ -296,42 +297,42 @@
     <span class="n">in_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the surface to transform&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the surface to transform&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">in_affine</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the affine file&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the affine file&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_xformed.surf.gii&quot;</span><span class="p">,</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;in_surface&quot;</span><span class="p">],</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_xformed.surf.gii&#39;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_surface&#39;</span><span class="p">],</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output transformed surface&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output transformed surface&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">flirt_source</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">requires</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;flirt_target&quot;</span><span class="p">],</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-flirt </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;flirt_target&#39;</span><span class="p">],</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-flirt </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Source volume (must be used if affine is a flirt affine)&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Source volume (must be used if affine is a flirt affine)&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">flirt_target</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">requires</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;flirt_source&quot;</span><span class="p">],</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;flirt_source&#39;</span><span class="p">],</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Target volume (must be used if affine is a flirt affine)&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Target volume (must be used if affine is a flirt affine)&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SurfaceApplyAffineOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output transformed surface&quot;</span><span class="p">)</span>
+    <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output transformed surface&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SurfaceApplyAffine">
@@ -373,9 +374,10 @@
 
 <span class="sd">    &gt;&gt;&gt; os.unlink(&#39;affine.txt&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">input_spec</span> <span class="o">=</span> <span class="n">SurfaceApplyAffineInputSpec</span>
     <span class="n">output_spec</span> <span class="o">=</span> <span class="n">SurfaceApplyAffineOutputSpec</span>
-    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;wb_command -surface-apply-affine&quot;</span></div>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s1">&#39;wb_command -surface-apply-affine&#39;</span></div>
 
 
 
@@ -383,34 +385,34 @@
     <span class="n">in_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the surface to transform&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the surface to transform&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">warpfield</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the INVERSE warpfield&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the INVERSE warpfield&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_warped.surf.gii&quot;</span><span class="p">,</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;in_surface&quot;</span><span class="p">],</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_warped.surf.gii&#39;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;in_surface&#39;</span><span class="p">],</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output transformed surface&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output transformed surface&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">fnirt_forward_warp</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-fnirt </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-fnirt </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the forward warpfield (must be used if fnirt warpfield)&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the forward warpfield (must be used if fnirt warpfield)&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SurfaceApplyWarpfieldOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output transformed surface&quot;</span><span class="p">)</span>
+    <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output transformed surface&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SurfaceApplyWarpfield">
@@ -444,9 +446,10 @@
 <span class="sd">    sub-01_desc-warped_T1w.nii.gz \</span>
 <span class="sd">    sub-01_hemi-L_sphere.surf_warped.surf.gii&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">input_spec</span> <span class="o">=</span> <span class="n">SurfaceApplyWarpfieldInputSpec</span>
     <span class="n">output_spec</span> <span class="o">=</span> <span class="n">SurfaceApplyWarpfieldOutputSpec</span>
-    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;wb_command -surface-apply-warpfield&quot;</span></div>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s1">&#39;wb_command -surface-apply-warpfield&#39;</span></div>
 
 
 
@@ -455,32 +458,29 @@
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the sphere to modify&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the sphere to modify&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">radius</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
-        <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the radius the output sphere should have&#39;</span>
+        <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the radius the output sphere should have&#39;</span>
     <span class="p">)</span>
     <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_mod.surf.gii&quot;</span><span class="p">,</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="s2">&quot;in_surface&quot;</span><span class="p">,</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_mod.surf.gii&#39;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="s1">&#39;in_surface&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the modified sphere&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the modified sphere&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">recenter</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Bool</span><span class="p">(</span>
         <span class="kc">False</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-recenter&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;recenter the sphere by means of the bounding box&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-recenter&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;recenter the sphere by means of the bounding box&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SurfaceModifySphereOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the modified sphere&quot;</span><span class="p">)</span>
+    <span class="n">out_surface</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the modified sphere&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SurfaceModifySphere">
@@ -585,37 +585,37 @@
 <span class="sd">       topology.&quot;&quot;&quot;</span>
 
     <span class="n">sphere_in</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a sphere with the desired output mesh&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;a sphere with the desired output mesh&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">sphere_project_to</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a sphere that aligns with sphere-in&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;a sphere that aligns with sphere-in&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">sphere_unproject_from</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;&lt;sphere-project-to&gt; deformed to the desired output space&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;&lt;sphere-project-to&gt; deformed to the desired output space&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">sphere_out</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">File</span><span class="p">(</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_unprojected.surf.gii&quot;</span><span class="p">,</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sphere_in&quot;</span><span class="p">],</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output sphere&quot;</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_unprojected.surf.gii&#39;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sphere_in&#39;</span><span class="p">],</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output sphere&#39;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SurfaceSphereProjectUnprojectOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">sphere_out</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output sphere&quot;</span><span class="p">)</span>
+    <span class="n">sphere_out</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output sphere&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SurfaceSphereProjectUnproject">
@@ -638,7 +638,7 @@
 
     <span class="n">input_spec</span> <span class="o">=</span> <span class="n">SurfaceSphereProjectUnprojectInputSpec</span>
     <span class="n">output_spec</span> <span class="o">=</span> <span class="n">SurfaceSphereProjectUnprojectOutputSpec</span>
-    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;wb_command -surface-sphere-project-unproject&quot;</span></div>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s1">&#39;wb_command -surface-sphere-project-unproject&#39;</span></div>
 
 
 
@@ -684,68 +684,68 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">surface_in</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the surface file to resample&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the surface file to resample&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">current_sphere</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a sphere surface with the mesh that the input surface is currently on&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;a sphere surface with the mesh that the input surface is currently on&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">new_sphere</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a sphere surface that is in register with &lt;current-sphere&gt; and has the &quot;</span>
-        <span class="s2">&quot;desired output mesh&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;a sphere surface that is in register with &lt;current-sphere&gt; and has the &#39;</span>
+        <span class="s1">&#39;desired output mesh&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">method</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
-        <span class="s2">&quot;ADAP_BARY_AREA&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;BARYCENTRIC&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the method name&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;ADAP_BARY_AREA&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;BARYCENTRIC&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the method name&#39;</span><span class="p">,</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">surface_out</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">File</span><span class="p">(</span>
-        <span class="n">name_template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_resampled.surf.gii&quot;</span><span class="p">,</span>
-        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;surface_in&quot;</span><span class="p">],</span>
+        <span class="n">name_template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_resampled.surf.gii&#39;</span><span class="p">,</span>
+        <span class="n">name_source</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;surface_in&#39;</span><span class="p">],</span>
         <span class="n">keep_extension</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output surface file&quot;</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output surface file&#39;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">correction_source</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
-        <span class="s2">&quot;area_surfs&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;area_metrics&quot;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;specify surfaces or vertex area metrics to do vertex area correction based on&quot;</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;area_surfs&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;area_metrics&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;specify surfaces or vertex area metrics to do vertex area correction based on&#39;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;-</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">current_area</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a relevant surface with &lt;current-sphere&gt; mesh&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;a relevant surface with &lt;current-sphere&gt; mesh&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
         <span class="n">requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;correction_source&#39;</span><span class="p">],</span>
     <span class="p">)</span>
     <span class="n">new_area</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;a relevant surface with &lt;new-sphere&gt; mesh&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;a relevant surface with &lt;new-sphere&gt; mesh&#39;</span><span class="p">,</span>
         <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">argstr</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">argstr</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">position</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
         <span class="n">requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;correction_source&#39;</span><span class="p">],</span>
     <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">SurfaceResampleOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">surface_out</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;the output surface file&quot;</span><span class="p">)</span>
+    <span class="n">surface_out</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;the output surface file&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SurfaceResample">
@@ -769,7 +769,7 @@
 
     <span class="n">input_spec</span> <span class="o">=</span> <span class="n">SurfaceResampleInputSpec</span>
     <span class="n">output_spec</span> <span class="o">=</span> <span class="n">SurfaceResampleOutputSpec</span>
-    <span class="n">_cmd</span> <span class="o">=</span> <span class="s2">&quot;wb_command -surface-resample&quot;</span></div>
+    <span class="n">_cmd</span> <span class="o">=</span> <span class="s1">&#39;wb_command -surface-resample&#39;</span></div>
 
 </pre></div>
 

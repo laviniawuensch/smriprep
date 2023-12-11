@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.interfaces.cifti &mdash; smriprep 0.13.2 documentation</title>
+  <title>smriprep.interfaces.cifti &mdash; smriprep 0.13.3.dev26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.2
+                0.13.3.dev26
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -80,43 +80,38 @@
   
 
 
-    
-    
 
 
 
-    <p class="scv-banner scv-sphinx_rtd_theme"><b>Warning:</b> This document is for an old version of smriprep.</p>
 <h1>Source code for smriprep.interfaces.cifti</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">ty</span>
 
 <span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
 <span class="kn">from</span> <span class="nn">nibabel</span> <span class="kn">import</span> <span class="n">cifti2</span> <span class="k">as</span> <span class="n">ci</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">TraitedSpec</span><span class="p">,</span> <span class="n">traits</span><span class="p">,</span> <span class="n">File</span><span class="p">,</span> <span class="n">SimpleInterface</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">File</span><span class="p">,</span> <span class="n">SimpleInterface</span><span class="p">,</span> <span class="n">TraitedSpec</span><span class="p">,</span> <span class="n">traits</span>
 <span class="kn">from</span> <span class="nn">templateflow</span> <span class="kn">import</span> <span class="n">api</span> <span class="k">as</span> <span class="n">tf</span>
 
 
 <span class="k">class</span> <span class="nc">_GenerateDScalarInputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
     <span class="n">surface_target</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span>
-        <span class="s2">&quot;fsLR&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;fsLR&#39;</span><span class="p">,</span>
         <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;CIFTI surface target space&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;CIFTI surface target space&#39;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">grayordinates</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span><span class="s2">&quot;91k&quot;</span><span class="p">,</span> <span class="s2">&quot;170k&quot;</span><span class="p">,</span> <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Final CIFTI grayordinates&quot;</span><span class="p">)</span>
+    <span class="n">grayordinates</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Enum</span><span class="p">(</span><span class="s1">&#39;91k&#39;</span><span class="p">,</span> <span class="s1">&#39;170k&#39;</span><span class="p">,</span> <span class="n">usedefault</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Final CIFTI grayordinates&#39;</span><span class="p">)</span>
     <span class="n">scalar_surfs</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
         <span class="n">File</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
         <span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;list of surface BOLD GIFTI files (length 2 with order [L,R])&quot;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;list of surface BOLD GIFTI files (length 2 with order [L,R])&#39;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">scalar_name</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span><span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Name of scalar&quot;</span><span class="p">)</span>
+    <span class="n">scalar_name</span> <span class="o">=</span> <span class="n">traits</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span><span class="n">mandatory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Name of scalar&#39;</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">_GenerateDScalarOutputSpec</span><span class="p">(</span><span class="n">TraitedSpec</span><span class="p">):</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;generated CIFTI file&quot;</span><span class="p">)</span>
-    <span class="n">out_metadata</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;CIFTI metadata JSON&quot;</span><span class="p">)</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;generated CIFTI file&#39;</span><span class="p">)</span>
+    <span class="n">out_metadata</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s1">&#39;CIFTI metadata JSON&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="GenerateDScalar">
@@ -131,20 +126,20 @@
 
     <span class="k">def</span> <span class="nf">_run_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runtime</span><span class="p">):</span>
         <span class="n">surface_labels</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">_prepare_cifti</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">grayordinates</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="s2">&quot;out_file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_create_cifti_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="s1">&#39;out_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_create_cifti_image</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">scalar_surfs</span><span class="p">,</span>
             <span class="n">surface_labels</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">scalar_name</span><span class="p">,</span>
             <span class="n">metadata</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">metadata_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;dscalar.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+        <span class="n">metadata_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;dscalar.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
         <span class="n">metadata_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="s2">&quot;out_metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">[</span><span class="s1">&#39;out_metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">runtime</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">_prepare_cifti</span><span class="p">(</span><span class="n">grayordinates</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ty</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">_prepare_cifti</span><span class="p">(</span><span class="n">grayordinates</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Fetch the required templates needed for CIFTI-2 generation, based on input surface density.</span>
 
@@ -173,21 +168,21 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">grayord_key</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;91k&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;surface-den&quot;</span><span class="p">:</span> <span class="s2">&quot;32k&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;tf-res&quot;</span><span class="p">:</span> <span class="s2">&quot;02&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;grayords&quot;</span><span class="p">:</span> <span class="s2">&quot;91,282&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;res-mm&quot;</span><span class="p">:</span> <span class="s2">&quot;2mm&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;91k&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;surface-den&#39;</span><span class="p">:</span> <span class="s1">&#39;32k&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;tf-res&#39;</span><span class="p">:</span> <span class="s1">&#39;02&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;grayords&#39;</span><span class="p">:</span> <span class="s1">&#39;91,282&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;res-mm&#39;</span><span class="p">:</span> <span class="s1">&#39;2mm&#39;</span><span class="p">,</span>
         <span class="p">},</span>
-        <span class="s2">&quot;170k&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;surface-den&quot;</span><span class="p">:</span> <span class="s2">&quot;59k&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;tf-res&quot;</span><span class="p">:</span> <span class="s2">&quot;06&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;grayords&quot;</span><span class="p">:</span> <span class="s2">&quot;170,494&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;res-mm&quot;</span><span class="p">:</span> <span class="s2">&quot;1.6mm&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;170k&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;surface-den&#39;</span><span class="p">:</span> <span class="s1">&#39;59k&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;tf-res&#39;</span><span class="p">:</span> <span class="s1">&#39;06&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;grayords&#39;</span><span class="p">:</span> <span class="s1">&#39;170,494&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;res-mm&#39;</span><span class="p">:</span> <span class="s1">&#39;1.6mm&#39;</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="n">grayordinates</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grayord_key</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Grayordinates </span><span class="si">{</span><span class="n">grayordinates</span><span class="si">}</span><span class="s2"> is not supported.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Grayordinates </span><span class="si">{</span><span class="n">grayordinates</span><span class="si">}</span><span class="s1"> is not supported.&#39;</span><span class="p">)</span>
 
     <span class="n">total_grayords</span> <span class="o">=</span> <span class="n">grayord_key</span><span class="p">[</span><span class="n">grayordinates</span><span class="p">][</span><span class="s1">&#39;grayords&#39;</span><span class="p">]</span>
     <span class="n">res_mm</span> <span class="o">=</span> <span class="n">grayord_key</span><span class="p">[</span><span class="n">grayordinates</span><span class="p">][</span><span class="s1">&#39;res-mm&#39;</span><span class="p">]</span>
@@ -196,39 +191,39 @@
     <span class="n">surface_labels</span> <span class="o">=</span> <span class="p">[</span>
         <span class="nb">str</span><span class="p">(</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="s2">&quot;fsLR&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;fsLR&#39;</span><span class="p">,</span>
                 <span class="n">density</span><span class="o">=</span><span class="n">surface_density</span><span class="p">,</span>
                 <span class="n">hemi</span><span class="o">=</span><span class="n">hemi</span><span class="p">,</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;nomedialwall&quot;</span><span class="p">,</span>
-                <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dparc&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;nomedialwall&#39;</span><span class="p">,</span>
+                <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;dparc&#39;</span><span class="p">,</span>
                 <span class="n">raise_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">hemi</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">hemi</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">)</span>
     <span class="p">]</span>
 
-    <span class="n">tf_url</span> <span class="o">=</span> <span class="s2">&quot;https://templateflow.s3.amazonaws.com&quot;</span>
+    <span class="n">tf_url</span> <span class="o">=</span> <span class="s1">&#39;https://templateflow.s3.amazonaws.com&#39;</span>
     <span class="n">surfaces_url</span> <span class="o">=</span> <span class="p">(</span>  <span class="c1"># midthickness is the default, but varying levels of inflation are all valid</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tf_url</span><span class="si">}</span><span class="s2">/tpl-fsLR/tpl-fsLR_den-</span><span class="si">{</span><span class="n">surface_density</span><span class="si">}</span><span class="s2">_hemi-%s_midthickness.surf.gii&quot;</span>
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tf_url</span><span class="si">}</span><span class="s1">/tpl-fsLR/tpl-fsLR_den-</span><span class="si">{</span><span class="n">surface_density</span><span class="si">}</span><span class="s1">_hemi-%s_midthickness.surf.gii&#39;</span>
     <span class="p">)</span>
     <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Density&quot;</span><span class="p">:</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_grayords</span><span class="si">}</span><span class="s2"> grayordinates corresponding to all of the grey matter sampled at a &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">res_mm</span><span class="si">}</span><span class="s2"> average vertex spacing on the surface&quot;</span>
+        <span class="s1">&#39;Density&#39;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">total_grayords</span><span class="si">}</span><span class="s1"> grayordinates corresponding to all of the grey matter sampled at a &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">res_mm</span><span class="si">}</span><span class="s1"> average vertex spacing on the surface&#39;</span>
         <span class="p">),</span>
-        <span class="s2">&quot;SpatialReference&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;CIFTI_STRUCTURE_CORTEX_LEFT&quot;</span><span class="p">:</span> <span class="n">surfaces_url</span> <span class="o">%</span> <span class="s2">&quot;L&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;CIFTI_STRUCTURE_CORTEX_RIGHT&quot;</span><span class="p">:</span> <span class="n">surfaces_url</span> <span class="o">%</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;SpatialReference&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;CIFTI_STRUCTURE_CORTEX_LEFT&#39;</span><span class="p">:</span> <span class="n">surfaces_url</span> <span class="o">%</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CIFTI_STRUCTURE_CORTEX_RIGHT&#39;</span><span class="p">:</span> <span class="n">surfaces_url</span> <span class="o">%</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">surface_labels</span><span class="p">,</span> <span class="n">metadata</span>
 
 
 <span class="k">def</span> <span class="nf">_create_cifti_image</span><span class="p">(</span>
-    <span class="n">scalar_surfs</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-    <span class="n">surface_labels</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">scalar_surfs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">surface_labels</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">scalar_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate CIFTI image in target space.</span>
@@ -262,12 +257,12 @@
         <span class="p">)</span>
 
         <span class="n">morph_scalar</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">scalar_surfs</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
-        <span class="n">arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">morph_scalar</span><span class="o">.</span><span class="n">darrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">))</span>
+        <span class="n">arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">morph_scalar</span><span class="o">.</span><span class="n">darrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">))</span>
 
     <span class="c1"># provide some metadata to CIFTI matrix</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">metadata</span><span class="p">:</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;surface&quot;</span><span class="p">:</span> <span class="s2">&quot;fsLR&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;surface&#39;</span><span class="p">:</span> <span class="s1">&#39;fsLR&#39;</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="c1"># generate and save CIFTI image</span>
@@ -277,11 +272,11 @@
     <span class="n">hdr</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">Cifti2MetaData</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
 
     <span class="n">img</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">Cifti2Image</span><span class="p">(</span><span class="n">dataobj</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">arrays</span><span class="p">)),</span> <span class="n">header</span><span class="o">=</span><span class="n">hdr</span><span class="p">)</span>
-    <span class="n">img</span><span class="o">.</span><span class="n">nifti_header</span><span class="o">.</span><span class="n">set_intent</span><span class="p">(</span><span class="s2">&quot;NIFTI_INTENT_CONNECTIVITY_DENSE_SCALARS&quot;</span><span class="p">)</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">nifti_header</span><span class="o">.</span><span class="n">set_intent</span><span class="p">(</span><span class="s1">&#39;NIFTI_INTENT_CONNECTIVITY_DENSE_SCALARS&#39;</span><span class="p">)</span>
 
-    <span class="n">stem</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">scalar_surfs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">cifti_stem</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ent</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">stem</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ent</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;hemi-&quot;</span><span class="p">))</span>
-    <span class="n">out_file</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cifti_stem</span><span class="si">}</span><span class="s2">.dscalar.nii&quot;</span>
+    <span class="n">stem</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">scalar_surfs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cifti_stem</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ent</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">stem</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ent</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;hemi-&#39;</span><span class="p">))</span>
+    <span class="n">out_file</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cifti_stem</span><span class="si">}</span><span class="s1">.dscalar.nii&#39;</span>
     <span class="n">img</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">out_file</span>
 </pre></div>
@@ -310,7 +305,7 @@
 <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
         <span class="fa fa-book"> Other Versions</span>
-        v: 0.13.2
+        v: master
         <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -326,7 +321,7 @@
             <dd><a href="../../../0.12.2/index.html">0.12.2</a></dd>
             <dd><a href="../../../0.13.0/index.html">0.13.0</a></dd>
             <dd><a href="../../../0.13.1/index.html">0.13.1</a></dd>
-            <dd><a href="../../../0.13.2/_modules/smriprep/interfaces/cifti.html">0.13.2</a></dd>
+            <dd><a href="../../../0.13.2/index.html">0.13.2</a></dd>
             <dd><a href="../../../0.8.0/index.html">0.8.0</a></dd>
             <dd><a href="../../../0.8.0rc1/index.html">0.8.0rc1</a></dd>
             <dd><a href="../../../0.8.0rc2/index.html">0.8.0rc2</a></dd>
@@ -349,7 +344,7 @@
             <dd><a href="../../../maint_0.13.x/index.html">maint/0.13.x</a></dd>
             <dd><a href="../../../maint_0.8.x/index.html">maint/0.8.x</a></dd>
             <dd><a href="../../../maint_0.9.x/index.html">maint/0.9.x</a></dd>
-            <dd><a href="../../../master/index.html">master</a></dd>
+            <dd><a href="../../../master/_modules/smriprep/interfaces/cifti.html">master</a></dd>
             <dd><a href="../../../rel_0.8.0rc1/index.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>
