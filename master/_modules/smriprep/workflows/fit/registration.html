@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.fit.registration &mdash; smriprep 0.13.3.dev26 documentation</title>
+  <title>smriprep.workflows.fit.registration &mdash; smriprep 0.13.3.dev28 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.3.dev26
+                0.13.3.dev28
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -272,6 +272,12 @@
         <span class="n">mem_gb</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">fmt_cohort</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_fmt_cohort</span><span class="p">,</span> <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;spec&#39;</span><span class="p">]),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fmt_cohort&#39;</span><span class="p">,</span>
+        <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="c1"># fmt:off</span>
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">split_desc</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;template&#39;</span><span class="p">)]),</span>
@@ -289,8 +295,12 @@
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">trunc_mov</span><span class="p">,</span> <span class="n">registration</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;output_image&#39;</span><span class="p">,</span> <span class="s1">&#39;moving_image&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">split_desc</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">split_desc</span><span class="p">,</span> <span class="n">fmt_cohort</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;template&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span> <span class="s1">&#39;spec&#39;</span><span class="p">),</span>
+        <span class="p">]),</span>
+        <span class="p">(</span><span class="n">fmt_cohort</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;template&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span> <span class="s1">&#39;template_spec&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">registration</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
@@ -313,6 +323,13 @@
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([(</span><span class="n">pout</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">out_fields</span><span class="p">])])</span>
         <span class="k">return</span> <span class="n">pout</span>
     <span class="k">return</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">out_fields</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_fmt_cohort</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+    <span class="n">cohort</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;cohort&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cohort</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">template</span><span class="si">}</span><span class="s1">:cohort-</span><span class="si">{</span><span class="n">cohort</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">template</span><span class="p">,</span> <span class="n">spec</span>
 </pre></div>
 
            </div>
@@ -369,6 +386,10 @@
         </dl>
         <dl>
             <dt>Branches</dt>
+            <dd><a href="../../../../../dependabot_github_actions_actions_download-artifact-4/index.html">dependabot/github_actions/actions/download-artifact-4</a></dd>
+            <dd><a href="../../../../../dependabot_github_actions_actions_upload-artifact-4/index.html">dependabot/github_actions/actions/upload-artifact-4</a></dd>
+            <dd><a href="../../../../../dependabot_pip_jinja2-3.1.3/index.html">dependabot/pip/jinja2-3.1.3</a></dd>
+            <dd><a href="../../../../../dependabot_pip_pillow-10.2.0/index.html">dependabot/pip/pillow-10.2.0</a></dd>
             <dd><a href="../../../../../enh_calabel/index.html">enh/calabel</a></dd>
             <dd><a href="../../../../../enh_split-surfaces/index.html">enh/split-surfaces</a></dd>
             <dd><a href="../../../../../fix_parcstats/index.html">fix/parcstats</a></dd>
