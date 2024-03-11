@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.outputs module &mdash; smriprep 0.13.3.dev28 documentation</title>
+  <title>smriprep.workflows.outputs module &mdash; smriprep 0.14.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5dd5ad26" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/banner.css" />
@@ -38,7 +38,7 @@
             smriprep
           </a>
               <div class="version">
-                0.13.3.dev28
+                0.14.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -111,7 +111,7 @@
 <p>Writing outputs.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_anat_reports_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_anat_reports_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spaces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freesurfer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'anat_reports_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_anat_reports_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_anat_reports_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_anat_reports_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spaces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freesurfer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sloppy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'anat_reports_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_anat_reports_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_anat_reports_wf" title="Link to this definition"></a></dt>
 <dd><p>Set up a battery of datasinks to store reports in the right location.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -407,7 +407,7 @@ and preprocessed T1w images, defining the anatomical space.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_template_iterator_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_template_iterator_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spaces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'template_iterator_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_template_iterator_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_template_iterator_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_template_iterator_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SpatialReferences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sloppy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'template_iterator_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_template_iterator_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_template_iterator_wf" title="Link to this definition"></a></dt>
 <dd><p>Prepare the necessary components to resample an image to a template space</p>
 <p>This produces a workflow with an unjoined iterable named “spacesource”.</p>
 <p>It takes as input a collated list of template specifiers and transforms to that
@@ -462,6 +462,7 @@ space.</p>
             <dd><a href="../../0.13.0/api/smriprep.workflows.outputs.html">0.13.0</a></dd>
             <dd><a href="../../0.13.1/api/smriprep.workflows.outputs.html">0.13.1</a></dd>
             <dd><a href="../../0.13.2/api/smriprep.workflows.outputs.html">0.13.2</a></dd>
+            <dd><a href="../../0.14.0/api/smriprep.workflows.outputs.html">0.14.0</a></dd>
             <dd><a href="../../0.8.0/api/smriprep.workflows.outputs.html">0.8.0</a></dd>
             <dd><a href="../../0.8.0rc1/api/smriprep.workflows.outputs.html">0.8.0rc1</a></dd>
             <dd><a href="../../0.8.0rc2/api/smriprep.workflows.outputs.html">0.8.0rc2</a></dd>
@@ -489,6 +490,7 @@ space.</p>
             <dd><a href="../../maint_0.8.x/api/smriprep.workflows.outputs.html">maint/0.8.x</a></dd>
             <dd><a href="../../maint_0.9.x/api/smriprep.workflows.outputs.html">maint/0.9.x</a></dd>
             <dd><a href="../../master/api/smriprep.workflows.outputs.html">master</a></dd>
+            <dd><a href="../../rel_0.14.0/api/smriprep.workflows.outputs.html">rel/0.14.0</a></dd>
             <dd><a href="../../rel_0.8.0rc1/api/smriprep.workflows.outputs.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>
