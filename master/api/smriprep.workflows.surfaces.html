@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.surfaces module &mdash; smriprep 0.14.1.dev20 documentation</title>
+  <title>smriprep.workflows.surfaces module &mdash; smriprep 0.14.1.dev47 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/banner.css" />
@@ -38,7 +38,7 @@
             smriprep
           </a>
               <div class="version">
-                0.14.1.dev20
+                0.14.1.dev47
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -485,7 +485,7 @@ midthickness (or graymid) surface, and inflated surfaces</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.surfaces.init_surface_recon_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_surface_recon_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omp_nthreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hires</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">precomputed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'surface_recon_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_surface_recon_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_surface_recon_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_surface_recon_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omp_nthreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hires</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs_no_resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">precomputed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'surface_recon_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_surface_recon_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_surface_recon_wf" title="Link to this definition"></a></dt>
 <dd><p>Reconstruct anatomical surfaces using FreeSurfer’s <code class="docutils literal notranslate"><span class="pre">recon-all</span></code>.</p>
 <p>Reconstruction is performed in three phases.
 The first phase initializes the subject with T1w and T2w (if available)
@@ -548,6 +548,8 @@ to have a certain margin.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>omp_nthreads</strong> (<em>int</em>) – Maximum number of threads an individual process may use</p></li>
 <li><p><strong>hires</strong> (<em>bool</em>) – Enable sub-millimeter preprocessing in FreeSurfer</p></li>
+<li><p><strong>fs_no_resume</strong> (<em>bool</em>) – use precomputed freesurfer without attempting to resume
+(eg. for longitudinal base or fastsurfer)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
@@ -649,6 +651,7 @@ to have a certain margin.</p>
             <dd><a href="../../maint_0.8.x/api/smriprep.workflows.surfaces.html">maint/0.8.x</a></dd>
             <dd><a href="../../maint_0.9.x/api/smriprep.workflows.surfaces.html">maint/0.9.x</a></dd>
             <dd><a href="smriprep.workflows.surfaces.html">master</a></dd>
+            <dd><a href="../../rel_0.15.0/api/smriprep.workflows.surfaces.html">rel/0.15.0</a></dd>
             <dd><a href="../../rel_0.8.0rc1/api/smriprep.workflows.surfaces.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>

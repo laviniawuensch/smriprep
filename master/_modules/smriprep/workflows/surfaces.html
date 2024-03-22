@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.surfaces &mdash; smriprep 0.14.1.dev20 documentation</title>
+  <title>smriprep.workflows.surfaces &mdash; smriprep 0.14.1.dev47 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.14.1.dev20
+                0.14.1.dev47
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -152,6 +152,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">omp_nthreads</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">hires</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">fs_no_resume</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">precomputed</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;surface_recon_wf&#39;</span><span class="p">,</span>
 <span class="p">):</span>
@@ -217,7 +218,11 @@
 <span class="sd">            :simple_form: yes</span>
 
 <span class="sd">            from smriprep.workflows.surfaces import init_surface_recon_wf</span>
-<span class="sd">            wf = init_surface_recon_wf(omp_nthreads=1, hires=True, precomputed={})</span>
+<span class="sd">            wf = init_surface_recon_wf(</span>
+<span class="sd">                omp_nthreads=1,</span>
+<span class="sd">                hires=True,</span>
+<span class="sd">                fs_no_resume=False,</span>
+<span class="sd">                precomputed={})</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -225,6 +230,9 @@
 <span class="sd">        Maximum number of threads an individual process may use</span>
 <span class="sd">    hires : bool</span>
 <span class="sd">        Enable sub-millimeter preprocessing in FreeSurfer</span>
+<span class="sd">    fs_no_resume : bool</span>
+<span class="sd">        use precomputed freesurfer without attempting to resume</span>
+<span class="sd">        (eg. for longitudinal base or fastsurfer)</span>
 
 <span class="sd">    Inputs</span>
 <span class="sd">    ------</span>
@@ -326,39 +334,62 @@
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;sync&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fs_no_resume</span><span class="p">:</span>
+        <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
+            <span class="c1"># Configuration</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">recon_config</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_list&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;t2w&#39;</span><span class="p">,</span> <span class="s1">&#39;t2w_list&#39;</span><span class="p">),</span>
+                                       <span class="p">(</span><span class="s1">&#39;flair&#39;</span><span class="p">,</span> <span class="s1">&#39;flair_list&#39;</span><span class="p">)]),</span>
+            <span class="c1"># Passing subjects_dir / subject_id enforces serial order</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
+                                     <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">autorecon1</span><span class="p">,</span> <span class="n">skull_strip_extern</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
+                                              <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">skull_strip_extern</span><span class="p">,</span> <span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
+                                                       <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">)]),</span>
+            <span class="c1"># Reconstruction phases</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T1_files&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fov_check</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">fov_check</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;flags&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">recon_config</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t2w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2_file&#39;</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="s1">&#39;flair&#39;</span><span class="p">,</span> <span class="s1">&#39;FLAIR_file&#39;</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="s1">&#39;hires&#39;</span><span class="p">,</span> <span class="s1">&#39;hires&#39;</span><span class="p">),</span>
+                                        <span class="c1"># First run only (recon-all saves expert options)</span>
+                                        <span class="p">(</span><span class="s1">&#39;mris_inflate&#39;</span><span class="p">,</span> <span class="s1">&#39;mris_inflate&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">skull_strip_extern</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;skullstripped_t1&#39;</span><span class="p">,</span> <span class="s1">&#39;in_brain&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">recon_config</span><span class="p">,</span> <span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;use_t2w&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.use_T2&#39;</span><span class="p">),</span>
+                                                 <span class="p">(</span><span class="s1">&#39;use_flair&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.use_FLAIR&#39;</span><span class="p">)]),</span>
+            <span class="c1"># Generate mid-thickness surfaces</span>
+            <span class="p">(</span><span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="n">get_surfaces</span><span class="p">,</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">),</span>
+            <span class="p">]),</span>
+            <span class="p">(</span><span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="n">save_midthickness</span><span class="p">,</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;base_directory&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;container&#39;</span><span class="p">),</span>
+            <span class="p">]),</span>
+        <span class="p">])</span>  <span class="c1"># fmt:skip</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Pretend to be the autorecon1 node so fsnative2t1w_xfm gets run ASAP</span>
+        <span class="n">fs_base_inputs</span> <span class="o">=</span> <span class="n">autorecon1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fs_base_inputs&#39;</span><span class="p">)</span>
+
+        <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fs_base_inputs</span><span class="p">,</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">),</span>
+            <span class="p">]),</span>
+            <span class="c1"># Generate mid-thickness surfaces</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">get_surfaces</span><span class="p">,</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">),</span>
+            <span class="p">]),</span>
+            <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">save_midthickness</span><span class="p">,</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;base_directory&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;container&#39;</span><span class="p">),</span>
+            <span class="p">]),</span>
+        <span class="p">])</span>  <span class="c1"># fmt:skip</span>
+
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
-        <span class="c1"># Configuration</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">recon_config</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_list&#39;</span><span class="p">),</span>
-                                   <span class="p">(</span><span class="s1">&#39;t2w&#39;</span><span class="p">,</span> <span class="s1">&#39;t2w_list&#39;</span><span class="p">),</span>
-                                   <span class="p">(</span><span class="s1">&#39;flair&#39;</span><span class="p">,</span> <span class="s1">&#39;flair_list&#39;</span><span class="p">)]),</span>
-        <span class="c1"># Passing subjects_dir / subject_id enforces serial order</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
-                                 <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">autorecon1</span><span class="p">,</span> <span class="n">skull_strip_extern</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
-                                          <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">skull_strip_extern</span><span class="p">,</span> <span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
-                                                   <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">)]),</span>
-        <span class="c1"># Reconstruction phases</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T1_files&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fov_check</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">fov_check</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;flags&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">recon_config</span><span class="p">,</span> <span class="n">autorecon1</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t2w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2_file&#39;</span><span class="p">),</span>
-                                    <span class="p">(</span><span class="s1">&#39;flair&#39;</span><span class="p">,</span> <span class="s1">&#39;FLAIR_file&#39;</span><span class="p">),</span>
-                                    <span class="p">(</span><span class="s1">&#39;hires&#39;</span><span class="p">,</span> <span class="s1">&#39;hires&#39;</span><span class="p">),</span>
-                                    <span class="c1"># First run only (recon-all saves expert options)</span>
-                                    <span class="p">(</span><span class="s1">&#39;mris_inflate&#39;</span><span class="p">,</span> <span class="s1">&#39;mris_inflate&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">skull_strip_extern</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;skullstripped_t1&#39;</span><span class="p">,</span> <span class="s1">&#39;in_brain&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">recon_config</span><span class="p">,</span> <span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;use_t2w&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.use_T2&#39;</span><span class="p">),</span>
-                                             <span class="p">(</span><span class="s1">&#39;use_flair&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.use_FLAIR&#39;</span><span class="p">)]),</span>
-        <span class="c1"># Generate mid-thickness surfaces</span>
-        <span class="p">(</span><span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="n">get_surfaces</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">),</span>
-        <span class="p">]),</span>
-        <span class="p">(</span><span class="n">autorecon_resume_wf</span><span class="p">,</span> <span class="n">save_midthickness</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;base_directory&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;container&#39;</span><span class="p">),</span>
-        <span class="p">]),</span>
         <span class="p">(</span><span class="n">get_surfaces</span><span class="p">,</span> <span class="n">midthickness</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;in_file&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;graymid&#39;</span><span class="p">,</span> <span class="s1">&#39;graymid&#39;</span><span class="p">),</span>
@@ -1850,6 +1881,7 @@
             <dd><a href="../../../../maint_0.8.x/index.html">maint/0.8.x</a></dd>
             <dd><a href="../../../../maint_0.9.x/index.html">maint/0.9.x</a></dd>
             <dd><a href="surfaces.html">master</a></dd>
+            <dd><a href="../../../../rel_0.15.0/index.html">rel/0.15.0</a></dd>
             <dd><a href="../../../../rel_0.8.0rc1/index.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.cli.run &mdash; smriprep 0.14.1.dev20 documentation</title>
+  <title>smriprep.cli.run &mdash; smriprep 0.14.1.dev47 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.14.1.dev20
+                0.14.1.dev47
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -306,6 +306,13 @@
         <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to existing FreeSurfer subjects directory to reuse. &#39;</span>
         <span class="s1">&#39;(default: OUTPUT_DIR/freesurfer)&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">g_fs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--fs-no-resume&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;fs_no_resume&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;EXPERT: Import pre-computed FreeSurfer reconstruction without resuming. &#39;</span>
+        <span class="s1">&#39;The user is responsible for ensuring that all necessary files are present.&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">g_fs</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;--cifti-output&#39;</span><span class="p">,</span>
@@ -715,6 +722,7 @@
         <span class="n">freesurfer</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">run_reconall</span><span class="p">,</span>
         <span class="n">fs_subjects_dir</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">fs_subjects_dir</span><span class="p">,</span>
         <span class="n">hires</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">hires</span><span class="p">,</span>
+        <span class="n">fs_no_resume</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">fs_no_resume</span><span class="p">,</span>
         <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span>
         <span class="n">longitudinal</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">longitudinal</span><span class="p">,</span>
         <span class="n">low_mem</span><span class="o">=</span><span class="n">opts</span><span class="o">.</span><span class="n">low_mem</span><span class="p">,</span>
@@ -857,6 +865,7 @@
             <dd><a href="../../../maint_0.8.x/index.html">maint/0.8.x</a></dd>
             <dd><a href="../../../maint_0.9.x/index.html">maint/0.9.x</a></dd>
             <dd><a href="../../../master/_modules/smriprep/cli/run.html">master</a></dd>
+            <dd><a href="../../../rel_0.15.0/index.html">rel/0.15.0</a></dd>
             <dd><a href="../../../rel_0.8.0rc1/index.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>

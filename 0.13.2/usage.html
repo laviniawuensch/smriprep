@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Usage &mdash; smriprep 0.14.1.dev20 documentation</title>
+  <title>Usage &mdash; smriprep 0.14.1.dev47 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/banner.css" />
@@ -38,7 +38,7 @@
             smriprep
           </a>
               <div class="version">
-                0.14.1.dev20
+                0.14.1.dev47
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -142,10 +142,11 @@ Example:</p>
                 <span class="p">[</span><span class="o">--</span><span class="n">skull</span><span class="o">-</span><span class="n">strip</span><span class="o">-</span><span class="n">fixed</span><span class="o">-</span><span class="n">seed</span><span class="p">]</span>
                 <span class="p">[</span><span class="o">--</span><span class="n">skull</span><span class="o">-</span><span class="n">strip</span><span class="o">-</span><span class="n">mode</span> <span class="p">{</span><span class="n">auto</span><span class="p">,</span><span class="n">skip</span><span class="p">,</span><span class="n">force</span><span class="p">}]</span>
                 <span class="p">[</span><span class="o">--</span><span class="n">fs</span><span class="o">-</span><span class="n">license</span><span class="o">-</span><span class="n">file</span> <span class="n">PATH</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">fs</span><span class="o">-</span><span class="n">subjects</span><span class="o">-</span><span class="nb">dir</span> <span class="n">PATH</span><span class="p">]</span>
-                <span class="p">[</span><span class="o">--</span><span class="n">cifti</span><span class="o">-</span><span class="n">output</span> <span class="p">[{</span><span class="mi">91</span><span class="n">k</span><span class="p">,</span><span class="mi">170</span><span class="n">k</span><span class="p">}]]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">submm</span><span class="o">-</span><span class="n">recon</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">msm</span><span class="p">]</span>
-                <span class="p">[</span><span class="o">--</span><span class="n">fs</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">reconall</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span> <span class="n">WORK_DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">fast</span><span class="o">-</span><span class="n">track</span><span class="p">]</span>
-                <span class="p">[</span><span class="o">--</span><span class="n">resource</span><span class="o">-</span><span class="n">monitor</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">reports</span><span class="o">-</span><span class="n">only</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">run</span><span class="o">-</span><span class="n">uuid</span> <span class="n">RUN_UUID</span><span class="p">]</span>
-                <span class="p">[</span><span class="o">--</span><span class="n">write</span><span class="o">-</span><span class="n">graph</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">stop</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">first</span><span class="o">-</span><span class="n">crash</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">notrack</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">sloppy</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">fs</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">resume</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">cifti</span><span class="o">-</span><span class="n">output</span> <span class="p">[{</span><span class="mi">91</span><span class="n">k</span><span class="p">,</span><span class="mi">170</span><span class="n">k</span><span class="p">}]]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">submm</span><span class="o">-</span><span class="n">recon</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">msm</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">fs</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">reconall</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span> <span class="n">WORK_DIR</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">fast</span><span class="o">-</span><span class="n">track</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">resource</span><span class="o">-</span><span class="n">monitor</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">reports</span><span class="o">-</span><span class="n">only</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">run</span><span class="o">-</span><span class="n">uuid</span> <span class="n">RUN_UUID</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">write</span><span class="o">-</span><span class="n">graph</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">stop</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">first</span><span class="o">-</span><span class="n">crash</span><span class="p">]</span>
+                <span class="p">[</span><span class="o">--</span><span class="n">notrack</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">sloppy</span><span class="p">]</span>
                 <span class="n">bids_dir</span> <span class="n">output_dir</span> <span class="p">{</span><span class="n">participant</span><span class="p">}</span>
 </pre></div>
 </div>
@@ -246,6 +247,9 @@ Example:</p>
 </dd>
 <dt><kbd>--fs-subjects-dir</kbd></dt>
 <dd><p>Path to existing FreeSurfer subjects directory to reuse. (default: OUTPUT_DIR/freesurfer)</p>
+</dd>
+<dt><kbd>--fs-no-resume</kbd></dt>
+<dd><p>EXPERT: Import pre-computed FreeSurfer reconstruction without resuming. The user is responsible for ensuring that all necessary files are present.</p>
 </dd>
 <dt><kbd>--cifti-output</kbd></dt>
 <dd><p>Possible choices: 91k, 170k</p>
@@ -515,6 +519,7 @@ RUNNING: docker run --rm -it -v /path/to/data/dir:/data:ro \
             <dd><a href="../maint_0.8.x/usage.html">maint/0.8.x</a></dd>
             <dd><a href="../maint_0.9.x/usage.html">maint/0.9.x</a></dd>
             <dd><a href="../master/usage.html">master</a></dd>
+            <dd><a href="../rel_0.15.0/usage.html">rel/0.15.0</a></dd>
             <dd><a href="../rel_0.8.0rc1/usage.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>

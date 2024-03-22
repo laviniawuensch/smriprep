@@ -10,6 +10,7 @@ wf = init_single_subject_wf(
     freesurfer=True,
     derivatives=[],
     hires=True,
+    fs_no_resume=False,
     layout=BIDSLayout('.'),
     longitudinal=False,
     low_mem=False,

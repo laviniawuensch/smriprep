@@ -13,6 +13,7 @@ wf = init_smriprep_wf(
     freesurfer=True,
     fs_subjects_dir=None,
     hires=True,
+    fs_no_resume=False,
     layout=BIDSLayout('.'),
     longitudinal=False,
     low_mem=False,
