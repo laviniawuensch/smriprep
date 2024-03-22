@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What’s new? &mdash; smriprep 0.14.0 documentation</title>
+  <title>What’s new? &mdash; smriprep 0.14.1.dev15 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/banner.css" />
@@ -37,7 +37,7 @@
             smriprep
           </a>
               <div class="version">
-                0.14.0
+                0.14.1.dev15
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Library API (application program interface)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What’s new?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#march-11-2024">0.14.0 (March 11, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#december-08-2023">0.13.2 (December 08, 2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#november-21-2023">0.13.1 (November 21, 2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#november-20-2023">0.13.0 (November 20, 2023)</a></li>
@@ -137,6 +138,20 @@
 
 <section id="what-s-new">
 <h1>What’s new?<a class="headerlink" href="#what-s-new" title="Link to this heading"></a></h1>
+<section id="march-11-2024">
+<h2>0.14.0 (March 11, 2024)<a class="headerlink" href="#march-11-2024" title="Link to this heading"></a></h2>
+<p>New feature release in the 0.14.x series.</p>
+<p>This release restores correct handling of cohort identifiers in templates.
+A feature release is warranted due to changes in the workflow structure.</p>
+<ul class="simple">
+<li><p>FIX: Fetch templates during workflow construction (#418)</p></li>
+<li><p>FIX: Re-add cohort identifier to template name (#416)</p></li>
+<li><p>FIX: Repair FreeSurfer Dependency in Dockerfile (tcsh) (#404)</p></li>
+<li><p>FIX: Invert result of skull-strip check in auto mode (#402)</p></li>
+<li><p>STY: Adopt ruff for linting and formatting (#397)</p></li>
+<li><p>CHORE: Update ruff, ignore certain rules (#419)</p></li>
+</ul>
+</section>
 <section id="december-08-2023">
 <h2>0.13.2 (December 08, 2023)<a class="headerlink" href="#december-08-2023" title="Link to this heading"></a></h2>
 <p>Bug fix release in the 0.13.x series.</p>
@@ -727,8 +742,6 @@ in <a class="reference external" href="https://github.com/nipreps/fmriprep/issue
         </dl>
         <dl>
             <dt>Branches</dt>
-            <dd><a href="../dependabot_github_actions_actions_download-artifact-4/changes.html">dependabot/github_actions/actions/download-artifact-4</a></dd>
-            <dd><a href="../dependabot_github_actions_actions_upload-artifact-4/changes.html">dependabot/github_actions/actions/upload-artifact-4</a></dd>
             <dd><a href="../dependabot_pip_jinja2-3.1.3/changes.html">dependabot/pip/jinja2-3.1.3</a></dd>
             <dd><a href="../dependabot_pip_pillow-10.2.0/changes.html">dependabot/pip/pillow-10.2.0</a></dd>
             <dd><a href="../enh_calabel/changes.html">enh/calabel</a></dd>
@@ -741,7 +754,6 @@ in <a class="reference external" href="https://github.com/nipreps/fmriprep/issue
             <dd><a href="../maint_0.8.x/changes.html">maint/0.8.x</a></dd>
             <dd><a href="../maint_0.9.x/changes.html">maint/0.9.x</a></dd>
             <dd><a href="changes.html">master</a></dd>
-            <dd><a href="../rel_0.14.0/changes.html">rel/0.14.0</a></dd>
             <dd><a href="../rel_0.8.0rc1/changes.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>
