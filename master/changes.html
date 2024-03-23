@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What’s new? &mdash; smriprep 0.15.0 documentation</title>
+  <title>What’s new? &mdash; smriprep 0.15.1.dev1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/banner.css" />
@@ -37,7 +37,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.0
+                0.15.1.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Library API (application program interface)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What’s new?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#march-22-2024">0.15.0 (March 22, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#march-11-2024">0.14.0 (March 11, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#december-08-2023">0.13.2 (December 08, 2023)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#november-21-2023">0.13.1 (November 21, 2023)</a></li>
@@ -138,6 +139,22 @@
 
 <section id="what-s-new">
 <h1>What’s new?<a class="headerlink" href="#what-s-new" title="Link to this heading"></a></h1>
+<section id="march-22-2024">
+<h2>0.15.0 (March 22, 2024)<a class="headerlink" href="#march-22-2024" title="Link to this heading"></a></h2>
+<p>New feature release in the 0.15.x series.</p>
+<p>This release adds the workflow configuration option and CLI option
+to reuse existing FreeSurfer outputs without attempting to resume.
+This should allow for using longitudinal or non-standard pipelines
+(for example, FastSurfer) without additional tooling for each variant.</p>
+<ul class="simple">
+<li><p>FIX: Patch version for smriprep-docker (#424)</p></li>
+<li><p>FIX: Require recent templateflow, select correct aparc dseg.tsv (#420)</p></li>
+<li><p>ENH: Add –fs-no-resume option to reuse existing FreeSurfer outputs without resuming (#393)</p></li>
+<li><p>MNT: set copyright owner in LICENSE file (#426)</p></li>
+<li><p>MNT: Apply Repo-Review suggestions (#422)</p></li>
+<li><p>CI: Small cleanups to GHA (#423)</p></li>
+</ul>
+</section>
 <section id="march-11-2024">
 <h2>0.14.0 (March 11, 2024)<a class="headerlink" href="#march-11-2024" title="Link to this heading"></a></h2>
 <p>New feature release in the 0.14.x series.</p>
@@ -750,10 +767,10 @@ in <a class="reference external" href="https://github.com/nipreps/fmriprep/issue
             <dd><a href="../fix_tfselect-resless/changes.html">fix/tfselect-resless</a></dd>
             <dd><a href="../maint_0.12.x/changes.html">maint/0.12.x</a></dd>
             <dd><a href="../maint_0.13.x/changes.html">maint/0.13.x</a></dd>
+            <dd><a href="../maint_0.15.x/changes.html">maint/0.15.x</a></dd>
             <dd><a href="../maint_0.8.x/changes.html">maint/0.8.x</a></dd>
             <dd><a href="../maint_0.9.x/changes.html">maint/0.9.x</a></dd>
             <dd><a href="changes.html">master</a></dd>
-            <dd><a href="../rel_0.15.0/changes.html">rel/0.15.0</a></dd>
             <dd><a href="../rel_0.8.0rc1/changes.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>
