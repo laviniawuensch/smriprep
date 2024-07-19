@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.fit.registration &mdash; smriprep 0.15.1.dev1 documentation</title>
+  <title>smriprep.workflows.fit.registration &mdash; smriprep 0.15.1.dev11 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/banner.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/banner.css?v=fd51b7f5" />
 
   
   <!--[if lt IE 9]>
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev1
+                0.15.1.dev11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -215,10 +215,10 @@
         <span class="c1"># Append template citations to description</span>
         <span class="k">for</span> <span class="n">template</span> <span class="ow">in</span> <span class="n">templates</span><span class="p">:</span>
             <span class="n">template_meta</span> <span class="o">=</span> <span class="n">get_metadata</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">template_refs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;@</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+            <span class="n">template_refs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;@</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())]</span>
 
             <span class="k">if</span> <span class="n">template_meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;RRID&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
-                <span class="n">template_refs</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;RRID:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">template_meta</span><span class="p">[</span><span class="s1">&#39;RRID&#39;</span><span class="p">]]</span>
+                <span class="n">template_refs</span> <span class="o">+=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;RRID:</span><span class="si">{</span><span class="n">template_meta</span><span class="p">[</span><span class="s2">&quot;RRID&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
 
             <span class="n">workflow</span><span class="o">.</span><span class="n">__desc__</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
 <span class="s2">*</span><span class="si">{template_name}</span><span class="s2">* [</span><span class="si">{template_refs}</span><span class="s2">; TemplateFlow ID: </span><span class="si">{template}</span><span class="s2">]&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -390,6 +390,7 @@
         <dl>
             <dt>Branches</dt>
             <dd><a href="../../../../enh_calabel/index.html">enh/calabel</a></dd>
+            <dd><a href="../../../../enh_nibabies-fit-apply/index.html">enh/nibabies-fit-apply</a></dd>
             <dd><a href="../../../../enh_split-surfaces/index.html">enh/split-surfaces</a></dd>
             <dd><a href="../../../../fix_parcstats/index.html">fix/parcstats</a></dd>
             <dd><a href="../../../../fix_recon-report/index.html">fix/recon-report</a></dd>
