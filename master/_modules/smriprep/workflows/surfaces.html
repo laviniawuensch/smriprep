@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.surfaces &mdash; smriprep 0.15.1.dev13 documentation</title>
+  <title>smriprep.workflows.surfaces &mdash; smriprep 0.15.1.dev34 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css?v=fd51b7f5" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev13
+                0.15.1.dev34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -128,6 +128,7 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.freesurfer</span> <span class="kn">import</span> <span class="n">PatchedRobustRegister</span> <span class="k">as</span> <span class="n">RobustRegister</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.nitransforms</span> <span class="kn">import</span> <span class="n">ConcatenateXFMs</span>
+<span class="kn">from</span> <span class="nn">niworkflows.interfaces.patches</span> <span class="kn">import</span> <span class="n">FreeSurferSource</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.utility</span> <span class="kn">import</span> <span class="n">KeySelect</span>
 <span class="kn">from</span> <span class="nn">niworkflows.interfaces.workbench</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">MetricDilate</span><span class="p">,</span>
@@ -315,7 +316,7 @@
 
     <span class="n">autorecon_resume_wf</span> <span class="o">=</span> <span class="n">init_autorecon_resume_wf</span><span class="p">(</span><span class="n">omp_nthreads</span><span class="o">=</span><span class="n">omp_nthreads</span><span class="p">)</span>
 
-    <span class="n">get_surfaces</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;get_surfaces&#39;</span><span class="p">)</span>
+    <span class="n">get_surfaces</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;get_surfaces&#39;</span><span class="p">)</span>
 
     <span class="n">midthickness</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">MapNode</span><span class="p">(</span>
         <span class="n">MakeMidthickness</span><span class="p">(</span><span class="n">thickness</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">out_name</span><span class="o">=</span><span class="s1">&#39;midthickness&#39;</span><span class="p">),</span>
@@ -371,7 +372,7 @@
         <span class="p">])</span>  <span class="c1"># fmt:skip</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Pretend to be the autorecon1 node so fsnative2t1w_xfm gets run ASAP</span>
-        <span class="n">fs_base_inputs</span> <span class="o">=</span> <span class="n">autorecon1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fs_base_inputs&#39;</span><span class="p">)</span>
+        <span class="n">fs_base_inputs</span> <span class="o">=</span> <span class="n">autorecon1</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fs_base_inputs&#39;</span><span class="p">)</span>
 
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
             <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fs_base_inputs</span><span class="p">,</span> <span class="p">[</span>
@@ -418,7 +419,9 @@
 
 <div class="viewcode-block" id="init_refinement_wf">
 <a class="viewcode-back" href="../../../api/smriprep.workflows.surfaces.html#smriprep.workflows.surfaces.init_refinement_wf">[docs]</a>
-<span class="k">def</span> <span class="nf">init_refinement_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;refinement_wf&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">init_refinement_wf</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">image_type</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;refinement_wf&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Refine ANTs brain extraction with FreeSurfer segmentation</span>
 
@@ -436,20 +439,12 @@
 <span class="sd">        FreeSurfer SUBJECTS_DIR</span>
 <span class="sd">    subject_id</span>
 <span class="sd">        FreeSurfer subject ID</span>
-<span class="sd">    fsnative2t1w_xfm</span>
-<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</span>
+<span class="sd">    fsnative2anat_xfm</span>
+<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to anatomical</span>
 <span class="sd">    reference_image</span>
 <span class="sd">        Input</span>
-<span class="sd">    t2w</span>
-<span class="sd">        List of T2-weighted structural images (only first used)</span>
-<span class="sd">    flair</span>
-<span class="sd">        List of FLAIR images</span>
-<span class="sd">    skullstripped_t1</span>
-<span class="sd">        Skull-stripped T1-weighted image (or mask of image)</span>
 <span class="sd">    ants_segs</span>
 <span class="sd">        Brain tissue segmentation from ANTS ``antsBrainExtraction.sh``</span>
-<span class="sd">    corrected_t1</span>
-<span class="sd">        INU-corrected, merged T1-weighted image</span>
 <span class="sd">    subjects_dir</span>
 <span class="sd">        FreeSurfer SUBJECTS_DIR</span>
 <span class="sd">    subject_id</span>
@@ -457,14 +452,6 @@
 
 <span class="sd">    Outputs</span>
 <span class="sd">    -------</span>
-<span class="sd">    subjects_dir</span>
-<span class="sd">        FreeSurfer SUBJECTS_DIR</span>
-<span class="sd">    subject_id</span>
-<span class="sd">        FreeSurfer subject ID</span>
-<span class="sd">    t1w2fsnative_xfm</span>
-<span class="sd">        LTA-style affine matrix translating from T1w to FreeSurfer-conformed subject space</span>
-<span class="sd">    fsnative2t1w_xfm</span>
-<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</span>
 <span class="sd">    out_brainmask</span>
 <span class="sd">        Refined brainmask, derived from FreeSurfer&#39;s ``aseg`` volume</span>
 
@@ -487,7 +474,7 @@
             <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
                 <span class="s1">&#39;reference_image&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;ants_segs&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
             <span class="p">]</span>
@@ -503,24 +490,22 @@
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">aseg_to_native_wf</span> <span class="o">=</span> <span class="n">init_segs_to_native_wf</span><span class="p">()</span>
+    <span class="n">aseg_to_native_wf</span> <span class="o">=</span> <span class="n">init_segs_to_native_wf</span><span class="p">(</span><span class="n">image_type</span><span class="o">=</span><span class="n">image_type</span><span class="p">)</span>
     <span class="n">refine</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">RefineBrainMask</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;refine&#39;</span><span class="p">)</span>
 
-    <span class="c1"># fmt:off</span>
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
         <span class="c1"># Refine ANTs mask, deriving new mask from FS&#39; aseg</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">aseg_to_native_wf</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;reference_image&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.in_file&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">refine</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;reference_image&#39;</span><span class="p">,</span> <span class="s1">&#39;in_anat&#39;</span><span class="p">),</span>
                              <span class="p">(</span><span class="s1">&#39;ants_segs&#39;</span><span class="p">,</span> <span class="s1">&#39;in_ants&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">aseg_to_native_wf</span><span class="p">,</span> <span class="n">refine</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;in_aseg&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">refine</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_file&#39;</span><span class="p">,</span> <span class="s1">&#39;out_brainmask&#39;</span><span class="p">)]),</span>
-    <span class="p">])</span>
-    <span class="c1"># fmt:on</span>
+    <span class="p">])</span>  <span class="c1"># fmt:skip</span>
 
     <span class="k">return</span> <span class="n">workflow</span></div>
 
@@ -706,8 +691,8 @@
 <a class="viewcode-back" href="../../../api/smriprep.workflows.surfaces.html#smriprep.workflows.surfaces.init_surface_derivatives_wf">[docs]</a>
 <span class="k">def</span> <span class="nf">init_surface_derivatives_wf</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">cifti_output</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;91k&#39;</span><span class="p">,</span> <span class="s1">&#39;170k&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;surface_derivatives_wf&#39;</span><span class="p">,</span>
+    <span class="n">image_type</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;surface_derivatives_wf&#39;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate sMRIPrep derivatives from FreeSurfer derivatives</span>
@@ -723,9 +708,9 @@
 <span class="sd">    Inputs</span>
 <span class="sd">    ------</span>
 <span class="sd">    reference</span>
-<span class="sd">        Reference image in native T1w space, for defining a resampling grid</span>
-<span class="sd">    fsnative2t1w_xfm</span>
-<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</span>
+<span class="sd">        Reference image in native anatomical space, for defining a resampling grid</span>
+<span class="sd">    fsnative2anat_xfm</span>
+<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to anatomical</span>
 <span class="sd">    subjects_dir</span>
 <span class="sd">        FreeSurfer SUBJECTS_DIR</span>
 <span class="sd">    subject_id</span>
@@ -739,9 +724,9 @@
 <span class="sd">    morphometrics</span>
 <span class="sd">        GIFTIs of cortical thickness, curvature, and sulcal depth</span>
 <span class="sd">    out_aseg</span>
-<span class="sd">        FreeSurfer&#39;s aseg segmentation, in native T1w space</span>
+<span class="sd">        FreeSurfer&#39;s aseg segmentation, in native anatomical space</span>
 <span class="sd">    out_aparc</span>
-<span class="sd">        FreeSurfer&#39;s aparc+aseg segmentation, in native T1w space</span>
+<span class="sd">        FreeSurfer&#39;s aparc+aseg segmentation, in native anatomical space</span>
 
 <span class="sd">    See also</span>
 <span class="sd">    --------</span>
@@ -755,7 +740,7 @@
             <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
                 <span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;reference&#39;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">),</span>
@@ -775,8 +760,8 @@
 
     <span class="n">gifti_surfaces_wf</span> <span class="o">=</span> <span class="n">init_gifti_surfaces_wf</span><span class="p">(</span><span class="n">surfaces</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;inflated&#39;</span><span class="p">])</span>
     <span class="n">gifti_morph_wf</span> <span class="o">=</span> <span class="n">init_gifti_morphometrics_wf</span><span class="p">(</span><span class="n">morphometrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;curv&#39;</span><span class="p">])</span>
-    <span class="n">aseg_to_native_wf</span> <span class="o">=</span> <span class="n">init_segs_to_native_wf</span><span class="p">()</span>
-    <span class="n">aparc_to_native_wf</span> <span class="o">=</span> <span class="n">init_segs_to_native_wf</span><span class="p">(</span><span class="n">segmentation</span><span class="o">=</span><span class="s1">&#39;aparc_aseg&#39;</span><span class="p">)</span>
+    <span class="n">aseg_to_native_wf</span> <span class="o">=</span> <span class="n">init_segs_to_native_wf</span><span class="p">(</span><span class="n">image_type</span><span class="o">=</span><span class="n">image_type</span><span class="p">)</span>
+    <span class="n">aparc_to_native_wf</span> <span class="o">=</span> <span class="n">init_segs_to_native_wf</span><span class="p">(</span><span class="n">image_type</span><span class="o">=</span><span class="n">image_type</span><span class="p">,</span> <span class="n">segmentation</span><span class="o">=</span><span class="s1">&#39;aparc_aseg&#39;</span><span class="p">)</span>
 
     <span class="c1"># fmt:off</span>
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -784,7 +769,7 @@
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">gifti_surfaces_wf</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">gifti_morph_wf</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
@@ -794,13 +779,13 @@
             <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;reference&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.in_file&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">aparc_to_native_wf</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;reference&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.in_file&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
 
         <span class="c1"># Output</span>
@@ -968,8 +953,8 @@
 <span class="sd">    ``lh/rh.inflated``, and ``lh/rh.white``.</span>
 
 <span class="sd">    Vertex coordinates are :py:class:`transformed</span>
-<span class="sd">    &lt;smriprep.interfaces.NormalizeSurf&gt;` to align with native T1w space</span>
-<span class="sd">    when ``fsnative2t1w_xfm`` is provided.</span>
+<span class="sd">    &lt;smriprep.interfaces.NormalizeSurf&gt;` to align with native anatomical space</span>
+<span class="sd">    when ``fsnative2anat_xfm`` is provided.</span>
 
 <span class="sd">    Workflow Graph</span>
 <span class="sd">        .. workflow::</span>
@@ -985,7 +970,7 @@
 <span class="sd">        FreeSurfer SUBJECTS_DIR</span>
 <span class="sd">    subject_id</span>
 <span class="sd">        FreeSurfer subject ID</span>
-<span class="sd">    fsnative2t1w_xfm</span>
+<span class="sd">    fsnative2anat_xfm</span>
 <span class="sd">        LTA formatted affine transform file</span>
 
 <span class="sd">    Outputs</span>
@@ -1001,7 +986,7 @@
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">([</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">]),</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">([</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">]),</span>
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">([</span><span class="s1">&#39;surfaces&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">surfaces</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
@@ -1036,7 +1021,7 @@
             <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fix_surfs</span><span class="p">,</span> <span class="p">[</span>
-            <span class="p">(</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;transform_file&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;transform_file&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">get_surfaces</span><span class="p">,</span> <span class="n">surface_list</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;in</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">surf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">surfaces</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1081,8 +1066,6 @@
 <span class="sd">        FreeSurfer SUBJECTS_DIR</span>
 <span class="sd">    subject_id</span>
 <span class="sd">        FreeSurfer subject ID</span>
-<span class="sd">    fsnative2t1w_xfm</span>
-<span class="sd">        LTA formatted affine transform file (inverse)</span>
 
 <span class="sd">    Outputs</span>
 <span class="sd">    -------</span>
@@ -1110,7 +1093,7 @@
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">get_subject</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;get_surfaces&#39;</span><span class="p">)</span>
+    <span class="n">get_subject</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;get_surfaces&#39;</span><span class="p">)</span>
 
     <span class="n">morphometry_list</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">niu</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">morphometrics</span><span class="p">),</span> <span class="n">ravel_inputs</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
@@ -1298,7 +1281,12 @@
 
 <div class="viewcode-block" id="init_segs_to_native_wf">
 <a class="viewcode-back" href="../../../api/smriprep.workflows.surfaces.html#smriprep.workflows.surfaces.init_segs_to_native_wf">[docs]</a>
-<span class="k">def</span> <span class="nf">init_segs_to_native_wf</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;segs_to_native&#39;</span><span class="p">,</span> <span class="n">segmentation</span><span class="o">=</span><span class="s1">&#39;aseg&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">init_segs_to_native_wf</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">image_type</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
+    <span class="n">segmentation</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;wmparc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;aseg&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;segs_to_native_wf&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get a segmentation from FreeSurfer conformed space into native T1w space.</span>
 
@@ -1312,19 +1300,21 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    image_type</span>
+<span class="sd">        MR anatomical image type (&#39;T1w&#39; or &#39;T2w&#39;)</span>
 <span class="sd">    segmentation</span>
 <span class="sd">        The name of a segmentation (&#39;aseg&#39; or &#39;aparc_aseg&#39; or &#39;wmparc&#39;)</span>
 
 <span class="sd">    Inputs</span>
 <span class="sd">    ------</span>
 <span class="sd">    in_file</span>
-<span class="sd">        Anatomical, merged T1w image after INU correction</span>
+<span class="sd">        Anatomical, merged anatomical image after INU correction</span>
 <span class="sd">    subjects_dir</span>
 <span class="sd">        FreeSurfer SUBJECTS_DIR</span>
 <span class="sd">    subject_id</span>
 <span class="sd">        FreeSurfer subject ID</span>
-<span class="sd">    fsnative2t1w_xfm</span>
-<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</span>
+<span class="sd">    fsnative2anat_xfm</span>
+<span class="sd">        LTA-style affine matrix translating from FreeSurfer-conformed subject space to anatomical</span>
 
 <span class="sd">    Outputs</span>
 <span class="sd">    -------</span>
@@ -1334,16 +1324,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">segmentation</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">inputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
-        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">([</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">]),</span>
+        <span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">([</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">]),</span>
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;inputnode&#39;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">outputnode</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">IdentityInterface</span><span class="p">([</span><span class="s1">&#39;out_file&#39;</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;outputnode&#39;</span><span class="p">)</span>
     <span class="c1"># Extract the aseg and aparc+aseg outputs</span>
-    <span class="n">fssource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">nio</span><span class="o">.</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fs_datasource&#39;</span><span class="p">)</span>
+    <span class="n">fssource</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">FreeSurferSource</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fs_datasource&#39;</span><span class="p">)</span>
 
     <span class="n">lta</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ConcatenateXFMs</span><span class="p">(</span><span class="n">out_fmt</span><span class="o">=</span><span class="s1">&#39;fs&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;lta&#39;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># Resample from T1.mgz to T1w.nii.gz, applying any offset in fsnative2t1w_xfm,</span>
+    <span class="c1"># Resample from T1.mgz to T1w.nii.gz, applying any offset in fsnative2anat_xfm,</span>
     <span class="c1"># and convert to NIfTI while we&#39;re at it</span>
     <span class="n">resample</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">fs</span><span class="o">.</span><span class="n">ApplyVolTransform</span><span class="p">(</span><span class="n">transformed_file</span><span class="o">=</span><span class="s1">&#39;seg.nii.gz&#39;</span><span class="p">,</span> <span class="n">interp</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">),</span>
@@ -1368,20 +1358,20 @@
 
         <span class="n">segmentation</span> <span class="o">=</span> <span class="p">(</span><span class="n">segmentation</span><span class="p">,</span> <span class="n">_sel</span><span class="p">)</span>
 
-    <span class="c1"># fmt:off</span>
+    <span class="n">anat</span> <span class="o">=</span> <span class="s1">&#39;T2&#39;</span> <span class="k">if</span> <span class="n">image_type</span> <span class="o">==</span> <span class="s1">&#39;T2w&#39;</span> <span class="k">else</span> <span class="s1">&#39;T1&#39;</span>
+
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">fssource</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects_dir&#39;</span><span class="p">),</span>
             <span class="p">(</span><span class="s1">&#39;subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;subject_id&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">lta</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;reference&#39;</span><span class="p">),</span>
-                          <span class="p">(</span><span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;in_xfms&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">lta</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;T1&#39;</span><span class="p">,</span> <span class="s1">&#39;moving&#39;</span><span class="p">)]),</span>
+                          <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;in_xfms&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">lta</span><span class="p">,</span> <span class="p">[(</span><span class="n">anat</span><span class="p">,</span> <span class="s1">&#39;moving&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;target_file&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="n">segmentation</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">lta</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;lta_file&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">resample</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s1">&#39;out_file&#39;</span><span class="p">)]),</span>
-    <span class="p">])</span>
-    <span class="c1"># fmt:on</span>
+    <span class="p">])</span>  <span class="c1"># fmt:skip</span>
     <span class="k">return</span> <span class="n">workflow</span></div>
 
 
@@ -1871,7 +1861,6 @@
         <dl>
             <dt>Branches</dt>
             <dd><a href="../../../../enh_calabel/index.html">enh/calabel</a></dd>
-            <dd><a href="../../../../enh_nibabies-fit-apply/index.html">enh/nibabies-fit-apply</a></dd>
             <dd><a href="../../../../enh_split-surfaces/index.html">enh/split-surfaces</a></dd>
             <dd><a href="../../../../fix_parcstats/index.html">fix/parcstats</a></dd>
             <dd><a href="../../../../fix_recon-report/index.html">fix/recon-report</a></dd>

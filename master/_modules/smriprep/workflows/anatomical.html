@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.anatomical &mdash; smriprep 0.15.1.dev13 documentation</title>
+  <title>smriprep.workflows.anatomical &mdash; smriprep 0.15.1.dev34 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css?v=fd51b7f5" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev13
+                0.15.1.dev34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -146,10 +146,10 @@
 <span class="kn">from</span> <span class="nn">.fit.registration</span> <span class="kn">import</span> <span class="n">init_register_template_wf</span>
 <span class="kn">from</span> <span class="nn">.outputs</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">init_anat_reports_wf</span><span class="p">,</span>
-    <span class="n">init_anat_second_derivatives_wf</span><span class="p">,</span>
     <span class="n">init_ds_anat_volumes_wf</span><span class="p">,</span>
     <span class="n">init_ds_dseg_wf</span><span class="p">,</span>
     <span class="n">init_ds_fs_registration_wf</span><span class="p">,</span>
+    <span class="n">init_ds_fs_segs_wf</span><span class="p">,</span>
     <span class="n">init_ds_grayord_metrics_wf</span><span class="p">,</span>
     <span class="n">init_ds_mask_wf</span><span class="p">,</span>
     <span class="n">init_ds_surface_metrics_wf</span><span class="p">,</span>
@@ -374,7 +374,6 @@
     <span class="n">ds_std_volumes_wf</span> <span class="o">=</span> <span class="n">init_ds_anat_volumes_wf</span><span class="p">(</span>
         <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span>
         <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_std_volumes_wf&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -407,10 +406,10 @@
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">anat_fit_wf</span><span class="p">,</span> <span class="n">ds_std_volumes_wf</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;outputnode.t1w_valid_list&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_preproc&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_mask&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_dseg&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_dseg&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_tpms&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_tpms&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_preproc&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_mask&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_dseg&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_dseg&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;outputnode.t1w_tpms&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_tpms&#39;</span><span class="p">),</span>
         <span class="p">]),</span>
         <span class="p">(</span><span class="n">template_iterator_wf</span><span class="p">,</span> <span class="n">ds_std_volumes_wf</span><span class="p">,</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">&#39;outputnode.std_t1w&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.ref_file&#39;</span><span class="p">),</span>
@@ -422,17 +421,12 @@
     <span class="p">])</span>  <span class="c1"># fmt:skip</span>
 
     <span class="k">if</span> <span class="n">freesurfer</span><span class="p">:</span>
-        <span class="n">anat_second_derivatives_wf</span> <span class="o">=</span> <span class="n">init_anat_second_derivatives_wf</span><span class="p">(</span>
+        <span class="n">ds_fs_segs_wf</span> <span class="o">=</span> <span class="n">init_ds_fs_segs_wf</span><span class="p">(</span>
             <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span>
             <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">cifti_output</span><span class="o">=</span><span class="n">cifti_output</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">surface_derivatives_wf</span> <span class="o">=</span> <span class="n">init_surface_derivatives_wf</span><span class="p">(</span>
-            <span class="n">cifti_output</span><span class="o">=</span><span class="n">cifti_output</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">ds_surfaces_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span>
-            <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;inflated&#39;</span><span class="p">]</span>
-        <span class="p">)</span>
+        <span class="n">surface_derivatives_wf</span> <span class="o">=</span> <span class="n">init_surface_derivatives_wf</span><span class="p">()</span>
+        <span class="n">ds_surfaces_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;inflated&#39;</span><span class="p">])</span>
         <span class="n">ds_curv_wf</span> <span class="o">=</span> <span class="n">init_ds_surface_metrics_wf</span><span class="p">(</span>
             <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;curv&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_curv_wf&#39;</span>
         <span class="p">)</span>
@@ -442,7 +436,7 @@
                 <span class="p">(</span><span class="s1">&#39;outputnode.t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.reference&#39;</span><span class="p">),</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">anat_fit_wf</span><span class="p">,</span> <span class="n">ds_surfaces_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.t1w_valid_list&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">),</span>
@@ -456,12 +450,12 @@
             <span class="p">(</span><span class="n">surface_derivatives_wf</span><span class="p">,</span> <span class="n">ds_curv_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.curv&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.curv&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
-            <span class="p">(</span><span class="n">anat_fit_wf</span><span class="p">,</span> <span class="n">anat_second_derivatives_wf</span><span class="p">,</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">anat_fit_wf</span><span class="p">,</span> <span class="n">ds_fs_segs_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.t1w_valid_list&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
-            <span class="p">(</span><span class="n">surface_derivatives_wf</span><span class="p">,</span> <span class="n">anat_second_derivatives_wf</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.out_aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_fs_aseg&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.out_aparc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_fs_aparc&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">surface_derivatives_wf</span><span class="p">,</span> <span class="n">ds_fs_segs_wf</span><span class="p">,</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.out_aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_fs_aseg&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.out_aparc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_fs_aparc&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">surface_derivatives_wf</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.out_aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_aseg&#39;</span><span class="p">),</span>
@@ -855,10 +849,12 @@
             <span class="n">longitudinal</span><span class="o">=</span><span class="n">longitudinal</span><span class="p">,</span>
             <span class="n">omp_nthreads</span><span class="o">=</span><span class="n">omp_nthreads</span><span class="p">,</span>
             <span class="n">num_files</span><span class="o">=</span><span class="n">num_t1w</span><span class="p">,</span>
-            <span class="n">contrast</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
+            <span class="n">image_type</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="s1">&#39;anat_template_wf&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">ds_template_wf</span> <span class="o">=</span> <span class="n">init_ds_template_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">num_t1w</span><span class="o">=</span><span class="n">num_t1w</span><span class="p">)</span>
+        <span class="n">ds_template_wf</span> <span class="o">=</span> <span class="n">init_ds_template_wf</span><span class="p">(</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">num_anat</span><span class="o">=</span><span class="n">num_t1w</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span>
+        <span class="p">)</span>
 
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -871,11 +867,11 @@
                 <span class="p">(</span><span class="s1">&#39;outputnode.out_report&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_conform_report&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">anat_template_wf</span><span class="p">,</span> <span class="n">ds_template_wf</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.anat_realign_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_ref_xfms&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.anat_realign_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_ref_xfms&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">sourcefile_buffer</span><span class="p">,</span> <span class="n">ds_template_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">)]),</span>
-            <span class="p">(</span><span class="n">t1w_buffer</span><span class="p">,</span> <span class="n">ds_template_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_preproc&#39;</span><span class="p">)]),</span>
-            <span class="p">(</span><span class="n">ds_template_wf</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_preproc&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">t1w_buffer</span><span class="p">,</span> <span class="n">ds_template_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_preproc&#39;</span><span class="p">)]),</span>
+            <span class="p">(</span><span class="n">ds_template_wf</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.anat_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_preproc&#39;</span><span class="p">)]),</span>
         <span class="p">])</span>
         <span class="c1"># fmt:on</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1044,16 +1040,16 @@
             <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
                 <span class="p">(</span><span class="n">fast</span><span class="p">,</span> <span class="n">lut_t1w_dseg</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;partial_volume_map&#39;</span><span class="p">,</span> <span class="s1">&#39;in_dseg&#39;</span><span class="p">)]),</span>
                 <span class="p">(</span><span class="n">sourcefile_buffer</span><span class="p">,</span> <span class="n">ds_dseg_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">lut_t1w_dseg</span><span class="p">,</span> <span class="n">ds_dseg_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_dseg&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">ds_dseg_wf</span><span class="p">,</span> <span class="n">seg_buffer</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.t1w_dseg&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_dseg&#39;</span><span class="p">)]),</span>
+                <span class="p">(</span><span class="n">lut_t1w_dseg</span><span class="p">,</span> <span class="n">ds_dseg_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_dseg&#39;</span><span class="p">)]),</span>
+                <span class="p">(</span><span class="n">ds_dseg_wf</span><span class="p">,</span> <span class="n">seg_buffer</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.anat_dseg&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_dseg&#39;</span><span class="p">)]),</span>
             <span class="p">])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">have_tpms</span><span class="p">:</span>
             <span class="n">ds_tpms_wf</span> <span class="o">=</span> <span class="n">init_ds_tpms_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">)</span>
             <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
                 <span class="p">(</span><span class="n">fast</span><span class="p">,</span> <span class="n">fast2bids</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;partial_volume_files&#39;</span><span class="p">,</span> <span class="s1">&#39;inlist&#39;</span><span class="p">)]),</span>
                 <span class="p">(</span><span class="n">sourcefile_buffer</span><span class="p">,</span> <span class="n">ds_tpms_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">fast2bids</span><span class="p">,</span> <span class="n">ds_tpms_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.t1w_tpms&#39;</span><span class="p">)]),</span>
-                <span class="p">(</span><span class="n">ds_tpms_wf</span><span class="p">,</span> <span class="n">seg_buffer</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.t1w_tpms&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_tpms&#39;</span><span class="p">)]),</span>
+                <span class="p">(</span><span class="n">fast2bids</span><span class="p">,</span> <span class="n">ds_tpms_wf</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.anat_tpms&#39;</span><span class="p">)]),</span>
+                <span class="p">(</span><span class="n">ds_tpms_wf</span><span class="p">,</span> <span class="n">seg_buffer</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;outputnode.anat_tpms&#39;</span><span class="p">,</span> <span class="s1">&#39;t1w_tpms&#39;</span><span class="p">)]),</span>
             <span class="p">])</span>
         <span class="c1"># fmt:on</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1088,7 +1084,9 @@
             <span class="n">omp_nthreads</span><span class="o">=</span><span class="n">omp_nthreads</span><span class="p">,</span>
             <span class="n">templates</span><span class="o">=</span><span class="n">templates</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">ds_template_registration_wf</span> <span class="o">=</span> <span class="n">init_ds_template_registration_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="n">ds_template_registration_wf</span> <span class="o">=</span> <span class="n">init_ds_template_registration_wf</span><span class="p">(</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span>
+        <span class="p">)</span>
 
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -1171,17 +1169,17 @@
 
     <span class="n">fsnative_xfms</span> <span class="o">=</span> <span class="n">precomputed</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;transforms&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fsnative&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">fsnative_xfms</span><span class="p">:</span>
-        <span class="n">ds_fs_registration_wf</span> <span class="o">=</span> <span class="n">init_ds_fs_registration_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="n">ds_fs_registration_wf</span> <span class="o">=</span> <span class="n">init_ds_fs_registration_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="s1">&#39;T1w&#39;</span><span class="p">)</span>
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
             <span class="p">(</span><span class="n">sourcefile_buffer</span><span class="p">,</span> <span class="n">ds_fs_registration_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;source_files&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.source_files&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">surface_recon_wf</span><span class="p">,</span> <span class="n">ds_fs_registration_wf</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">ds_fs_registration_wf</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;fsnative2t1w_xfm&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
         <span class="p">])</span>
         <span class="c1"># fmt:on</span>
@@ -1204,7 +1202,7 @@
             <span class="p">(</span><span class="n">surface_recon_wf</span><span class="p">,</span> <span class="n">refinement_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">t1w_buffer</span><span class="p">,</span> <span class="n">refinement_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;t1w_preproc&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.reference_image&#39;</span><span class="p">),</span>
@@ -1225,7 +1223,7 @@
             <span class="n">longitudinal</span><span class="o">=</span><span class="n">longitudinal</span><span class="p">,</span>
             <span class="n">omp_nthreads</span><span class="o">=</span><span class="n">omp_nthreads</span><span class="p">,</span>
             <span class="n">num_files</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">t2w</span><span class="p">),</span>
-            <span class="n">contrast</span><span class="o">=</span><span class="s1">&#39;T2w&#39;</span><span class="p">,</span>
+            <span class="n">image_type</span><span class="o">=</span><span class="s1">&#39;T2w&#39;</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="s1">&#39;t2w_template_wf&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">bbreg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
@@ -1306,15 +1304,13 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ANAT Stage 8: Creating GIFTI surfaces for </span><span class="si">{</span><span class="n">surfs</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">spheres</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">surfs</span><span class="p">:</span>
         <span class="n">gifti_surfaces_wf</span> <span class="o">=</span> <span class="n">init_gifti_surfaces_wf</span><span class="p">(</span><span class="n">surfaces</span><span class="o">=</span><span class="n">surfs</span><span class="p">)</span>
-        <span class="n">ds_surfaces_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span>
-            <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="n">surfs</span>
-        <span class="p">)</span>
+        <span class="n">ds_surfaces_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="n">surfs</span><span class="p">)</span>
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
             <span class="p">(</span><span class="n">surface_recon_wf</span><span class="p">,</span> <span class="n">gifti_surfaces_wf</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.subject_id&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subject_id&#39;</span><span class="p">),</span>
                 <span class="p">(</span><span class="s1">&#39;outputnode.subjects_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.subjects_dir&#39;</span><span class="p">),</span>
-                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2t1w_xfm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;outputnode.fsnative2t1w_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;inputnode.fsnative2anat_xfm&#39;</span><span class="p">),</span>
             <span class="p">]),</span>
             <span class="p">(</span><span class="n">gifti_surfaces_wf</span><span class="p">,</span> <span class="n">surfaces_buffer</span><span class="p">,</span> <span class="p">[</span>
                 <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;outputnode.</span><span class="si">{</span><span class="n">surf</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">surf</span><span class="p">)</span> <span class="k">for</span> <span class="n">surf</span> <span class="ow">in</span> <span class="n">surfs</span>
@@ -1330,7 +1326,7 @@
             <span class="n">surfaces</span><span class="o">=</span><span class="n">spheres</span><span class="p">,</span> <span class="n">to_scanner</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;gifti_spheres_wf&#39;</span>
         <span class="p">)</span>
         <span class="n">ds_spheres_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span>
-            <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="n">spheres</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_spheres_wf&#39;</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="n">spheres</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_spheres_wf&#39;</span>
         <span class="p">)</span>
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>
@@ -1406,7 +1402,6 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;ANAT Stage 9: Creating fsLR registration sphere&#39;</span><span class="p">)</span>
         <span class="n">fsLR_reg_wf</span> <span class="o">=</span> <span class="n">init_fsLR_reg_wf</span><span class="p">()</span>
         <span class="n">ds_fsLR_reg_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span>
-            <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span>
             <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
             <span class="n">surfaces</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sphere_reg_fsLR&#39;</span><span class="p">],</span>
             <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_fsLR_reg_wf&#39;</span><span class="p">,</span>
@@ -1431,7 +1426,6 @@
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;ANAT Stage 10: Creating MSM-Sulc registration sphere&#39;</span><span class="p">)</span>
         <span class="n">msm_sulc_wf</span> <span class="o">=</span> <span class="n">init_msm_sulc_wf</span><span class="p">(</span><span class="n">sloppy</span><span class="o">=</span><span class="n">sloppy</span><span class="p">)</span>
         <span class="n">ds_msmsulc_wf</span> <span class="o">=</span> <span class="n">init_ds_surfaces_wf</span><span class="p">(</span>
-            <span class="n">bids_root</span><span class="o">=</span><span class="n">bids_root</span><span class="p">,</span>
             <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span>
             <span class="n">surfaces</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sphere_reg_msm&#39;</span><span class="p">],</span>
             <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ds_msmsulc_wf&#39;</span><span class="p">,</span>
@@ -1468,7 +1462,7 @@
     <span class="n">longitudinal</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">omp_nthreads</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_files</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">contrast</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">image_type</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2w&#39;</span><span class="p">],</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;anat_template_wf&#39;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1481,7 +1475,7 @@
 
 <span class="sd">            from smriprep.workflows.anatomical import init_anat_template_wf</span>
 <span class="sd">            wf = init_anat_template_wf(</span>
-<span class="sd">                longitudinal=False, omp_nthreads=1, num_files=1, contrast=&quot;T1w&quot;</span>
+<span class="sd">                longitudinal=False, omp_nthreads=1, num_files=1, image_type=&quot;T1w&quot;</span>
 <span class="sd">            )</span>
 
 <span class="sd">    Parameters</span>
@@ -1493,8 +1487,8 @@
 <span class="sd">        Maximum number of threads an individual process may use</span>
 <span class="sd">    num_files : :obj:`int`</span>
 <span class="sd">        Number of images</span>
-<span class="sd">    contrast : :obj:`str`</span>
-<span class="sd">        Name of contrast, for reporting purposes, e.g., T1w, T2w, PDw</span>
+<span class="sd">    image_type : :obj:`str`</span>
+<span class="sd">       MR image type (T1w, T2w, etc.)</span>
 <span class="sd">    name : :obj:`str`, optional</span>
 <span class="sd">        Workflow name (default: anat_template_wf)</span>
 
@@ -1520,8 +1514,8 @@
     <span class="k">if</span> <span class="n">num_files</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">fs_ver</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">Info</span><span class="p">()</span><span class="o">.</span><span class="n">looseversion</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;(version unknown)&#39;</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">__desc__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
-<span class="s2">An anatomical </span><span class="si">{</span><span class="n">contrast</span><span class="si">}</span><span class="s2">-reference map was computed after registration of</span>
-<span class="si">{</span><span class="n">num_files</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">contrast</span><span class="si">}</span><span class="s2"> images (after INU-correction) using</span>
+<span class="s2">An anatomical </span><span class="si">{</span><span class="n">image_type</span><span class="si">}</span><span class="s2">-reference map was computed after registration of</span>
+<span class="si">{</span><span class="n">num_files</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">image</span><span class="si">}</span><span class="s2"> images (after INU-correction) using</span>
 <span class="s2">`mri_robust_template` [FreeSurfer </span><span class="si">{</span><span class="n">fs_ver</span><span class="si">}</span><span class="s2">, @fs_template].</span>
 <span class="s2">&quot;&quot;&quot;</span>
 
@@ -1794,7 +1788,6 @@
         <dl>
             <dt>Branches</dt>
             <dd><a href="../../../../enh_calabel/index.html">enh/calabel</a></dd>
-            <dd><a href="../../../../enh_nibabies-fit-apply/index.html">enh/nibabies-fit-apply</a></dd>
             <dd><a href="../../../../enh_split-surfaces/index.html">enh/split-surfaces</a></dd>
             <dd><a href="../../../../fix_parcstats/index.html">fix/parcstats</a></dd>
             <dd><a href="../../../../fix_recon-report/index.html">fix/recon-report</a></dd>

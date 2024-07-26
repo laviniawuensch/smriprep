@@ -39,7 +39,7 @@
 <polyline fill="none" stroke="black" points="329,-516.5 329,-608.5 "/>
 <text text-anchor="middle" x="382.5" y="-589.8" font-family="Times,serif" font-size="14.00">get_surfaces</text>
 <polyline fill="none" stroke="black" points="329,-578.5 436,-578.5 "/>
-<text text-anchor="middle" x="382.5" y="-559.3" font-family="Times,serif" font-size="14.00">io</text>
+<text text-anchor="middle" x="382.5" y="-559.3" font-family="Times,serif" font-size="14.00">patches</text>
 <polyline fill="none" stroke="black" points="329,-547.5 436,-547.5 "/>
 <text text-anchor="middle" x="382.5" y="-528.3" font-family="Times,serif" font-size="14.00"> </text>
 <polyline fill="none" stroke="black" points="436,-516.5 436,-608.5 "/>

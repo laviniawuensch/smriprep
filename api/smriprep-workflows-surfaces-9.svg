@@ -12,20 +12,20 @@
 <!-- inputnode (utility) -->
 <g id="node1" class="node">
 <title>inputnode (utility)</title>
-<ellipse fill="none" stroke="black" cx="171.94" cy="-306" rx="94.78" ry="18"/>
-<text text-anchor="middle" x="171.94" y="-302.3" font-family="Times,serif" font-size="14.00">inputnode (utility)</text>
+<ellipse fill="none" stroke="black" cx="158.94" cy="-306" rx="94.78" ry="18"/>
+<text text-anchor="middle" x="158.94" y="-302.3" font-family="Times,serif" font-size="14.00">inputnode (utility)</text>
 </g>
-<!-- fs_datasource (io) -->
+<!-- fs_datasource (patches) -->
 <g id="node2" class="node">
-<title>fs_datasource (io)</title>
-<ellipse fill="none" stroke="black" cx="171.94" cy="-234" rx="92.88" ry="18"/>
-<text text-anchor="middle" x="171.94" y="-230.3" font-family="Times,serif" font-size="14.00">fs_datasource (io)</text>
+<title>fs_datasource (patches)</title>
+<ellipse fill="none" stroke="black" cx="158.94" cy="-234" rx="120.48" ry="18"/>
+<text text-anchor="middle" x="158.94" y="-230.3" font-family="Times,serif" font-size="14.00">fs_datasource (patches)</text>
 </g>
-<!-- inputnode (utility)&#45;&gt;fs_datasource (io) -->
+<!-- inputnode (utility)&#45;&gt;fs_datasource (patches) -->
 <g id="edge1" class="edge">
-<title>inputnode (utility)&#45;&gt;fs_datasource (io)</title>
-<path fill="none" stroke="black" d="M171.94,-287.7C171.94,-279.98 171.94,-270.71 171.94,-262.11"/>
-<polygon fill="black" stroke="black" points="175.44,-262.1 171.94,-252.1 168.44,-262.1 175.44,-262.1"/>
+<title>inputnode (utility)&#45;&gt;fs_datasource (patches)</title>
+<path fill="none" stroke="black" d="M158.94,-287.7C158.94,-279.98 158.94,-270.71 158.94,-262.11"/>
+<polygon fill="black" stroke="black" points="162.44,-262.1 158.94,-252.1 155.44,-262.1 162.44,-262.1"/>
 </g>
 <!-- lta (nitransforms) -->
 <g id="node3" class="node">
@@ -36,8 +36,8 @@
 <!-- inputnode (utility)&#45;&gt;lta (nitransforms) -->
 <g id="edge2" class="edge">
 <title>inputnode (utility)&#45;&gt;lta (nitransforms)</title>
-<path fill="none" stroke="black" d="M120.3,-290.81C101.03,-282.73 81.13,-270.42 69.94,-252 58.18,-232.63 66.54,-207.36 76.32,-188.7"/>
-<polygon fill="black" stroke="black" points="79.44,-190.3 81.31,-179.87 73.35,-186.86 79.44,-190.3"/>
+<path fill="none" stroke="black" d="M91.34,-293.26C67.88,-285.59 43.96,-272.92 29.94,-252 21.03,-238.71 23.19,-230.51 29.94,-216 35.56,-203.94 45.42,-193.64 55.7,-185.41"/>
+<polygon fill="black" stroke="black" points="58.03,-188.05 63.96,-179.27 53.85,-182.43 58.03,-188.05"/>
 </g>
 <!-- resample (freesurfer) -->
 <g id="node4" class="node">
@@ -48,20 +48,20 @@
 <!-- inputnode (utility)&#45;&gt;resample (freesurfer) -->
 <g id="edge3" class="edge">
 <title>inputnode (utility)&#45;&gt;resample (freesurfer)</title>
-<path fill="none" stroke="black" d="M223.58,-290.81C242.85,-282.73 262.75,-270.42 273.94,-252 301.06,-207.34 262.98,-148.43 236.23,-115.67"/>
-<polygon fill="black" stroke="black" points="238.83,-113.33 229.72,-107.93 233.48,-117.83 238.83,-113.33"/>
+<path fill="none" stroke="black" d="M226.54,-293.26C250,-285.59 273.92,-272.92 287.94,-252 318.07,-207.05 271.86,-147.86 239.99,-115.22"/>
+<polygon fill="black" stroke="black" points="242.2,-112.49 232.65,-107.9 237.26,-117.44 242.2,-112.49"/>
 </g>
-<!-- fs_datasource (io)&#45;&gt;lta (nitransforms) -->
+<!-- fs_datasource (patches)&#45;&gt;lta (nitransforms) -->
 <g id="edge4" class="edge">
-<title>fs_datasource (io)&#45;&gt;lta (nitransforms)</title>
-<path fill="none" stroke="black" d="M152.82,-216.05C142.82,-207.2 130.43,-196.22 119.52,-186.55"/>
-<polygon fill="black" stroke="black" points="121.7,-183.8 111.89,-179.79 117.05,-189.04 121.7,-183.8"/>
+<title>fs_datasource (patches)&#45;&gt;lta (nitransforms)</title>
+<path fill="none" stroke="black" d="M142.96,-216.05C134.78,-207.37 124.66,-196.64 115.68,-187.11"/>
+<polygon fill="black" stroke="black" points="118.18,-184.66 108.77,-179.79 113.08,-189.47 118.18,-184.66"/>
 </g>
-<!-- fs_datasource (io)&#45;&gt;resample (freesurfer) -->
+<!-- fs_datasource (patches)&#45;&gt;resample (freesurfer) -->
 <g id="edge5" class="edge">
-<title>fs_datasource (io)&#45;&gt;resample (freesurfer)</title>
-<path fill="none" stroke="black" d="M180.51,-215.67C185.28,-205.48 191.03,-192.23 194.94,-180 201.44,-159.72 206.36,-136.12 209.56,-118.32"/>
-<polygon fill="black" stroke="black" points="213.04,-118.78 211.29,-108.33 206.14,-117.58 213.04,-118.78"/>
+<title>fs_datasource (patches)&#45;&gt;resample (freesurfer)</title>
+<path fill="none" stroke="black" d="M173.11,-215.85C180.63,-205.93 189.44,-192.89 194.94,-180 203.35,-160.29 208.19,-136.49 210.87,-118.46"/>
+<polygon fill="black" stroke="black" points="214.37,-118.71 212.24,-108.33 207.43,-117.76 214.37,-118.71"/>
 </g>
 <!-- lta (nitransforms)&#45;&gt;resample (freesurfer) -->
 <g id="edge6" class="edge">

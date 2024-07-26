@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.outputs module &mdash; smriprep 0.15.1.dev13 documentation</title>
+  <title>smriprep.workflows.outputs module &mdash; smriprep 0.15.1.dev34 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5dd5ad26" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/banner.css?v=fd51b7f5" />
@@ -38,7 +38,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev13
+                0.15.1.dev34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -140,72 +140,39 @@ and preprocessed T1w images, defining the anatomical space.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="smriprep.workflows.outputs.init_anat_second_derivatives_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_anat_second_derivatives_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cifti_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'91k'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'170k'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">False</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'anat_second_derivatives_wf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tpm_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('GM',</span> <span class="pre">'WM',</span> <span class="pre">'CSF')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_anat_second_derivatives_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_anat_second_derivatives_wf" title="Link to this definition"></a></dt>
-<dd><p>Set up a battery of datasinks to store derivatives in the right location.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>bids_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Root path of BIDS dataset</p></li>
-<li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: anat_derivatives_wf)</p></li>
-<li><p><strong>tpm_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>) – Tissue probability maps in order</p></li>
-</ul>
-</dd>
-<dt class="field-even">Inputs<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>template</strong> – Template space and specifications</p></li>
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
-<li><p><strong>t1w_preproc</strong> – The T1w reference map, which is calculated as the average of bias-corrected
-and preprocessed T1w images, defining the anatomical space.</p></li>
-<li><p><strong>t1w_mask</strong> – Mask of the <code class="docutils literal notranslate"><span class="pre">t1w_preproc</span></code></p></li>
-<li><p><strong>t1w_dseg</strong> – Segmentation in T1w space</p></li>
-<li><p><strong>t1w_tpms</strong> – Tissue probability maps in T1w space</p></li>
-<li><p><strong>anat2std_xfm</strong> – Nonlinear spatial transform to resample imaging data given in anatomical space
-into standard space.</p></li>
-<li><p><strong>surfaces</strong> – GIFTI surfaces (gray/white boundary, midthickness, pial, inflated)</p></li>
-<li><p><strong>morphometrics</strong> – GIFTIs of cortical thickness, curvature, and sulcal depth</p></li>
-<li><p><strong>t1w_fs_aseg</strong> – FreeSurfer’s aseg segmentation, in native T1w space</p></li>
-<li><p><strong>t1w_fs_aparc</strong> – FreeSurfer’s aparc+aseg segmentation, in native T1w space</p></li>
-<li><p><strong>cifti_morph</strong> – Morphometric CIFTI-2 dscalar files</p></li>
-<li><p><strong>cifti_metadata</strong> – JSON files containing metadata dictionaries</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_anat_volumes_wf">
 <span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_anat_volumes_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_anat_volumes_wf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tpm_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('GM',</span> <span class="pre">'WM',</span> <span class="pre">'CSF')</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://nipype.readthedocs.io/en/latest/api/generated/nipype.pipeline.engine.workflows.html#nipype.pipeline.engine.workflows.Workflow" title="(in nipype v1.8.7.dev0)"><span class="pre">Workflow</span></a></span></span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_anat_volumes_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_anat_volumes_wf" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_dseg_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_dseg_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_dseg_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_dseg_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_dseg_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_dseg_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ds_dseg_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_dseg_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_dseg_wf" title="Link to this definition"></a></dt>
 <dd><p>Save discrete segmentations</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
+<li><p><strong>extra_entities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a> or None) – Additional entities to add to filename</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: ds_dseg_wf)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
-<li><p><strong>t1w_dseg</strong> – Segmentation in T1w space</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
+<li><p><strong>anat_dseg</strong> – Segmentation in anatomical space</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Outputs<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>t1w_dseg</strong> – The location in the output directory of the discrete segmentation</p>
+<dd class="field-odd"><p><strong>anat_dseg</strong> – The location in the output directory of the discrete segmentation</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_fs_registration_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_fs_registration_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_fs_registration_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_fs_registration_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_fs_registration_wf" title="Link to this definition"></a></dt>
-<dd><p>Save rigid registration between subject anatomical template and FreeSurfer T1.mgz</p>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_fs_registration_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'T1w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'T2w'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ds_fs_registration_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_fs_registration_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_fs_registration_wf" title="Link to this definition"></a></dt>
+<dd><p>Save rigid registration between subject anatomical template and either
+FreeSurfer T1.mgz or T2.mgz</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -215,17 +182,40 @@ into standard space.</p></li>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed
-subject space to T1w</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
+<li><p><strong>fsnative2anat_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed
+subject space to T1/T2</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Outputs<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>t1w2fsnative_xfm</strong> – LTA-style affine matrix translating from T1w to
+<li><p><strong>anat2fsnative_xfm</strong> – LTA-style affine matrix translating from T1/T2 to
 FreeSurfer-conformed subject space</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed
+<li><p><strong>fsnative2anat_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed
 subject space to T1w</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_fs_segs_wf">
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_fs_segs_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_fs_segs_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_fs_segs_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_fs_segs_wf" title="Link to this definition"></a></dt>
+<dd><p>Set up a battery of datasinks to store derivatives in the right location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bids_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Root path of BIDS dataset</p></li>
+<li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
+<li><p><strong>extra_entities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a> or None) – Additional entities to add to filename</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: ds_anat_segs_wf)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Inputs<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>anat_fs_aparc</strong> – FreeSurfer’s aparc+aseg segmentation, in native anatomical space</p></li>
+<li><p><strong>anat_fs_aseg</strong> – FreeSurfer’s aseg segmentation, in native anatomical space</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
 </ul>
 </dd>
 </dl>
@@ -260,19 +250,20 @@ subject space to T1w</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_mask_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_mask_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_mask_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_mask_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_mask_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_mask_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'brain'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'roi'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ribbon'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_mask_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_mask_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_mask_wf" title="Link to this definition"></a></dt>
 <dd><p>Save the subject brain mask</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>bids_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Root path of BIDS dataset</p></li>
 <li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
+<li><p><strong>extra_entities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a> or None) – Additional entities to add to filename</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: ds_mask_wf)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
+<li><p><strong>source_files</strong> – List of input anat images</p></li>
 <li><p><strong>mask_file</strong> – Mask to save</p></li>
 </ul>
 </dd>
@@ -309,7 +300,7 @@ subject space to T1w</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_surfaces_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_surfaces_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bids_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">surfaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_surfaces_wf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://www.nipreps.org/niworkflows/api/niworkflows.engine.workflows.html#niworkflows.engine.workflows.LiterateWorkflow" title="(in niworkflows v0)"><span class="pre">LiterateWorkflow</span></a></span></span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_surfaces_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_surfaces_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_surfaces_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">surfaces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_surfaces_wf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://www.nipreps.org/niworkflows/api/niworkflows.engine.workflows.html#niworkflows.engine.workflows.LiterateWorkflow" title="(in niworkflows v0)"><span class="pre">LiterateWorkflow</span></a></span></span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_surfaces_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_surfaces_wf" title="Link to this definition"></a></dt>
 <dd><p>Save GIFTI surfaces</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -322,7 +313,7 @@ subject space to T1w</p></li>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
 <li><p><strong>``&lt;surface&gt;``</strong> – Left and right GIFTIs for each surface passed to <code class="docutils literal notranslate"><span class="pre">surfaces</span></code></p></li>
 </ul>
 </dd>
@@ -334,19 +325,20 @@ subject space to T1w</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_template_registration_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_template_registration_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_template_registration_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_template_registration_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_template_registration_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_template_registration_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'T1w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'T2w'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ds_template_registration_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_template_registration_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_template_registration_wf" title="Link to this definition"></a></dt>
 <dd><p>Save template registration transforms</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
+<li><p><strong>image_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Anatomical image type (T1w, T2w, etc)</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: anat_derivatives_wf)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>template</strong> – Template space and specifications</p></li>
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
 <li><p><strong>anat2std_xfm</strong> – Nonlinear spatial transform to resample imaging data given in anatomical space
 into standard space.</p></li>
 <li><p><strong>std2anat_xfm</strong> – Inverse transform of <code class="docutils literal notranslate"><span class="pre">anat2std_xfm</span></code></p></li>
@@ -357,50 +349,52 @@ into standard space.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_template_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_template_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_t1w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_template_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_template_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_template_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_template_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_anat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'T1w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'T2w'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ds_template_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_template_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_template_wf" title="Link to this definition"></a></dt>
 <dd><p>Save the subject-specific template</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>num_t1w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of T1w images</p></li>
+<li><p><strong>num_anat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Number of anatomical images</p></li>
 <li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
+<li><p><strong>image_type</strong> – MR image type (T1w, T2w, etc.)</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: ds_template_wf)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
-<li><p><strong>t1w_ref_xfms</strong> – List of affine transforms to realign input T1w images</p></li>
-<li><p><strong>t1w_preproc</strong> – The T1w reference map, which is calculated as the average of bias-corrected
-and preprocessed T1w images, defining the anatomical space.</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
+<li><p><strong>anat_ref_xfms</strong> – List of affine transforms to realign input anatomical images</p></li>
+<li><p><strong>anat_preproc</strong> – The anatomical reference map, which is calculated as the average of bias-corrected
+and preprocessed anatomical images, defining the anatomical space.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Outputs<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>t1w_preproc</strong> – The location in the output directory of the preprocessed T1w image</p>
+<dd class="field-odd"><p><strong>anat_preproc</strong> – The location in the output directory of the preprocessed anatomical image</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.outputs.init_ds_tpms_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_tpms_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ds_tpms_wf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tpm_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('GM',</span> <span class="pre">'WM',</span> <span class="pre">'CSF')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_tpms_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_tpms_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.outputs.</span></span><span class="sig-name descname"><span class="pre">init_ds_tpms_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ds_tpms_wf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tpm_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('GM',</span> <span class="pre">'WM',</span> <span class="pre">'CSF')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/outputs.html#init_ds_tpms_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.outputs.init_ds_tpms_wf" title="Link to this definition"></a></dt>
 <dd><p>Save tissue probability maps</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Directory in which to save derivatives</p></li>
+<li><p><strong>extra_entities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a> or None) – Additional entities to add to filename</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Workflow name (default: anat_derivatives_wf)</p></li>
 <li><p><strong>tpm_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>) – Tissue probability maps in order</p></li>
 </ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>source_files</strong> – List of input T1w images</p></li>
-<li><p><strong>t1w_tpms</strong> – Tissue probability maps in T1w space</p></li>
+<li><p><strong>source_files</strong> – List of input anatomical images</p></li>
+<li><p><strong>anat_tpms</strong> – Tissue probability maps in anatomical space</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Outputs<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>t1w_tpms</strong> – The location in the output directory of the tissue probability maps</p>
+<dd class="field-odd"><p><strong>anat_tpms</strong> – The location in the output directory of the tissue probability maps</p>
 </dd>
 </dl>
 </dd></dl>
@@ -478,7 +472,6 @@ space.</p>
         <dl>
             <dt>Branches</dt>
             <dd><a href="../../enh_calabel/api/smriprep.workflows.outputs.html">enh/calabel</a></dd>
-            <dd><a href="../../enh_nibabies-fit-apply/api/smriprep.workflows.outputs.html">enh/nibabies-fit-apply</a></dd>
             <dd><a href="../../enh_split-surfaces/api/smriprep.workflows.outputs.html">enh/split-surfaces</a></dd>
             <dd><a href="../../fix_parcstats/api/smriprep.workflows.outputs.html">fix/parcstats</a></dd>
             <dd><a href="smriprep.workflows.outputs.html">fix/recon-report</a></dd>

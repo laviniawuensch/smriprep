@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.surfaces module &mdash; smriprep 0.15.1.dev13 documentation</title>
+  <title>smriprep.workflows.surfaces module &mdash; smriprep 0.15.1.dev34 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/banner.css?v=fd51b7f5" />
@@ -38,7 +38,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev13
+                0.15.1.dev34
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -215,7 +215,6 @@ directory.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
 <li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA formatted affine transform file (inverse)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Outputs<span class="colon">:</span></dt>
@@ -233,8 +232,8 @@ directory.</p>
 <dd><p>Prepare GIFTI surfaces from a FreeSurfer subjects directory.</p>
 <p>The default surfaces are <code class="docutils literal notranslate"><span class="pre">lh/rh.pial</span></code>, <code class="docutils literal notranslate"><span class="pre">lh/rh.midthickness</span></code>,
 <code class="docutils literal notranslate"><span class="pre">lh/rh.inflated</span></code>, and <code class="docutils literal notranslate"><span class="pre">lh/rh.white</span></code>.</p>
-<p>Vertex coordinates are <code class="xref py py-class docutils literal notranslate"><span class="pre">transformed</span></code> to align with native T1w space
-when <code class="docutils literal notranslate"><span class="pre">fsnative2t1w_xfm</span></code> is provided.</p>
+<p>Vertex coordinates are <code class="xref py py-class docutils literal notranslate"><span class="pre">transformed</span></code> to align with native anatomical space
+when <code class="docutils literal notranslate"><span class="pre">fsnative2anat_xfm</span></code> is provided.</p>
 <dl>
 <dt>Workflow Graph</dt><dd><figure class="align-default">
 <img alt="../_images/smriprep-workflows-surfaces-4.png" src="../_images/smriprep-workflows-surfaces-4.png" />
@@ -247,7 +246,7 @@ when <code class="docutils literal notranslate"><span class="pre">fsnative2t1w_x
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
 <li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA formatted affine transform file</p></li>
+<li><p><strong>fsnative2anat_xfm</strong> – LTA formatted affine transform file</p></li>
 </ul>
 </dd>
 <dt class="field-even">Outputs<span class="colon">:</span></dt>
@@ -343,7 +342,7 @@ subject-specific cortical ROI.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.surfaces.init_refinement_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_refinement_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'refinement_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_refinement_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_refinement_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_refinement_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'T1w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'T2w'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'T1w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'refinement_wf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://www.nipreps.org/niworkflows/api/niworkflows.engine.workflows.html#niworkflows.engine.workflows.LiterateWorkflow" title="(in niworkflows v0)"><span class="pre">LiterateWorkflow</span></a></span></span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_refinement_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_refinement_wf" title="Link to this definition"></a></dt>
 <dd><p>Refine ANTs brain extraction with FreeSurfer segmentation</p>
 <dl>
 <dt>Workflow Graph</dt><dd><figure class="align-default">
@@ -357,25 +356,15 @@ subject-specific cortical ROI.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
 <li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</p></li>
+<li><p><strong>fsnative2anat_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to anatomical</p></li>
 <li><p><strong>reference_image</strong> – Input</p></li>
-<li><p><strong>t2w</strong> – List of T2-weighted structural images (only first used)</p></li>
-<li><p><strong>flair</strong> – List of FLAIR images</p></li>
-<li><p><strong>skullstripped_t1</strong> – Skull-stripped T1-weighted image (or mask of image)</p></li>
 <li><p><strong>ants_segs</strong> – Brain tissue segmentation from ANTS <code class="docutils literal notranslate"><span class="pre">antsBrainExtraction.sh</span></code></p></li>
-<li><p><strong>corrected_t1</strong> – INU-corrected, merged T1-weighted image</p></li>
 <li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
 <li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
 </ul>
 </dd>
 <dt class="field-even">Outputs<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
-<li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
-<li><p><strong>t1w2fsnative_xfm</strong> – LTA-style affine matrix translating from T1w to FreeSurfer-conformed subject space</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</p></li>
-<li><p><strong>out_brainmask</strong> – Refined brainmask, derived from FreeSurfer’s <code class="docutils literal notranslate"><span class="pre">aseg</span></code> volume</p></li>
-</ul>
+<dd class="field-even"><p><strong>out_brainmask</strong> – Refined brainmask, derived from FreeSurfer’s <code class="docutils literal notranslate"><span class="pre">aseg</span></code> volume</p>
 </dd>
 </dl>
 <div class="admonition seealso">
@@ -418,7 +407,7 @@ subject-specific cortical ROI.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.surfaces.init_segs_to_native_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_segs_to_native_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'segs_to_native'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'aseg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_segs_to_native_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_segs_to_native_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_segs_to_native_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'T1w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'T2w'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'T1w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'aseg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'aparc_aseg'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'wmparc'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'aseg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'segs_to_native_wf'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://www.nipreps.org/niworkflows/api/niworkflows.engine.workflows.html#niworkflows.engine.workflows.LiterateWorkflow" title="(in niworkflows v0)"><span class="pre">LiterateWorkflow</span></a></span></span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_segs_to_native_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_segs_to_native_wf" title="Link to this definition"></a></dt>
 <dd><p>Get a segmentation from FreeSurfer conformed space into native T1w space.</p>
 <dl>
 <dt>Workflow Graph</dt><dd><figure class="align-default">
@@ -429,14 +418,17 @@ subject-specific cortical ROI.</p>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>segmentation</strong> – The name of a segmentation (‘aseg’ or ‘aparc_aseg’ or ‘wmparc’)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_type</strong> – MR anatomical image type (‘T1w’ or ‘T2w’)</p></li>
+<li><p><strong>segmentation</strong> – The name of a segmentation (‘aseg’ or ‘aparc_aseg’ or ‘wmparc’)</p></li>
+</ul>
 </dd>
 <dt class="field-even">Inputs<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>in_file</strong> – Anatomical, merged T1w image after INU correction</p></li>
+<li><p><strong>in_file</strong> – Anatomical, merged anatomical image after INU correction</p></li>
 <li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
 <li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</p></li>
+<li><p><strong>fsnative2anat_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to anatomical</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Outputs<span class="colon">:</span></dt>
@@ -447,7 +439,7 @@ subject-specific cortical ROI.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="smriprep.workflows.surfaces.init_surface_derivatives_wf">
-<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_surface_derivatives_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cifti_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'91k'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'170k'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">False</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'surface_derivatives_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_surface_derivatives_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_surface_derivatives_wf" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">smriprep.workflows.surfaces.</span></span><span class="sig-name descname"><span class="pre">init_surface_derivatives_wf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'T1w'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'T2w'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'T1w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'surface_derivatives_wf'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/smriprep/workflows/surfaces.html#init_surface_derivatives_wf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#smriprep.workflows.surfaces.init_surface_derivatives_wf" title="Link to this definition"></a></dt>
 <dd><p>Generate sMRIPrep derivatives from FreeSurfer derivatives</p>
 <dl>
 <dt>Workflow Graph</dt><dd><figure class="align-default">
@@ -459,8 +451,8 @@ subject-specific cortical ROI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Inputs<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reference</strong> – Reference image in native T1w space, for defining a resampling grid</p></li>
-<li><p><strong>fsnative2t1w_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to T1w</p></li>
+<li><p><strong>reference</strong> – Reference image in native anatomical space, for defining a resampling grid</p></li>
+<li><p><strong>fsnative2anat_xfm</strong> – LTA-style affine matrix translating from FreeSurfer-conformed subject space to anatomical</p></li>
 <li><p><strong>subjects_dir</strong> – FreeSurfer SUBJECTS_DIR</p></li>
 <li><p><strong>subject_id</strong> – FreeSurfer subject ID</p></li>
 </ul>
@@ -470,8 +462,8 @@ subject-specific cortical ROI.</p>
 <li><p><strong>surfaces</strong> – GIFTI surfaces for gray/white matter boundary, pial surface,
 midthickness (or graymid) surface, and inflated surfaces</p></li>
 <li><p><strong>morphometrics</strong> – GIFTIs of cortical thickness, curvature, and sulcal depth</p></li>
-<li><p><strong>out_aseg</strong> – FreeSurfer’s aseg segmentation, in native T1w space</p></li>
-<li><p><strong>out_aparc</strong> – FreeSurfer’s aparc+aseg segmentation, in native T1w space</p></li>
+<li><p><strong>out_aseg</strong> – FreeSurfer’s aseg segmentation, in native anatomical space</p></li>
+<li><p><strong>out_aparc</strong> – FreeSurfer’s aparc+aseg segmentation, in native anatomical space</p></li>
 </ul>
 </dd>
 </dl>
@@ -641,7 +633,6 @@ to have a certain margin.</p>
         <dl>
             <dt>Branches</dt>
             <dd><a href="../enh_calabel/api/smriprep.workflows.surfaces.html">enh/calabel</a></dd>
-            <dd><a href="../enh_nibabies-fit-apply/api/smriprep.workflows.surfaces.html">enh/nibabies-fit-apply</a></dd>
             <dd><a href="../enh_split-surfaces/api/smriprep.workflows.surfaces.html">enh/split-surfaces</a></dd>
             <dd><a href="../fix_parcstats/api/smriprep.workflows.surfaces.html">fix/parcstats</a></dd>
             <dd><a href="../fix_recon-report/api/smriprep.workflows.surfaces.html">fix/recon-report</a></dd>

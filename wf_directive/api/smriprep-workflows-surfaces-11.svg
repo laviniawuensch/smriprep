@@ -129,15 +129,15 @@
 <path fill="none" stroke="black" d="M151.26,-431.97C153.89,-405.34 158.49,-352.21 158.49,-307 158.49,-307 158.49,-307 158.49,-161 158.49,-118.78 178.09,-73.16 192.49,-45.33"/>
 <polygon fill="black" stroke="black" points="195.71,-46.74 197.33,-36.27 189.54,-43.44 195.71,-46.74"/>
 </g>
-<!-- get_surfaces (io) -->
+<!-- get_surfaces (patches) -->
 <g id="node8" class="node">
-<title>get_surfaces (io)</title>
-<ellipse fill="none" stroke="black" cx="467.49" cy="-306" rx="87.18" ry="18"/>
-<text text-anchor="middle" x="467.49" y="-302.3" font-family="Times,serif" font-size="14.00">get_surfaces (io)</text>
+<title>get_surfaces (patches)</title>
+<ellipse fill="none" stroke="black" cx="467.49" cy="-306" rx="115.08" ry="18"/>
+<text text-anchor="middle" x="467.49" y="-302.3" font-family="Times,serif" font-size="14.00">get_surfaces (patches)</text>
 </g>
-<!-- autorecon_resume_wf&#45;&gt;get_surfaces (io) -->
+<!-- autorecon_resume_wf&#45;&gt;get_surfaces (patches) -->
 <g id="edge13" class="edge">
-<title>autorecon_resume_wf&#45;&gt;get_surfaces (io)</title>
+<title>autorecon_resume_wf&#45;&gt;get_surfaces (patches)</title>
 <path fill="none" stroke="black" d="M467.49,-359.7C467.49,-351.98 467.49,-342.71 467.49,-334.11"/>
 <polygon fill="black" stroke="black" points="470.99,-334.1 467.49,-324.1 463.99,-334.1 470.99,-334.1"/>
 </g>
@@ -150,8 +150,8 @@
 <!-- autorecon_resume_wf&#45;&gt;save_midthickness (io) -->
 <g id="edge14" class="edge">
 <title>autorecon_resume_wf&#45;&gt;save_midthickness (io)</title>
-<path fill="none" stroke="black" d="M427.88,-361.08C409.21,-352.18 387.56,-339.7 371.49,-324 334.08,-287.47 319.32,-225.7 313.71,-190.24"/>
-<polygon fill="black" stroke="black" points="317.15,-189.53 312.25,-180.13 310.22,-190.53 317.15,-189.53"/>
+<path fill="none" stroke="black" d="M404.54,-363.08C382.23,-355.15 358.88,-342.86 343.49,-324 312.23,-285.7 308.17,-225.5 308.8,-190.59"/>
+<polygon fill="black" stroke="black" points="312.32,-190.31 309.15,-180.2 305.32,-190.08 312.32,-190.31"/>
 </g>
 <!-- midthickness (freesurfer) -->
 <g id="node10" class="node">
@@ -159,9 +159,9 @@
 <ellipse fill="none" stroke="black" cx="467.49" cy="-234" rx="128.88" ry="18"/>
 <text text-anchor="middle" x="467.49" y="-230.3" font-family="Times,serif" font-size="14.00">midthickness (freesurfer)</text>
 </g>
-<!-- get_surfaces (io)&#45;&gt;midthickness (freesurfer) -->
+<!-- get_surfaces (patches)&#45;&gt;midthickness (freesurfer) -->
 <g id="edge15" class="edge">
-<title>get_surfaces (io)&#45;&gt;midthickness (freesurfer)</title>
+<title>get_surfaces (patches)&#45;&gt;midthickness (freesurfer)</title>
 <path fill="none" stroke="black" d="M467.49,-287.7C467.49,-279.98 467.49,-270.71 467.49,-262.11"/>
 <polygon fill="black" stroke="black" points="470.99,-262.1 467.49,-252.1 463.99,-262.1 470.99,-262.1"/>
 </g>

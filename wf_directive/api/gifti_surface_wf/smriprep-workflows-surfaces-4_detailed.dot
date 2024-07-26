@@ -1,6 +1,6 @@
 digraph structs {
 node [shape=record];
-gifti_surface_wfinputnode [label="{IN}|{ inputnode | utility |  }|{OUT|<outfsnative2t1wxfm> fsnative2t1w_xfm|<outsubjectid> subject_id|<outsubjectsdir> subjects_dir}"];
+gifti_surface_wfinputnode [label="{IN}|{ inputnode | utility |  }|{OUT|<outfsnative2anatxfm> fsnative2anat_xfm|<outsubjectid> subject_id|<outsubjectsdir> subjects_dir}"];
 gifti_surface_wfget_surfaces [label="{IN|<insubjectid> subject_id|<insubjectsdir> subjects_dir}|{ get_surfaces | utility |  }|{OUT|<outinflated> inflated|<outmidthickness> midthickness|<outpial> pial|<outwhite> white}"];
 gifti_surface_wfsurface_list [label="{IN|<inin1> in1|<inin2> in2|<inin3> in3|<inin4> in4}|{ surface_list | utility |  }|{OUT|<outout> out}"];
 gifti_surface_wffs2gii [label="{IN|<ininfile> in_file}|{ fs2gii | freesurfer |  }|{OUT|<outconverted> converted}"];
@@ -14,7 +14,7 @@ gifti_surface_wfget_surfaces:outinflated:e -> gifti_surface_wfsurface_list:inin3
 gifti_surface_wfget_surfaces:outmidthickness:e -> gifti_surface_wfsurface_list:inin2:w;
 gifti_surface_wfget_surfaces:outpial:e -> gifti_surface_wfsurface_list:inin1:w;
 gifti_surface_wfget_surfaces:outwhite:e -> gifti_surface_wfsurface_list:inin4:w;
-gifti_surface_wfinputnode:outfsnative2t1wxfm:e -> gifti_surface_wffix_surfs:intransformfile:w;
+gifti_surface_wfinputnode:outfsnative2anatxfm:e -> gifti_surface_wffix_surfs:intransformfile:w;
 gifti_surface_wfinputnode:outsubjectid:e -> gifti_surface_wfget_surfaces:insubjectid:w;
 gifti_surface_wfinputnode:outsubjectsdir:e -> gifti_surface_wfget_surfaces:insubjectsdir:w;
 gifti_surface_wfsurface_groups:outout1:e -> gifti_surface_wfoutputnode:inpial:w;

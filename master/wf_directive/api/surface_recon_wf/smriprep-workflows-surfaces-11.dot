@@ -6,7 +6,7 @@ strict digraph  {
 "skull_strip_extern (freesurfer)";
 "fsnative2t1w_xfm (freesurfer)";
 "autorecon_resume_wf";
-"get_surfaces (io)";
+"get_surfaces (patches)";
 "save_midthickness (io)";
 "midthickness (freesurfer)";
 "sync (utility)";
@@ -23,9 +23,9 @@ strict digraph  {
 "fov_check (utility)" -> "autorecon1 (freesurfer)";
 "skull_strip_extern (freesurfer)" -> "autorecon_resume_wf";
 "fsnative2t1w_xfm (freesurfer)" -> "outputnode (utility)";
-"autorecon_resume_wf" -> "get_surfaces (io)";
+"autorecon_resume_wf" -> "get_surfaces (patches)";
 "autorecon_resume_wf" -> "save_midthickness (io)";
-"get_surfaces (io)" -> "midthickness (freesurfer)";
+"get_surfaces (patches)" -> "midthickness (freesurfer)";
 "save_midthickness (io)" -> "sync (utility)";
 "midthickness (freesurfer)" -> "save_midthickness (io)";
 "sync (utility)" -> "outputnode (utility)";
