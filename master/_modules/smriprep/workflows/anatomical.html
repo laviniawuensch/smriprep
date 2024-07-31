@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.anatomical &mdash; smriprep 0.15.1.dev42 documentation</title>
+  <title>smriprep.workflows.anatomical &mdash; smriprep 0.15.1.dev45 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css?v=fd51b7f5" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev42
+                0.15.1.dev45
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -139,7 +139,8 @@
 <span class="kn">from</span> <span class="nn">niworkflows.utils.misc</span> <span class="kn">import</span> <span class="n">add_suffix</span>
 <span class="kn">from</span> <span class="nn">niworkflows.utils.spaces</span> <span class="kn">import</span> <span class="n">Reference</span><span class="p">,</span> <span class="n">SpatialReferences</span>
 
-<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">load_resource</span>
+<span class="kn">import</span> <span class="nn">smriprep</span>
+
 <span class="kn">from</span> <span class="nn">..interfaces</span> <span class="kn">import</span> <span class="n">DerivativesDataSink</span>
 <span class="kn">from</span> <span class="nn">..utils.misc</span> <span class="kn">import</span> <span class="n">apply_lut</span> <span class="k">as</span> <span class="n">_apply_bids_lut</span>
 <span class="kn">from</span> <span class="nn">..utils.misc</span> <span class="kn">import</span> <span class="n">fs_isRunning</span> <span class="k">as</span> <span class="n">_fs_isRunning</span>
@@ -1554,7 +1555,7 @@
 
     <span class="k">if</span> <span class="n">num_files</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">get1st</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;get1st&#39;</span><span class="p">)</span>
-        <span class="n">outputnode</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">anat_realign_xfm</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">load_resource</span><span class="p">(</span><span class="s1">&#39;itkIdentityTransform.txt&#39;</span><span class="p">))]</span>
+        <span class="n">outputnode</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">anat_realign_xfm</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">smriprep</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;itkIdentityTransform.txt&#39;</span><span class="p">))]</span>
 
         <span class="c1"># fmt:off</span>
         <span class="n">workflow</span><span class="o">.</span><span class="n">connect</span><span class="p">([</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.cli.run &mdash; smriprep 0.15.1.dev42 documentation</title>
+  <title>smriprep.cli.run &mdash; smriprep 0.15.1.dev45 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css?v=fd51b7f5" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev42
+                0.15.1.dev45
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -144,7 +144,7 @@
         <span class="n">SpatialReferences</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="kn">from</span> <span class="nn">..__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
+    <span class="kn">import</span> <span class="nn">smriprep</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="s1">&#39;sMRIPrep: Structural MRI PREProcessing workflows&#39;</span><span class="p">,</span>
@@ -175,7 +175,11 @@
     <span class="p">)</span>
 
     <span class="c1"># optional arguments</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;smriprep v</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;smriprep v</span><span class="si">{</span><span class="n">smriprep</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">g_bids</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;Options for filtering BIDS queries&#39;</span><span class="p">)</span>
     <span class="n">g_bids</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
@@ -569,9 +573,8 @@
     <span class="kn">from</span> <span class="nn">nipype</span> <span class="kn">import</span> <span class="n">logging</span>
     <span class="kn">from</span> <span class="nn">niworkflows.utils.bids</span> <span class="kn">import</span> <span class="n">collect_participants</span>
 
-    <span class="kn">from</span> <span class="nn">..__about__</span> <span class="kn">import</span> <span class="n">__version__</span>
-    <span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">load_resource</span>
-    <span class="kn">from</span> <span class="nn">..workflows.base</span> <span class="kn">import</span> <span class="n">init_smriprep_wf</span>
+    <span class="kn">import</span> <span class="nn">smriprep</span>
+    <span class="kn">from</span> <span class="nn">smriprep.workflows.base</span> <span class="kn">import</span> <span class="n">init_smriprep_wf</span>
 
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;nipype.workflow&#39;</span><span class="p">)</span>
 
@@ -695,7 +698,7 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
         <span class="mi">25</span><span class="p">,</span>
         <span class="n">INIT_MSG</span><span class="p">(</span>
-            <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="n">smriprep</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
             <span class="n">bids_dir</span><span class="o">=</span><span class="n">bids_dir</span><span class="p">,</span>
             <span class="n">subject_list</span><span class="o">=</span><span class="n">subject_list</span><span class="p">,</span>
             <span class="n">uuid</span><span class="o">=</span><span class="n">run_uuid</span><span class="p">,</span>
@@ -750,7 +753,7 @@
         <span class="n">boilerplate</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">boilerplate_bib</span> <span class="o">=</span> <span class="n">load_resource</span><span class="p">(</span><span class="s1">&#39;boilerplate.bib&#39;</span><span class="p">)</span>
+    <span class="n">boilerplate_bib</span> <span class="o">=</span> <span class="n">smriprep</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;boilerplate.bib&#39;</span><span class="p">)</span>
 
     <span class="c1"># Generate HTML file resolving citations</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>

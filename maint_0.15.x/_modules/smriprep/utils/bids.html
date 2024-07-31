@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.utils.bids &mdash; smriprep 0.15.1.dev42 documentation</title>
+  <title>smriprep.utils.bids &mdash; smriprep 0.15.1.dev45 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css?v=fd51b7f5" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.15.1.dev42
+                0.15.1.dev45
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -116,7 +116,7 @@
 <span class="kn">from</span> <span class="nn">bids.layout</span> <span class="kn">import</span> <span class="n">BIDSLayout</span>
 <span class="kn">from</span> <span class="nn">niworkflows.data</span> <span class="kn">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">nwf_load</span>
 
-<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">load_resource</span>
+<span class="kn">import</span> <span class="nn">smriprep</span>
 
 
 <div class="viewcode-block" id="collect_derivatives">
@@ -124,7 +124,7 @@
 <span class="k">def</span> <span class="nf">collect_derivatives</span><span class="p">(</span><span class="n">derivatives_dir</span><span class="p">,</span> <span class="n">subject_id</span><span class="p">,</span> <span class="n">std_spaces</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gather existing derivatives and compose a cache.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">patterns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_spec</span><span class="p">,</span> <span class="n">_patterns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">load_resource</span><span class="p">(</span><span class="s1">&#39;io_spec.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">_spec</span><span class="p">,</span> <span class="n">_patterns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">smriprep</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;io_spec.json&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spec</span> <span class="o">=</span> <span class="n">_spec</span>
@@ -192,11 +192,11 @@
 
 <span class="sd">    .. testsetup::</span>
 
-<span class="sd">    &gt;&gt;&gt; from smriprep.data import load_resource</span>
+<span class="sd">    &gt;&gt;&gt; from smriprep.data import load</span>
 <span class="sd">    &gt;&gt;&gt; from pathlib import Path</span>
 <span class="sd">    &gt;&gt;&gt; from tempfile import TemporaryDirectory</span>
 <span class="sd">    &gt;&gt;&gt; tmpdir = TemporaryDirectory()</span>
-<span class="sd">    &gt;&gt;&gt; bids_dir = load_resource(&#39;tests&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; bids_dir = load(&#39;tests&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; deriv_desc = Path(tmpdir.name) / &#39;dataset_description.json&#39;</span>
 
 <span class="sd">    .. doctest::</span>
