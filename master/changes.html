@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What’s new? &mdash; smriprep 0.16.0 documentation</title>
+  <title>What’s new? &mdash; smriprep 0.16.1.dev1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/banner.css?v=fd51b7f5" />
@@ -37,7 +37,7 @@
             smriprep
           </a>
               <div class="version">
-                0.16.0
+                0.16.1.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Library API (application program interface)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What’s new?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#july-31-2024">0.16.0 (July 31, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#march-22-2024">0.15.0 (March 22, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#march-11-2024">0.14.0 (March 11, 2024)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#december-08-2023">0.13.2 (December 08, 2023)</a></li>
@@ -139,6 +140,20 @@
 
 <section id="what-s-new">
 <h1>What’s new?<a class="headerlink" href="#what-s-new" title="Link to this heading"></a></h1>
+<section id="july-31-2024">
+<h2>0.16.0 (July 31, 2024)<a class="headerlink" href="#july-31-2024" title="Link to this heading"></a></h2>
+<p>Start of the 0.16.x minor series.</p>
+<p>This release decouples much of the hardcoded T1w behavior in favor of T1w/T2w options,
+to allow easier integration with tools less reliant on a single anatomical scan.</p>
+<ul class="simple">
+<li><p>ENH: Use genericised “anat” input/output for TemplateDimensions (#443)</p></li>
+<li><p>ENH: Remove much of the hardcoded <cite>T1w</cite> fields in favor of <cite>anat</cite> (#433)</p></li>
+<li><p>RF: Load package data with acres (#448)</p></li>
+<li><p>RF: <cite>space-fsaverage</cite> to <cite>sphere_reg</cite> output files (#446)</p></li>
+<li><p>MNT: Unpin libitk 5.3 (ANTs 2.5.3 is built with 5.4) (#445)</p></li>
+<li><p>MNT: Clean up doc builds, environment, style checks (#444)</p></li>
+</ul>
+</section>
 <section id="march-22-2024">
 <h2>0.15.0 (March 22, 2024)<a class="headerlink" href="#march-22-2024" title="Link to this heading"></a></h2>
 <p>New feature release in the 0.15.x series.</p>
@@ -773,7 +788,6 @@ in <a class="reference external" href="https://github.com/nipreps/fmriprep/issue
             <dd><a href="../maint_0.8.x/changes.html">maint/0.8.x</a></dd>
             <dd><a href="../maint_0.9.x/changes.html">maint/0.9.x</a></dd>
             <dd><a href="changes.html">master</a></dd>
-            <dd><a href="../rel_0.16.0/changes.html">rel/0.16.0</a></dd>
             <dd><a href="../rel_0.8.0rc1/changes.html">rel/0.8.0rc1</a></dd>
         </dl>
     </div>
