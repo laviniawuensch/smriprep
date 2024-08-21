@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>smriprep.workflows.surfaces &mdash; smriprep 0.16.1.dev1 documentation</title>
+  <title>smriprep.workflows.surfaces &mdash; smriprep 0.16.1.dev7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e08756c3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/banner.css?v=fd51b7f5" />
@@ -35,7 +35,7 @@
             smriprep
           </a>
               <div class="version">
-                0.16.1.dev1
+                0.16.1.dev7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -1287,11 +1287,11 @@
 <span class="k">def</span> <span class="nf">init_segs_to_native_wf</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">image_type</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;T2w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;T1w&#39;</span><span class="p">,</span>
-    <span class="n">segmentation</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;wmparc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;aseg&#39;</span><span class="p">,</span>
+    <span class="n">segmentation</span><span class="p">:</span> <span class="n">ty</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_aseg&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_a2009s&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_dkt&#39;</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;aseg&#39;</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;segs_to_native_wf&#39;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Workflow</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get a segmentation from FreeSurfer conformed space into native T1w space.</span>
+<span class="sd">    Get a segmentation from FreeSurfer conformed space into native anatomical space.</span>
 
 <span class="sd">    Workflow Graph</span>
 <span class="sd">        .. workflow::</span>
@@ -1336,30 +1336,15 @@
 
     <span class="n">lta</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">ConcatenateXFMs</span><span class="p">(</span><span class="n">out_fmt</span><span class="o">=</span><span class="s1">&#39;fs&#39;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;lta&#39;</span><span class="p">,</span> <span class="n">run_without_submitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># Resample from T1.mgz to T1w.nii.gz, applying any offset in fsnative2anat_xfm,</span>
+    <span class="c1"># Resample from Freesurfer anat to native anat, applying any offset in fsnative2anat_xfm,</span>
     <span class="c1"># and convert to NIfTI while we&#39;re at it</span>
     <span class="n">resample</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
         <span class="n">fs</span><span class="o">.</span><span class="n">ApplyVolTransform</span><span class="p">(</span><span class="n">transformed_file</span><span class="o">=</span><span class="s1">&#39;seg.nii.gz&#39;</span><span class="p">,</span> <span class="n">interp</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">),</span>
         <span class="n">name</span><span class="o">=</span><span class="s1">&#39;resample&#39;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">segmentation</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;aparc&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">segmentation</span> <span class="o">==</span> <span class="s1">&#39;aparc_aseg&#39;</span><span class="p">:</span>
-
-            <span class="k">def</span> <span class="nf">_sel</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-                <span class="k">return</span> <span class="p">[</span><span class="n">parc</span> <span class="k">for</span> <span class="n">parc</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="s1">&#39;aparc+&#39;</span> <span class="ow">in</span> <span class="n">parc</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># noqa</span>
-
-        <span class="k">elif</span> <span class="n">segmentation</span> <span class="o">==</span> <span class="s1">&#39;aparc_a2009s&#39;</span><span class="p">:</span>
-
-            <span class="k">def</span> <span class="nf">_sel</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-                <span class="k">return</span> <span class="p">[</span><span class="n">parc</span> <span class="k">for</span> <span class="n">parc</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="s1">&#39;a2009s+&#39;</span> <span class="ow">in</span> <span class="n">parc</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># noqa</span>
-
-        <span class="k">elif</span> <span class="n">segmentation</span> <span class="o">==</span> <span class="s1">&#39;aparc_dkt&#39;</span><span class="p">:</span>
-
-            <span class="k">def</span> <span class="nf">_sel</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-                <span class="k">return</span> <span class="p">[</span><span class="n">parc</span> <span class="k">for</span> <span class="n">parc</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="s1">&#39;DKTatlas+&#39;</span> <span class="ow">in</span> <span class="n">parc</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># noqa</span>
-
-        <span class="n">segmentation</span> <span class="o">=</span> <span class="p">(</span><span class="n">segmentation</span><span class="p">,</span> <span class="n">_sel</span><span class="p">)</span>
+    <span class="n">select_seg</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">niu</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">_select_seg</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;select_seg&#39;</span><span class="p">)</span>
+    <span class="n">select_seg</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">segmentation</span> <span class="o">=</span> <span class="n">segmentation</span>
 
     <span class="n">anat</span> <span class="o">=</span> <span class="s1">&#39;T2&#39;</span> <span class="k">if</span> <span class="n">image_type</span> <span class="o">==</span> <span class="s1">&#39;T2w&#39;</span> <span class="k">else</span> <span class="s1">&#39;T1&#39;</span>
 
@@ -1371,7 +1356,8 @@
                           <span class="p">(</span><span class="s1">&#39;fsnative2anat_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;in_xfms&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">lta</span><span class="p">,</span> <span class="p">[(</span><span class="n">anat</span><span class="p">,</span> <span class="s1">&#39;moving&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">inputnode</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;in_file&#39;</span><span class="p">,</span> <span class="s1">&#39;target_file&#39;</span><span class="p">)]),</span>
-        <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="n">segmentation</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">fssource</span><span class="p">,</span> <span class="n">select_seg</span><span class="p">,</span> <span class="p">[(</span><span class="n">segmentation</span><span class="p">,</span> <span class="s1">&#39;in_files&#39;</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="n">select_seg</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;source_file&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">lta</span><span class="p">,</span> <span class="n">resample</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;out_xfm&#39;</span><span class="p">,</span> <span class="s1">&#39;lta_file&#39;</span><span class="p">)]),</span>
         <span class="p">(</span><span class="n">resample</span><span class="p">,</span> <span class="n">outputnode</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;transformed_file&#39;</span><span class="p">,</span> <span class="s1">&#39;out_file&#39;</span><span class="p">)]),</span>
     <span class="p">])</span>  <span class="c1"># fmt:skip</span>
@@ -1805,6 +1791,20 @@
 
     <span class="n">ret</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">all_surfs</span><span class="p">[</span><span class="n">surface</span><span class="p">]</span> <span class="k">for</span> <span class="n">surface</span> <span class="ow">in</span> <span class="n">surfaces</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ret</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_select_seg</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="n">segmentation</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_files</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">in_files</span>
+
+    <span class="n">seg_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;aparc_aseg&#39;</span><span class="p">:</span> <span class="s1">&#39;aparc+&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_a2009s&#39;</span><span class="p">:</span> <span class="s1">&#39;a2009s+&#39;</span><span class="p">,</span> <span class="s1">&#39;aparc_dkt&#39;</span><span class="p">:</span> <span class="s1">&#39;DKTatlas+&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">segmentation</span> <span class="ow">in</span> <span class="n">seg_mapping</span><span class="p">:</span>
+        <span class="n">segmentation</span> <span class="o">=</span> <span class="n">seg_mapping</span><span class="p">[</span><span class="n">segmentation</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">fl</span> <span class="ow">in</span> <span class="n">in_files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">segmentation</span> <span class="ow">in</span> <span class="n">fl</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">fl</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No segmentation containing &quot;</span><span class="si">{</span><span class="n">segmentation</span><span class="si">}</span><span class="s1">&quot; was found.&#39;</span><span class="p">)</span>
 </pre></div>
 
            </div>
